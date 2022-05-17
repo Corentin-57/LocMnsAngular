@@ -1,0 +1,161 @@
+<div class="page-gestionnaire">
+
+    <h1>Suivi du parc</h1>
+
+    <div class="container">
+        <div class="row g-3">
+            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Nouvelles demandes</h5>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Retour de stock</h5>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Matériel défectueux</h5>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row g-3">
+            <div class="col-12 col-md-6 col-lg-4 mb-3 ">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Matériel disponible/lieux</h5>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Matériel en prêt</h5>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Matériel en retard</h5>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="btnEnregistrer btn-lg px-5 " type="submit">Enregistrer une réservation</button>
+
+        <div class="titre">
+            <h1>Suivi des locations</h1>
+        </div>
+
+        <h2>Nouvelles demandes de prêts</h2>
+        <!-- -------------------------------------Tableau nouvelle demande---------------------- -->
+        <table class="table table-light">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Statut</th>
+                    <th scope="col">Matériel demandé</th>
+                    <th scope="col">Date d'emprunt</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>Etudiant</td>
+                    <td>Ordinateur</td>
+                    <td>23-06-20222</td>
+                    <td>
+                        <a type="submit" class="btn btn-outline-success" href="#" role="button">Valider</a>
+                        <a type="submit" class="btn btn-outline-danger" href="#" role="button">Supprimer</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Retour de prêt du matériel</h2>
+        <!-- -----------------------------------------Tableau retour prêt ---------------------- -->
+        <table class="table table-light">
+            <thead>
+                <tr>
+                    <th scope="col">N° Identification</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Statut</th>
+                    <th scope="col">Etat</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                    <td>Opérationnel</td>
+                    
+                    <td>
+                        <a type="submit" class="btn btn-outline-success" href="#" role="button">Valider</a>
+                        <a type="submit" class="btn btn-outline-danger" href="#" role="button">Supprimer</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h1>Gestion du parc</h1>
+
+        <!-- -----------------------------------------Tableau Gestion du Parc ---------------------- -->
+
+        <table class="table table-light">
+            <thead>
+                <tr>
+                    <th scope="col">Emprunteur</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">Localisation</th>
+                    <th scope="col">Etat</th>
+                    <th scope="col">Documents techniques</th>
+                    <th scope="col">Mode opératoire</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                    <td>@mdo</td>
+                    <td>@mdo</td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+    </div>
+
+
+</div>
+
+<app-footer></app-footer> 

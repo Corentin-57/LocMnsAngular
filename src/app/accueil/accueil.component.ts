@@ -7,13 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccueilComponent implements OnInit {
 
-  cheminPhotoOrdi:any = "assets/ordinateur.jpg"
+  cheminPhotoOrdi:any = "assets/accueil/ordinateur.jpg"
 
-  cheminCasqueVR:any = "assets/casqueVR.jpg"
+  cheminCasqueVR:any = "assets/accueil/casqueVR.jpg"
 
-  cheminWebcam: any = "assets/webcam.jpg"
+  cheminWebcam: any = "assets/accueil/webcam.jpg"
 
-  cheminProjecteur: any = "assets/projecteur.jpg"
+  cheminProjecteur: any = "assets/accueil/projecteur.jpg"
 
   constructor() { }
 

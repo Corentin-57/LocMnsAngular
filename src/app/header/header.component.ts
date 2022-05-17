@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  cheminLogo:any = "assets/logo.svg";
+  cheminLogo:any = "assets/header/logo.svg";
 
   constructor() { }
 

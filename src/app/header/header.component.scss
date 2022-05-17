@@ -1,0 +1,37 @@
+.seConnecter{
+    background-color: #E9731D;
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 50px;
+    margin-right: 10px;
+}
+
+.nav-link{
+    color: black;
+    font-weight: bold;
+    font-size: 25px;
+    margin-right: 20px;
+}
+
+.titreLogo{
+    margin-left: 20px;
+    font-size: 35px;
+}
+
+@media screen and (max-width: 600px){ //fait disparaitre le titre locMNS sur écran inférieur à 600px
+    .titreLogo{
+        display: none;
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 400px){ //Enlève marges sur écran mobiles
+    .seConnecter{
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+
+
+

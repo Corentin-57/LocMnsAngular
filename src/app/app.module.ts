@@ -12,7 +12,7 @@ import { PageEtudiantComponent } from './page-etudiant/page-etudiant.component';
     AppComponent,
     HeaderComponent,
     AccueilComponent,
-    PageEtudiantComponent
+    PageEtudiantComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,20 @@
+footer{
+    padding-top: 30px;
+    background-color: #041937;
+  }
+  
+  @media screen and (min-width: 770px){ //Enlève marges sur écran mobiles
+    .adresses{
+        display: flex;
+        justify-content: center;
+    }
+    .mns{
+        margin-right: 80px;
+    }
+}
+  
+  
+  
+  
+  
+  

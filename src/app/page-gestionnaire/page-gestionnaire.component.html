@@ -1,0 +1,194 @@
+<div class="page-gestionnaire">
+
+    <h1>Suivi du parc</h1>
+
+
+    <div class="container">
+        <div class="row g-3">
+            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Nouvelles demandes</h4>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Retour de stock</h4>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Matériel défectueux</h4>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row g-3">
+            <div class="col-12 col-md-6 col-lg-4 mb-3 ">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Matériel disponible/lieux</h4>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Matériel en prêt</h4>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Matériel en retard</h4>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <button class="btnEnregistrer btn-lg px-4" type="submit">Enregistrer une réservation</button>
+        </div>
+
+
+        <div class="titre">
+            <h2>Suivi des locations</h2>
+        </div>
+
+        <h3>Nouvelles demandes de prêts</h3>
+        <!-- -------------------------------------Tableau nouvelle demande de prêt---------------------- -->
+        <table class="table table-light">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Statut</th>
+                    <th scope="col">Matériel demandé</th>
+                    <th scope="col">Date d'emprunt</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>Etudiant</td>
+                    <td>Ordinateur</td>
+                    <td>23-06-2022</td>
+                    <td>
+                        <a type="submit" class="btn btn-outline-success" href="#" role="button">Valider</a>
+                        <a type="submit" class="btn btn-outline-danger" href="#" role="button">Supprimer</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Retour de prêt du matériel</h3>
+        <!-- -----------------------------------------Tableau retour prêt ---------------------- -->
+        <table class="table table-light">
+            <thead>
+                <tr>
+                    <th scope="col">N° Identification</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Statut</th>
+                    <th scope="col">Etat matériel&emsp;</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>Opérationnel</td>
+                    <td>Opérationnel</td>
+
+                    <td>
+                        <a type="submit" class="btn btn-outline-success" href="#" role="button">Valider</a>
+                        <a type="submit" class="btn btn-outline-danger" href="#" role="button">Supprimer</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Gestion du parc</h2>
+
+        <!-- -----------------------------------Filtre de recherche Gestion du Parc ---------------------- -->
+        <div class="filtre">
+            <div class="col-lg-3 mb-5">
+                <input type="date" class="form-control" id="validationDefault01" required>
+            </div>
+            <div class="col-lg-3 mb-3">
+
+
+                <select class="form-select" aria-label="Default select example">
+                    <option class="espace" selected>Sélectionner un matériel</option>
+                    <option class="espace"></option>
+                    <option class="espace" value="1">Pc</option>
+                    <option class="espace" value="2">Casque VR</option>
+                    <option class="espace" value="3">Webcam</option>
+                    <option class="espace" value="4">Projecteur</option>
+                </select>
+            </div>
+
+            <div class="col-lg-3 mb-3">
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>Sélectionner le lieu</option>
+                    <option></option>
+                    <option value="1">MNS</option>
+                    <option value="2">IFA</option>
+                </select>
+            </div>
+        </div>
+
+
+
+        <div class="d-flex justify-content-center">
+            <button class="btnRechercher btn-lg px-4" type="submit">Rechercher</button>
+        </div>
+
+<!-- -----------------------------------------Tableau Gestion du Parc ---------------------- -->
+
+        <table class="table table-light">
+            <thead>
+                <tr>
+                    <th scope="col">Emprunteur</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">Localisation</th>
+                    <th scope="col">Etat</th>
+                    <th scope="col">Documents techniques</th>
+                    <th scope="col">Mode opératoire</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Disponible 60</td>
+                    <td>Emprunté par élève</td>
+                    <td>Emprunté</td>
+                    <td>Pilotes d'installations</td>
+                    <td>@mdo</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <br>
+
+    </div>
+</div>

@@ -7,6 +7,7 @@ import { PageEtudiantComponent } from './page-etudiant/page-etudiant.component';
 import { PageGestionnaireComponent } from './page-gestionnaire/page-gestionnaire.component';
 
 const routes: Routes = [ //Définir les differente routes pour accéder aux composants
+{path: "", component: AccueilComponent}, //Lancement app envoie sur page accueil
 {path: "accueil", component: AccueilComponent},
 {path: "page-etudiant", component: PageEtudiantComponent},
 {path: "contact", component: ContactComponent},

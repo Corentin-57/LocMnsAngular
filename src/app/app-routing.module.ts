@@ -6,6 +6,7 @@ import { ContactComponent } from './contact/contact.component';
 import { PageEtudiantComponent } from './page-etudiant/page-etudiant.component';
 
 const routes: Routes = [ //Définir les differente routes pour accéder aux composants
+{path: "", component: AccueilComponent},
 {path: "accueil", component: AccueilComponent},
 {path: "page-etudiant", component: PageEtudiantComponent},
 {path: "contact", component: ContactComponent},

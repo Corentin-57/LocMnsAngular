@@ -13,7 +13,7 @@ export class ConnexionComponent implements OnInit {
 
   public formControl: FormGroup = this.formBuilder.group(
     {
-      "email": ["", [Validators.required, Validators.email]],
+      "mail": ["", [Validators.required, Validators.email]],
       "motDePasse": ["", [Validators.required]]
     }
   );
@@ -26,7 +26,6 @@ export class ConnexionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
   }
 
   onConnexion(): void {

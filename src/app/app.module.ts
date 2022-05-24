@@ -7,7 +7,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ContactComponent } from './contact/contact.component';
 import { ConnexionComponent } from './connexion/connexion.component';
 import { PageGestionnaireComponent } from './page-gestionnaire/page-gestionnaire.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
 import { AccueilComponent } from './accueil/accueil.component';
@@ -18,6 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { TokenInterceptor } from './token.interceptor';
 
 
 @NgModule({
@@ -44,7 +45,7 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatInputModule
   ],
-  providers: [],
+  providers: [{provide : HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi : true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -19,9 +19,29 @@
 
 .btn1{
   background-color:#C44C21;
-  
+  border-radius: 20px;
+  width: 300px;
+
 }
 
 .container{
     margin-top: 100px;
 }
+
+mat-form-field{
+  margin-top: 20px;
+  margin-bottom: 50px;
+  background-color: white;
+  border-radius: 10px;
+  height: 50px;
+}
+
+mat-form-field input{
+  color: black;
+}
+
+
+
+
+
+

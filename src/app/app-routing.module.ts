@@ -10,6 +10,7 @@ const routes: Routes = [ //Définir les differente routes pour accéder aux comp
 {path: "", component: AccueilComponent}, //Lancement app envoie sur page accueil
 {path: "accueil", component: AccueilComponent},
 {path: "page-etudiant", component: PageEtudiantComponent},
+{path: "page-gestionnaire", component: PageGestionnaireComponent},
 {path: "contact", component: ContactComponent},
 {path: "connexion", component: ConnexionComponent}
 ];

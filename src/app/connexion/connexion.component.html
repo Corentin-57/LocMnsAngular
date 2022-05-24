@@ -6,32 +6,42 @@
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
           <div class="card bg-dark text-white" style="border-radius: 5rem;">
-            <div class="card-body p-5 text-center">
+            <div class="card-body p-5 text-center d-flex justify-content-center">
   
-              <div>
-  
+              <form [formGroup]="formControl" class="d-flex flex-column" (submit)="onConnexion()">
+
                 <h2 class="fw-bold mb-2 text-uppercase mb-5">CONNEXION</h2>
                 <p class="text-white-50 ">Entrez votre email et votre mot de passe</p>
-  
-                <div class="form-outline form-white mb-4">
-                  <input type="email" id="typeEmailX" class="form-control form-control-lg" />
-                  <label class="form-label" for="typeEmailX">Email</label>
-                </div>
-  
-                <div class="form-outline form-white mb-4">
-                  <input type="password" id="typePasswordX" class="form-control form-control-lg" />
-                  <label class="form-label" for="typePasswordX">Mot de passe</label>
-                </div>
-  
+                
+                <mat-form-field appearance="fill">
+                    <mat-label>Email</mat-label>
+                    <input formControlName="email" matInput/>
+                    <mat-error *ngIf="formControl.get('email')?.hasError('required')"> <!-- protège le fait que valeur soit potentiellement nulle --> 
+                      L'email est <strong>obligatoire</strong>
+                    </mat-error>
+                    <mat-error *ngIf="formControl.get('email')?.hasError('email')"> <!-- protège le fait que valeur soit potentiellement nulle --> 
+                      L'email est <strong>mal formé</strong>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Mot de passe</mat-label>
+                    <input type="password" formControlName="motDePasse"  matInput/>
+                    <mat-error *ngIf="formControl.get('motDePasse')?.hasError('required')"> <!-- protège le fait que valeur soit potentiellement nulle --> 
+                      Le mot de passe est <strong>obligatoire</strong>
+                    </mat-error>
+                </mat-form-field>
+
                 <p class="small"><a class="text-white-50" href="#!">Créer votre compte</a></p>
   
-                <button class="btn1 btn-outline-dark btn-lg px-5 "  type="submit">Se connecter</button>
+                <button class="btn1 btn-outline-dark btn-lg px-5"  type="submit">Se connecter</button>
                           
-              </div>
+              </form>
   
             </div>
           </div>
         </div>
       </div>
     </div>
+
   </section>

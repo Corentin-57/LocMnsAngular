@@ -10,6 +10,15 @@ import { FooterComponent } from './footer/footer.component';
 import { ConnexionComponent } from './connexion/connexion.component';
 import { ContactComponent } from './contact/contact.component';
 import { PageGestionnaireComponent } from './page-gestionnaire/page-gestionnaire.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -24,7 +33,17 @@ import { PageGestionnaireComponent } from './page-gestionnaire/page-gestionnaire
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

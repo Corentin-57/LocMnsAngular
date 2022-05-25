@@ -16,7 +16,7 @@ export class ConnexionComponent implements OnInit {
 
   public formControl: FormGroup = this.formBuilder.group(
     {
-      "email": ["", [Validators.required, Validators.email]],
+      "mail": ["", [Validators.required, Validators.email]],
       "motDePasse": ["", [Validators.required]]
     }
   )
@@ -41,19 +41,14 @@ export class ConnexionComponent implements OnInit {
           alert(resultat.erreur) //Affiche le message mauvais login/ mot de passe dans Spring
         }else{
           localStorage.setItem('token', resultat.token) //Permet de stocker des infos
+
           this.tokenIdentification.raffraichirUtilisateur();
 
-          // this.tokenIdentification.utilisateur.subscribe(
-          //   utilisateur => {
-          //     this.admin = utilisateur.droits.incudes("ROLE_ADMIN");
-          //   }
-          // )
-
-          // if(this.admin)
-          //   this.router.navigateByUrl("page-gestionnaire");
-          // else{
-          //   this.router.navigateByUrl("page-etudiant");
-          // }
+          if(this.tokenIdentification.utilisateur.value.droits.includes("ROLE_GESTIONNAIRE")){
+            this.router.navigateByUrl("page-gestionnaire");
+          }else{
+            this.router.navigateByUrl("page-etudiant");
+          }
         }
       })
     }

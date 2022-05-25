@@ -15,11 +15,11 @@
                 
                 <mat-form-field appearance="fill">
                     <mat-label>Email</mat-label>
-                    <input formControlName="email" matInput/>
-                    <mat-error *ngIf="formControl.get('email')?.hasError('required')"> <!-- protège le fait que valeur soit potentiellement nulle --> 
+                    <input formControlName="mail" matInput/>
+                    <mat-error *ngIf="formControl.get('mail')?.hasError('required')"> <!-- protège le fait que valeur soit potentiellement nulle --> 
                       L'email est <strong>obligatoire</strong>
                     </mat-error>
-                    <mat-error *ngIf="formControl.get('email')?.hasError('email')"> <!-- protège le fait que valeur soit potentiellement nulle --> 
+                    <mat-error *ngIf="formControl.get('mail')?.hasError('mail')"> <!-- protège le fait que valeur soit potentiellement nulle --> 
                       L'email est <strong>mal formé</strong>
                     </mat-error>
                 </mat-form-field>

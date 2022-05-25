@@ -14,10 +14,9 @@ export class TokenIdentificationService {
 
     if(localStorage.getItem("token") != null){
       const token: any = localStorage.getItem("token") //Récupère le token
-    
-
+  
       try{
-        this.utilisateur.next(JSON.parse(atob(token.split("."[1])))) //Récupére la partie du milieu du token et transforme les informations en objet
+        this.utilisateur.next(JSON.parse(atob(token.split(".")[1]))); //Récupére la partie du milieu du token et transforme les informations en objet
       //Tous les composants qui ont souscrits à l'observable vont récupérer le corps du token
       }catch{
         this.utilisateur.next(null);

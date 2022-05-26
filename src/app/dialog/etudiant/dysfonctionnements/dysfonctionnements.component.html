@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>Déclarer un dysfonctionnement</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formControl">
+    <p>Quelle est la date d'apparition du dysfonctionnement ?*</p>
+    <mat-form-field appearance="fill">
+      <input  formControlName="dateDysfonctionnement" type="date" matInput [(ngModel)]="data.dateDysfonctionnement"/>
+      <mat-error *ngIf="formControl.get('dateDysfonctionnement')?.hasError('required')"> 
+        La date d'apparition du dysfonctionnement est <strong>obligatoire</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <p>Quel est le dysfonctionnement ?*</p>
+    <mat-form-field appearance="fill">
+      <textarea formControlName="descriptif" matInput [(ngModel)]="data.descriptif"></textarea>
+      <mat-error *ngIf="formControl.get('descriptif')?.hasError('required')"> 
+        Le descriptif est <strong>obligatoire</strong>
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Annuler</button>
+  <button mat-button [disabled]="!this.formControl.valid" [mat-dialog-close]="data">Valider</button>
+</div>

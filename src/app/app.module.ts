@@ -20,6 +20,9 @@ import {MatIconModule} from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TokenInterceptor } from './token.interceptor';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DysfonctionnementsComponent } from './dialog/etudiant/dysfonctionnements/dysfonctionnements.component';
+
 
 @NgModule({
   declarations: [
@@ -31,6 +34,7 @@ import { TokenInterceptor } from './token.interceptor';
     ConnexionComponent,
     ContactComponent,
     PageGestionnaireComponent,
+    DysfonctionnementsComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +48,7 @@ import { TokenInterceptor } from './token.interceptor';
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    
+    MatDialogModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}],
   bootstrap: [AppComponent]

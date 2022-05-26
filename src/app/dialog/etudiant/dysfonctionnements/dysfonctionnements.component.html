@@ -1,24 +1,43 @@
-<h1 mat-dialog-title>Déclarer un dysfonctionnement</h1>
-<div mat-dialog-content>
-  <form [formGroup]="formControl">
-    <p>Quelle est la date d'apparition du dysfonctionnement ?*</p>
-    <mat-form-field appearance="fill">
-      <input  formControlName="dateDysfonctionnement" type="date" matInput [(ngModel)]="data.dateDysfonctionnement"/>
-      <mat-error *ngIf="formControl.get('dateDysfonctionnement')?.hasError('required')"> 
-        La date d'apparition du dysfonctionnement est <strong>obligatoire</strong>
-      </mat-error>
-    </mat-form-field>
+<div class="container">
+  <h1 mat-dialog-title>Déclarer un dysfonctionnement</h1>
+  <div mat-dialog-content>
+    <form [formGroup]="formControl">
+      <p>Quel est le matériel concerné ?*</p>
+      <mat-form-field appearance="fill">
+        <mat-label>Select</mat-label>
+        <mat-select>
+          <mat-option value="one">First option</mat-option>
+          <mat-option value="two">Second option</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <p>Quel est le dysfonctionnement ?*</p>
-    <mat-form-field appearance="fill">
-      <textarea formControlName="descriptif" matInput [(ngModel)]="data.descriptif"></textarea>
-      <mat-error *ngIf="formControl.get('descriptif')?.hasError('required')"> 
-        Le descriptif est <strong>obligatoire</strong>
-      </mat-error>
-    </mat-form-field>
-  </form>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Annuler</button>
-  <button mat-button [disabled]="!this.formControl.valid" [mat-dialog-close]="data">Valider</button>
+      <!-- <mat-form-field appearance="fill">
+        <input  formControlName="materiel" matInput [(ngModel)]="data.dateDysfonctionnement"/>
+        <mat-error *ngIf="formControl.get('materiel')?.hasError('required')"> 
+          La matériel <strong>obligatoire</strong>
+        </mat-error>
+      </mat-form-field> -->
+
+
+      <p>Quelle est la date d'apparition du dysfonctionnement ?*</p>
+      <mat-form-field appearance="fill">
+        <input  formControlName="dateDysfonctionnement" type="date" matInput [(ngModel)]="data.dateDysfonctionnement"/>
+        <mat-error *ngIf="formControl.get('dateDysfonctionnement')?.hasError('required')"> 
+          La date d'apparition du dysfonctionnement est <strong>obligatoire</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <p>Quel est le dysfonctionnement ?*</p>
+      <mat-form-field appearance="fill">
+        <textarea formControlName="descriptif" matInput [(ngModel)]="data.descriptif"></textarea>
+        <mat-error *ngIf="formControl.get('descriptif')?.hasError('required')"> 
+          Le descriptif est <strong>obligatoire</strong>
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Annuler</button>
+    <button mat-button [disabled]="!this.formControl.valid" [mat-dialog-close]="data">Valider</button>
+  </div>
 </div>

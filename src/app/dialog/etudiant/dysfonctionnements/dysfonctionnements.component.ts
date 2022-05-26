@@ -11,6 +11,7 @@ export class DysfonctionnementsComponent implements OnInit {
 
   public formControl:FormGroup = this.formBuilder.group(
     {
+      "materiel": ["", [Validators.required]],
       "dateDysfonctionnement": ["", [Validators.required]], //Lien des éléments avec le HTML
       "descriptif": ["", [Validators.required]] //Mettre le même nom que le champ sous Spring
     }

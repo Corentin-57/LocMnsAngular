@@ -22,6 +22,7 @@ export class PageEtudiantComponent implements OnInit {
   private donneesSaisies!: {};
   //private messageValidation!: string;
   private idUtilisateur!: number;
+  private utilisateur!: {};
  
   ngOnInit(): void {
             this.tokenIdentification.raffraichirUtilisateur();
@@ -29,14 +30,15 @@ export class PageEtudiantComponent implements OnInit {
               utilisateur =>{
                 this.idUtilisateur = utilisateur.id
               }
-          )
+          );
+          this.http.get('http://localhost:8080/saisir-dysfonctionnement');
   }
 
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DysfonctionnementsComponent, {
       width: '500px',
-      data: {descriptif: this.descriptif, dateDysfonctionnement: this.dateDysfonctionnement, idUtilisateur : this.idUtilisateur},
+      data: {descriptif: this.descriptif, dateDysfonctionnement: this.dateDysfonctionnement, utilisateur : {id : this.idUtilisateur} },
     });
 
     // dialogRef.afterClosed().subscribe(result => {
@@ -72,12 +74,14 @@ export class PageEtudiantComponent implements OnInit {
           // .pipe(
           //   catchError(this.handleError('saisirDysfonctionnement', this.donneesSaisies))
           //);
+
         })
 
-      
-
-
   }
+
+
+
+          
 
 
 

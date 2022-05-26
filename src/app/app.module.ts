@@ -21,6 +21,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TokenInterceptor } from './token.interceptor';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatSelectModule} from '@angular/material/select';
+
+
 import { DysfonctionnementsComponent } from './dialog/etudiant/dysfonctionnements/dysfonctionnements.component';
 
 
@@ -48,7 +51,8 @@ import { DysfonctionnementsComponent } from './dialog/etudiant/dysfonctionnement
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSelectModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}],
   bootstrap: [AppComponent]

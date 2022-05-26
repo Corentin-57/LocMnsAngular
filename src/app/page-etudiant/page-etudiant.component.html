@@ -29,36 +29,36 @@
         </div>
       </div>
   
-    <form>
+    <form (ngSubmit)="donneesEtudiant(registerFrom)" #registerFrom="ngForm">
       <h2 class="text-center mb-5">Demande de location matériel</h2>
       <h3 class="mb-3">Informations personnelles</h3>
         <div class="form-row">
           <div class="row">
             <div class="col-lg-4 mb-3">
               <label for="validationDefault01">Nom*</label>
-              <input type="text" class="form-control" id="validationDefault01" required>
+              <input type="text" class="form-control" id="validationDefault01" required  [(ngModel)]="etudiant.nom" name="nom">
             </div>
             <div class="col-lg-4 mb-3">
               <label for="validationDefault02">Prenom*</label>
-              <input type="text" class="form-control" id="validationDefault02" required>
+              <input type="text" class="form-control" id="validationDefault02" required  [(ngModel)]="etudiant.prenom" name="prenom">
             </div>
             <div class="col-lg-3 mb-3">
               <label for="validationDefault01">Date de naissance*</label>
-              <input type="date" class="form-control" id="validationDefault01" required>
+              <input type="date" class="form-control" id="validationDefault01" required  [(ngModel)]="etudiant.dateNaissance" name="dateNaissance">
             </div>
           </div>
           <div class="row">
             <div class="col-lg-4 mb-3">
               <label for="validationDefault02">Adresse*</label>
-              <input type="text" class="form-control" id="validationDefault02" placeholder="Numéro et nom de rue" required>
+              <input type="text" class="form-control" id="validationDefault02" placeholder="Numéro et nom de rue" required [(ngModel)]="etudiant.adresse" name="adresse">
             </div>
             <div class="col-lg-3 mb-3">
               <label for="validationDefault03">Ville*</label>
-              <input type="text" class="form-control" id="validationDefault03" required>
+              <input type="text" class="form-control" id="validationDefault03" required [(ngModel)]="etudiant.ville" name="ville">
             </div>
             <div class="col-lg-3 mb-3">
               <label for="validationDefault05">Code postal*</label>
-              <input type="text" class="form-control" id="validationDefault05" required>
+              <input type="text" class="form-control" id="validationDefault05" required  [(ngModel)]="etudiant.codePostale" name="codePostale">
             </div>
           </div>
           <div class="row">
@@ -68,16 +68,18 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroupPrepend2">@</span>
                 </div>
-                <input type="text" class="form-control" id="validationDefaultUsername" placeholder="exemple@gmail.com" aria-describedby="inputGroupPrepend2" required>
+                <input type="text" class="form-control" id="validationDefaultUsername" placeholder="exemple@gmail.com" aria-describedby="inputGroupPrepend2" required [(ngModel)]="etudiant.mail" name="mail">
               </div>
             </div>
             <div class="col-lg-3 mb-3">
+            <form [formGroup]="contactForm" (ngSubmit)="subbmitListe()">
               <label>Veuillez choisir votre statut...</label>
-              <select class="form-select" aria-label="Default select example">
-                <option selected></option>
-                <option value="1">Etudiant</option>
-                <option value="2">Intervenant</option>
+              <select formControlName="statutUtilisateur" class="form-select" aria-label="Default select example">
+                <option [ngValue]="null" selected></option>
+                <option *ngFor="let statut of statutUtilisateur" [ngValue]="statut.name">{{statut.name}}</option>
+                
               </select>
+            </form>
             </div>
           </div>
         </div>

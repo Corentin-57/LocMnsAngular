@@ -43,11 +43,18 @@ export class ConnexionComponent implements OnInit {
             alert(resultat.erreur);
           } else {
             localStorage.setItem('token', resultat.token)
-            this.tokenIdentification.raffraichir(); // permet d'afficher le message de bienvenue pour n'importe quel utilisateur
-            this.router.navigateByUrl("");   // router en rapport avec la dépendance injecter 
+            this.tokenIdentification.raffraichir();
+
+            if (this.tokenIdentification.utilisateur.value.droits.includes("ROLE_GESTIONNAIRE")) {
+              this.router.navigateByUrl("page-gestionnaire");
+            } else {
+              this.router.navigateByUrl("page-etudiant");
+            }
           }
         })
+
     }
+
 
   }
 

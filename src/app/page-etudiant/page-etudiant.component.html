@@ -1,8 +1,9 @@
 <div class="pageEtudiant">
   <div class="container">
     <h2 class="text-center mb-5">Matériel en location</h2>
+
     <div class="row text-center">
-      <div class="col-6">
+      <div class="col-6 pt-1">
         <div class="card text-start">
           <div class="card-body">
             <h3 class="card-title text-center">Informations</h3>
@@ -11,9 +12,24 @@
           </div>
         </div>
       </div>
-      <div class="col-6">
+
+      <div class="col-6 pt-1">
         <div class="card text-center">
           <div class="card-body">
+            <ng-container *ngIf="successMessage">
+              <div class="alert alert-success messageValidation">
+                <mat-icon class="iconInfo">check_circle</mat-icon>
+                <span>{{ successMessage }}</span>
+                <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="errorMessage">
+              <div class="alert alert-danger messageValidation">
+                <mat-icon class="iconInfo">error</mat-icon>
+                {{ errorMessage }}
+                <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
+              </div>
+            </ng-container>
             <h3 class="card-title">Gestion</h3>
 
             <p class="card-text">Signaler un dysfonctionnement ou une panne</p>

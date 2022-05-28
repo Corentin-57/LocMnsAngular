@@ -17,6 +17,9 @@ export class PageEtudiantComponent implements OnInit {
   private idUtilisateur!: number;
   private donneesSaisies!: {};
 
+  public errorMessage!: string;
+  public successMessage!: string;
+
   constructor(
     public dialog: MatDialog,
     private http: HttpClient,
@@ -41,27 +44,26 @@ export class PageEtudiantComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         this.donneesSaisies = result;
 
-         if(this.donneesSaisies != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
-          this.http.post('http://localhost:8080/saisir-dysfonctionnement', this.donneesSaisies,{responseType: 'text'} )
-            .subscribe((res) =>{
-              //this.messageValidation = res;
-            });
-        }
-
-          // .pipe(
-          //   catchError(this.handleError('saisirDysfonctionnement', this.donneesSaisies))
-          //);
-
-        })
-
+          if(this.donneesSaisies != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
+            this.http.post('http://localhost:8080/saisir-dysfonctionnement', this.donneesSaisies,{responseType: 'text'} )
+              .subscribe(
+                (reponse) => {
+                  console.log(reponse);
+                  this.successMessage = reponse;
+                },
+                (error) => {
+                  this.errorMessage = "Une erreur est survenue, veuillez réessayer plus tard";
+                }
+              )
+          }
+        })  
   }
 
-
-
+  public cacherMessage(): void{
+    this.errorMessage = "";
+    this.successMessage = "";
+  }
           
-
-
-
 
 }
 

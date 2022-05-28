@@ -17,6 +17,8 @@
 
 h2{
     font-size: 35px;
+    padding-top: 200px;
+    color: white;
 }
 
 h3{
@@ -39,6 +41,21 @@ form{
 .card{
     margin-top: 100px;
 }
+
+.iconInfo{
+    margin-right: 20px;
+}
+
+.messageValidation{
+    display: flex;
+    justify-content: start;
+    align-items: flex-end;
+}
+
+.iconClose{
+    margin-left: auto;
+}
+
 
 
 

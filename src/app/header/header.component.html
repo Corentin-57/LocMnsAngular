@@ -17,7 +17,10 @@
           </div>
         </div>
         <div class="d-flex justify-content-end">
-          <button type="button" class="btn seConnecter btn-warning" [routerLink]="['connexion']">Se connecter</button>
+          <button *ngIf="!utilisateurConnecte" type="button" class="btn seConnecter btn-warning" [routerLink]="['connexion']">Se connecter</button>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button *ngIf="utilisateurConnecte" type="button" class="btn seDeconnecter btn-warning" (click)="Deconnexion()" [routerLink]="['connexion']">Deconnexion</button>
         </div>
       </div>
     </nav> 

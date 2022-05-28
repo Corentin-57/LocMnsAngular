@@ -2,22 +2,17 @@
   <h1 mat-dialog-title>Déclarer un dysfonctionnement</h1>
   <div mat-dialog-content>
     <form [formGroup]="formControl">
-      <p>Quel est le matériel concerné ?*</p>
+
+      <p>Quel est le numéro de série du matériel concerné ?*</p>
       <mat-form-field appearance="fill">
-        <mat-label>Select</mat-label>
-        <mat-select>
-          <mat-option value="one">First option</mat-option>
-          <mat-option value="two">Second option</mat-option>
+        <mat-label>Identifiant</mat-label>
+        <mat-select formControlName="numeroSerie" [(ngModel)]="data.materiel.idMateriel"> <!-- Permet d'ajouter id présent dans value à data pour l'envoyer en post-->
+          <mat-option *ngFor="let numSerie of listeNumSerieMateriels" [value]=numSerie.idMateriel>{{ numSerie.numeroSerie}}</mat-option> <!-- [value] permet de récupérer directement la valeur de l'objet -->
         </mat-select>
-      </mat-form-field>
-
-      <!-- <mat-form-field appearance="fill">
-        <input  formControlName="materiel" matInput [(ngModel)]="data.dateDysfonctionnement"/>
-        <mat-error *ngIf="formControl.get('materiel')?.hasError('required')"> 
-          La matériel <strong>obligatoire</strong>
+        <mat-error *ngIf="formControl.get('numeroSerie')?.hasError('required')"> 
+          Le numéro de série est <strong>obligatoire</strong>
         </mat-error>
-      </mat-form-field> -->
-
+      </mat-form-field>
 
       <p>Quelle est la date d'apparition du dysfonctionnement ?*</p>
       <mat-form-field appearance="fill">

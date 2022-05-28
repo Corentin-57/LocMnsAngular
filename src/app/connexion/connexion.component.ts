@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { TokenIdentificationService } from '../token-identification.service';
+import { ConnexionDeconnexionService } from '../connexion-deconnexion.service';
+import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 
 
 @Component({
@@ -13,6 +15,7 @@ import { TokenIdentificationService } from '../token-identification.service';
 export class ConnexionComponent implements OnInit {
 
   public admin: boolean = false;
+  private utilisateurConnecte!: boolean;
 
   public formControl: FormGroup = this.formBuilder.group(
     {
@@ -21,12 +24,17 @@ export class ConnexionComponent implements OnInit {
     }
   )
 
-  constructor(
+constructor(
     private client: HttpClient,
     private router: Router,
     private formBuilder: FormBuilder,
-    private tokenIdentification: TokenIdentificationService
-  ) { }
+    private tokenIdentification: TokenIdentificationService,
+    private connexionDeconnexionService: ConnexionDeconnexionService
+  ) {       
+    this.connexionDeconnexionService.utilisateurConnecte.subscribe( value => { //Permet la maj des boutons quand un changement est effectué sur le service 
+    this.utilisateurConnecte = value;
+    });
+}
 
   ngOnInit(): void {
   }
@@ -44,10 +52,13 @@ export class ConnexionComponent implements OnInit {
 
           this.tokenIdentification.raffraichirUtilisateur();
 
+
           if(this.tokenIdentification.utilisateur.value.droits.includes("ROLE_GESTIONNAIRE")){
             this.router.navigateByUrl("page-gestionnaire");
+            this.connexionDeconnexionService.utilisateurConnecte.next(true);
           }else{
             this.router.navigateByUrl("page-etudiant");
+            this.connexionDeconnexionService.utilisateurConnecte.next(true);
           }
         }
       })

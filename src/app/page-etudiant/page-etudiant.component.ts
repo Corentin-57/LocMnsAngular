@@ -11,65 +11,42 @@ import { TokenIdentificationService } from '../token-identification.service';
 })
 export class PageEtudiantComponent implements OnInit {
 
+  private descriptif: string = "";
+  private dateDysfonctionnement!: Date;  
+  private idMateriel!: number;  
+  private idUtilisateur!: number;
+  private donneesSaisies!: {};
+
   constructor(
     public dialog: MatDialog,
     private http: HttpClient,
     private tokenIdentification: TokenIdentificationService
   ) { }
 
-  private descriptif: string = "";
-  private dateDysfonctionnement!: Date;
-  private donneesSaisies!: {};
-  //private messageValidation!: string;
-  private idUtilisateur!: number;
-  private utilisateur!: {};
- 
   ngOnInit(): void {
             this.tokenIdentification.raffraichirUtilisateur();
             this.tokenIdentification.utilisateur.subscribe(
               utilisateur =>{
                 this.idUtilisateur = utilisateur.id
               }
-          );
-          this.http.get('http://localhost:8080/saisir-dysfonctionnement');
+          ); 
   }
-
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DysfonctionnementsComponent, {
       width: '500px',
-      data: {descriptif: this.descriptif, dateDysfonctionnement: this.dateDysfonctionnement, utilisateur : {id : this.idUtilisateur} },
+      data: {descriptif: this.descriptif, dateDysfonctionnement: this.dateDysfonctionnement, utilisateur : {id : this.idUtilisateur}, materiel: {idMateriel: this.idMateriel}},
     });
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   this.donneesSaisies = result;
-    //   console.log(this.donneesSaisies);
-
-    //   this.http.post('http://localhost:8080/saisir-dysfonctionnement', this.donneesSaisies)
-    //   .subscribe((res) =>{
-    //     console.log(res);
-    //   });
-    //     // .pipe(
-    //     //   catchError(this.handleError('saisirDysfonctionnement', this.donneesSaisies))
-    //     // );
-    //   })
 
       dialogRef.afterClosed().subscribe(result => {
         this.donneesSaisies = result;
-        console.log(this.donneesSaisies);
 
-        // this.tokenIdentification.utilisateur.subscribe(
-        //   utilisateur =>{
-        //     this.idUtilisateur = utilisateur.id
-        //   }
-
-          //this.donneesSaisies = this.donneesSaisies.push({idUtilisateur: this.idUtilisateur })
-        //)
-  
+         if(this.donneesSaisies != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
           this.http.post('http://localhost:8080/saisir-dysfonctionnement', this.donneesSaisies,{responseType: 'text'} )
-          .subscribe((res) =>{
-            //this.messageValidation = res;
-          });
+            .subscribe((res) =>{
+              //this.messageValidation = res;
+            });
+        }
 
           // .pipe(
           //   catchError(this.handleError('saisirDysfonctionnement', this.donneesSaisies))

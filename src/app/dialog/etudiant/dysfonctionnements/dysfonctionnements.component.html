@@ -6,7 +6,7 @@
       <p>Quel est le numéro de série du matériel concerné ?*</p>
       <mat-form-field appearance="fill">
         <mat-label>Identifiant</mat-label>
-        <mat-select formControlName="numeroSerie" [(ngModel)]="data.materiel.idMateriel"> <!-- Permet d'ajouter id présent dans value à data pour l'envoyer en post-->
+        <mat-select formControlName="numeroSerie" [(ngModel)]="dataDysfonctionnement.materiel.idMateriel"> <!-- Permet d'ajouter id présent dans value à data pour l'envoyer en post-->
           <mat-option *ngFor="let numSerie of listeNumSerieMateriels" [value]=numSerie.idMateriel>{{ numSerie.numeroSerie}}</mat-option> <!-- [value] permet de récupérer directement la valeur de l'objet -->
         </mat-select>
         <mat-error *ngIf="formControl.get('numeroSerie')?.hasError('required')"> 
@@ -16,7 +16,7 @@
 
       <p>Quelle est la date d'apparition du dysfonctionnement ?*</p>
       <mat-form-field appearance="fill">
-        <input  formControlName="dateDysfonctionnement" type="date" matInput [(ngModel)]="data.dateDysfonctionnement"/>
+        <input  formControlName="dateDysfonctionnement" type="date" matInput [(ngModel)]="dataDysfonctionnement.dateDysfonctionnement"/>
         <mat-error *ngIf="formControl.get('dateDysfonctionnement')?.hasError('required')"> 
           La date d'apparition du dysfonctionnement est <strong>obligatoire</strong>
         </mat-error>
@@ -24,7 +24,7 @@
 
       <p>Quel est le dysfonctionnement ?*</p>
       <mat-form-field appearance="fill">
-        <textarea formControlName="descriptif" matInput [(ngModel)]="data.descriptif"></textarea>
+        <textarea formControlName="descriptif" matInput [(ngModel)]="dataDysfonctionnement.descriptif"></textarea>
         <mat-error *ngIf="formControl.get('descriptif')?.hasError('required')"> 
           Le descriptif est <strong>obligatoire</strong>
         </mat-error>
@@ -33,6 +33,6 @@
   </div>
   <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">Annuler</button>
-    <button mat-button [disabled]="!this.formControl.valid" [mat-dialog-close]="data">Valider</button>
+    <button mat-button [disabled]="!this.formControl.valid" [mat-dialog-close]="dataDysfonctionnement">Valider</button>
   </div>
 </div>

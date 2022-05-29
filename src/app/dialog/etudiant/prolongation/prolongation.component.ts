@@ -3,24 +3,25 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TokenIdentificationService } from 'src/app/token-identification.service';
+import { DysfonctionnementsComponent } from '../dysfonctionnements/dysfonctionnements.component';
 
 @Component({
-  selector: 'app-dysfonctionnements',
-  templateUrl: './dysfonctionnements.component.html',
-  styleUrls: ['./dysfonctionnements.component.scss']
+  selector: 'app-prolongation',
+  templateUrl: './prolongation.component.html',
+  styleUrls: ['./prolongation.component.scss']
 })
-export class DysfonctionnementsComponent implements OnInit {
+export class ProlongationComponent implements OnInit {
 
   public listeNumSerieMateriels: any;
   private idUtilisateur!: number;
 
-  constructor( 
+  constructor(
     public dialogRef: MatDialogRef<DysfonctionnementsComponent>,
-    @Inject(MAT_DIALOG_DATA) public dataDysfonctionnement: any,
+    @Inject(MAT_DIALOG_DATA) public dataProlongation: any,
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private tokenIdentification: TokenIdentificationService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.tokenIdentification.raffraichirUtilisateur();
@@ -36,17 +37,13 @@ export class DysfonctionnementsComponent implements OnInit {
   public formControl:FormGroup = this.formBuilder.group(
     {
       "numeroSerie": ["", [Validators.required]],
-      "dateDysfonctionnement": ["", [Validators.required]], //Lien des éléments avec le HTML
-      "descriptif": ["", [Validators.required]] //Mettre le même nom que le champ sous Spring
+      "dateProlongation": ["", [Validators.required]], //Lien des éléments avec le HTML
     }
   )
-  
-onNoClick(): void {
+
+  onNoClick(): void {
     this.dialogRef.close();
+  }
+
+
 }
-
-
-
-}
-
-

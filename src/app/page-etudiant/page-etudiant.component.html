@@ -3,7 +3,7 @@
     <h2 class="text-center mb-5">Matériel en location</h2>
 
     <div class="row text-center">
-      <div class="col-6 pt-1">
+      <!-- <div class="col-6 pt-1">
         <div class="card text-start">
           <div class="card-body">
             <h3 class="card-title text-center">Informations</h3>
@@ -11,10 +11,10 @@
             <p class="card-text">Matériel(s) en retard:</p>
           </div>
         </div>
-      </div>
+      </div> -->
 
-      <div class="col-6 pt-1">
-        <div class="card text-center">
+      <div class="col-12 pt-1 d-flex justify-content-center">
+        <div class="card text-center p-5">
           <div class="card-body">
             <ng-container *ngIf="successMessage">
               <div class="alert alert-success messageValidation">
@@ -33,15 +33,11 @@
             <h3 class="card-title">Gestion</h3>
 
             <p class="card-text">Signaler un dysfonctionnement ou une panne</p>
-            <a class="btn btn-primary boutonsGestion" (click) ="openDialog()">Signaler</a>
+            <a class="btn btn-primary boutonsGestion" (click) ="openDialogDysfonctionnement()">Signaler</a>
             <p class="card-text">Demander une prolongation d'emprunt</p>
-            <a href="#" class="btn btn-primary boutonsGestion">Prolonger</a>
-            <p class="card-text">Faire une nouvelle demande d'emprunt</p>
-            <a href="#" class="btn btn-primary boutonsGestion">Nouveau emprunt</a>
+            <a class="btn btn-primary boutonsGestion" (click) = "openDialogProlongation()">Prolonger</a>
             <p class="card-text">Faire une demande de retour</p>
             <a href="#" class="btn btn-primary boutonsGestion">Retourner</a>
-            <p class="card-text">Faire une demande de prolongation de prêt</p>
-            <a href="#" class="btn btn-primary boutonsGestion">Prolonger</a>
           </div>
         </div>
       </div>

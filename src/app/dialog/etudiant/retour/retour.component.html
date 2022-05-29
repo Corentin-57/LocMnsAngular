@@ -1,0 +1,31 @@
+<div class="container">
+    <h1 mat-dialog-title>Demander un retour de matériel</h1>
+    <div mat-dialog-content>
+      <form [formGroup]="formControl">
+  
+        <p>Quel est le numéro de série du matériel concerné ?*</p>
+        <mat-form-field appearance="fill">
+          <mat-label>Identifiant</mat-label>
+          <mat-select formControlName="numeroSerie" [(ngModel)]="dataRetour.materiel.idMateriel"> <!-- Permet d'ajouter id présent dans value à data pour l'envoyer en post-->
+            <mat-option *ngFor="let numSerie of listeNumSerieMateriels" [value]=numSerie.idMateriel>{{ numSerie.numeroSerie}}</mat-option> <!-- [value] permet de récupérer directement la valeur de l'objet -->
+          </mat-select>
+          <mat-error *ngIf="formControl.get('numeroSerie')?.hasError('required')"> 
+            Le numéro de série est <strong>obligatoire</strong>
+          </mat-error>
+        </mat-form-field>
+  
+        <p>A quelle date souhaitez vous ramener le matériel ?*</p>
+        <mat-form-field appearance="fill">
+          <input  formControlName="dateDemandeRetour" type="date" matInput [(ngModel)]="dataRetour.dateDemandeRetour"/>
+          <mat-error *ngIf="formControl.get('dateDemandeRetour')?.hasError('required')"> 
+            La date est <strong>obligatoire</strong>
+          </mat-error>
+        </mat-form-field>
+
+      </form>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button (click)="onNoClick()">Annuler</button>
+      <button mat-button [disabled]="!this.formControl.valid" [mat-dialog-close]="dataRetour">Valider</button>
+    </div>
+  </div>

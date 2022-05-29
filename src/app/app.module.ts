@@ -26,6 +26,7 @@ import {MatSelectModule} from '@angular/material/select';
 
 import { DysfonctionnementsComponent } from './dialog/etudiant/dysfonctionnements/dysfonctionnements.component';
 import { ProlongationComponent } from './dialog/etudiant/prolongation/prolongation.component';
+import { RetourComponent } from './dialog/etudiant/retour/retour.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { ProlongationComponent } from './dialog/etudiant/prolongation/prolongati
     PageGestionnaireComponent,
     DysfonctionnementsComponent,
     ProlongationComponent,
+    RetourComponent,
   ],
   imports: [
     BrowserModule,

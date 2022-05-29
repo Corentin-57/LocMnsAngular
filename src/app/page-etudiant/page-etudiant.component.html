@@ -16,7 +16,7 @@
       <div class="col-12 pt-1 d-flex justify-content-center">
         <div class="card text-center p-5">
           <div class="card-body">
-            <ng-container *ngIf="successMessage">
+            <ng-container *ngIf="successMessage" >
               <div class="alert alert-success messageValidation">
                 <mat-icon class="iconInfo">check_circle</mat-icon>
                 <span>{{ successMessage }}</span>
@@ -37,7 +37,7 @@
             <p class="card-text">Demander une prolongation d'emprunt</p>
             <a class="btn btn-primary boutonsGestion" (click) = "openDialogProlongation()">Prolonger</a>
             <p class="card-text">Faire une demande de retour</p>
-            <a href="#" class="btn btn-primary boutonsGestion">Retourner</a>
+            <a class="btn btn-primary boutonsGestion" (click) = "openDialogRetour()">Retourner</a>
           </div>
         </div>
       </div>

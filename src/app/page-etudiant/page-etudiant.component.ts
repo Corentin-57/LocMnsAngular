@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DysfonctionnementsComponent } from '../dialog/etudiant/dysfonctionnements/dysfonctionnements.component';
 import { ProlongationComponent } from '../dialog/etudiant/prolongation/prolongation.component';
+import { RetourComponent } from '../dialog/etudiant/retour/retour.component';
 import { TokenIdentificationService } from '../token-identification.service';
 
 @Component({
@@ -16,6 +17,8 @@ export class PageEtudiantComponent implements OnInit {
   private dateDysfonctionnement!: Date;  
 
   private dateProlongation!: Date;
+
+  private dateDemandeRetour!: Date;
 
   private idMateriel!: number;  
   private idUtilisateur!: number;
@@ -71,9 +74,31 @@ export class PageEtudiantComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         this.donneesSaisies = result;
-        console.log(result);
+
           if(this.donneesSaisies != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
             this.http.post('http://localhost:8080/demande-prolongation', this.donneesSaisies,{responseType: 'text'} )
+              .subscribe(
+                (reponse) => {
+                  this.successMessage = reponse;
+                },
+                (error) => {
+                  this.errorMessage = "Une erreur est survenue, veuillez réessayer plus tard";
+                }
+              )
+          }
+        })  
+  }
+
+  openDialogRetour(): void {
+    const dialogRef = this.dialog.open(RetourComponent, {
+      width: '500px',
+      data: {dateDemandeRetour: this.dateDemandeRetour, utilisateur : {id : this.idUtilisateur}, materiel: {idMateriel: this.idMateriel}},
+    });
+
+      dialogRef.afterClosed().subscribe(result => {
+        this.donneesSaisies = result;
+          if(this.donneesSaisies != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
+            this.http.post('http://localhost:8080/demande-retour', this.donneesSaisies,{responseType: 'text'} )
               .subscribe(
                 (reponse) => {
                   this.successMessage = reponse;

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DysfonctionnementsComponent } from '../dialog/etudiant/dysfonctionnements/dysfonctionnements.component';
 import { ProlongationComponent } from '../dialog/etudiant/prolongation/prolongation.component';
@@ -27,10 +28,30 @@ export class PageEtudiantComponent implements OnInit {
   public errorMessage!: string;
   public successMessage!: string;
 
+  public messageValidationRequete!: string;
+  public messageErreurRequete!: string;
+
+  public donneesDemandeMateriel!:any;
+  public listeTypesMateriel: any;
+  public idTypeMateriel!: number;
+
+  public listeModeles!: any;
+  public idModele!: number;
+
+  public listeLieuxUtilisation!: any;
+  public idLieuUtilisation!: number;
+
+  public listeCadresUtilisation!: any;
+  public idCadreUtilisation!: number;
+
+  public dateDebutEmprunt!: Date;
+  public dateFinEmprunt!: Date;
+
   constructor(
     public dialog: MatDialog,
     private http: HttpClient,
-    private tokenIdentification: TokenIdentificationService
+    private tokenIdentification: TokenIdentificationService,
+    private formBuilder: FormBuilder,
   ) { }
 
   ngOnInit(): void {
@@ -40,6 +61,14 @@ export class PageEtudiantComponent implements OnInit {
                 this.idUtilisateur = utilisateur.id
               }
           ); 
+          this.http.get("http://localhost:8080/liste-typeMateriels").subscribe(reponse => this.listeTypesMateriel = reponse); //Récupére la liste des types de matériel
+
+          this.http.get("http://localhost:8080/liste-modeles").subscribe(reponse => this.listeModeles = reponse); //Récupére la liste des modèles
+
+          this.http.get("http://localhost:8080/liste-lieux-utilisation").subscribe(reponse => this.listeLieuxUtilisation = reponse); //Récupére la liste des lieux d'utilisation
+          
+          this.http.get("http://localhost:8080/liste-cadres-utilisation").subscribe(reponse => this.listeCadresUtilisation = reponse); //Récupére la liste des cadres d'utilisation
+          
   }
 
   openDialogDysfonctionnement(): void {
@@ -114,6 +143,34 @@ export class PageEtudiantComponent implements OnInit {
   public cacherMessage(): void{
     this.errorMessage = "";
     this.successMessage = "";
+  }
+
+
+
+  public formControl:FormGroup = this.formBuilder.group(
+    {
+      "typeMateriel": ["", [Validators.required]],
+      "modele": ["", [Validators.required]],
+      "lieu": ["", [Validators.required]],
+      "cadreUtilisation": ["", [Validators.required]],
+      "datesEmprunt" : ["", [Validators.required]],
+    }
+  )
+
+  envoyerFormulaire(): void{
+    this.donneesDemandeMateriel = {typeMateriel: {idType: this.idTypeMateriel}, materiel: {modele: {idModele: this.idModele}}, lieuUtilisation: {idLieu: this.idLieuUtilisation}, cadreUtilisation: {idCadre: this.idCadreUtilisation}, dateEmprunt: this.dateDebutEmprunt, dateRetour: this.dateFinEmprunt, utilisateur : {id : this.idUtilisateur}, contient: {idCadre: this.idCadreUtilisation} };
+    console.log(this.donneesDemandeMateriel)
+
+    this.http.post('http://localhost:8080/demande-emprunt', this.donneesDemandeMateriel,{responseType: 'text'} )
+    .subscribe(
+      (reponse) => {
+        this.messageValidationRequete = reponse;
+      },
+      (error) => {
+        this.messageErreurRequete = "Une erreur est survenue, veuillez réessayer plus tard";
+      }
+    )
+
   }
           
 

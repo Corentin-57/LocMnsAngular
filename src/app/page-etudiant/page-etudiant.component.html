@@ -1,6 +1,6 @@
 <div class="pageEtudiant">
   <div class="container">
-    <h2 class="text-center mb-5">Matériel en location</h2>
+    <h2 class="text-center mb-5 titreMaterielLocation">Matériel en location</h2>
 
     <div class="row text-center">
       <!-- <div class="col-6 pt-1">
@@ -43,117 +43,118 @@
       </div>
     </div>
 
-  <form>
-    <h2 class="text-center mb-5">Demande de location matériel</h2>
-    <h3 class="mb-3">Informations personnelles</h3>
-      <div class="form-row">
-        <div class="row">
-          <div class="col-lg-4 mb-3">
-            <label for="validationDefault01">Nom*</label>
-            <input type="text" class="form-control" id="validationDefault01" required>
-          </div>
-          <div class="col-lg-4 mb-3">
-            <label for="validationDefault02">Prenom*</label>
-            <input type="text" class="form-control" id="validationDefault02" required>
-          </div>
-          <div class="col-lg-3 mb-3">
-            <label for="validationDefault01">Date de naissance*</label>
-            <input type="date" class="form-control" id="validationDefault01" required>
-          </div>
+  <form [formGroup]="formControl">
+    <h2 class="text-center mb-5 titreDemandeLocation">Demande de location matériel</h2>
+    <ng-container *ngIf="messageValidationRequete" >
+      <div class="alert alert-warning messageValidation d-flex justify-content-center">
+        <mat-icon class="iconInfo">check_circle</mat-icon>
+        <span>{{ messageValidationRequete }}</span>
+        <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="messageErreurRequete">
+      <div class="alert alert-danger messageValidation">
+        <mat-icon class="iconInfo">error</mat-icon>
+        {{ messageErreurRequete }}
+        <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
+      </div>
+    </ng-container>
+
+      <h3 class="mb-3 mt-4">Informations matériel</h3>
+      <div class="row d-flex justify-content-center">
+        <div class="col-lg-4 mb-4">
+          <p>Sélectionnez le type de matériel*</p>
+          <mat-form-field appearance="fill">
+            <mat-label>Type matériel</mat-label>
+            <mat-select formControlName="typeMateriel" [(ngModel)]="idTypeMateriel"> <!-- Permet d'ajouter id présent dans value à data pour l'envoyer en post -->
+              <mat-option *ngFor="let type of listeTypesMateriel" [value]=type.idType>{{ type.nomType}}</mat-option> <!-- [value] permet de récupérer directement la valeur de l'objet -->
+            </mat-select>
+            <mat-error *ngIf="formControl.get('typeMateriel')?.hasError('required')"> 
+              Le type de matériel est <strong>obligatoire</strong>
+            </mat-error>
+          </mat-form-field>
         </div>
-        <div class="row">
-          <div class="col-lg-4 mb-3">
-            <label for="validationDefault02">Adresse*</label>
-            <input type="text" class="form-control" id="validationDefault02" placeholder="Numéro et nom de rue" required>
-          </div>
-          <div class="col-lg-3 mb-3">
-            <label for="validationDefault03">Ville*</label>
-            <input type="text" class="form-control" id="validationDefault03" required>
-          </div>
-          <div class="col-lg-3 mb-3">
-            <label for="validationDefault05">Code postal*</label>
-            <input type="text" class="form-control" id="validationDefault05" required>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-3 mb-3">
-            <label for="validationDefaultUsername">Mail*</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroupPrepend2">@</span>
-              </div>
-              <input type="text" class="form-control" id="validationDefaultUsername" placeholder="exemple@gmail.com" aria-describedby="inputGroupPrepend2" required>
-            </div>
-          </div>
-          <div class="col-lg-3 mb-3">
-            <label>Veuillez choisir votre statut...</label>
-            <select class="form-select" aria-label="Default select example">
-              <option selected></option>
-              <option value="1">Etudiant</option>
-              <option value="2">Intervenant</option>
-            </select>
-          </div>
+        <div class="col-lg-3 mb-3">
+          <p>Sélectionnez le modèle*</p>
+          <mat-form-field appearance="fill">
+            <mat-label>Modèle du matériel</mat-label>
+            <mat-select formControlName="modele" [(ngModel)]="idModele"> <!-- Permet d'ajouter id présent dans value à data pour l'envoyer en post -->
+              <mat-option *ngFor="let modele of listeModeles" [value]=modele.idModele>{{ modele.nomModele}}</mat-option> <!-- [value] permet de récupérer directement la valeur de l'objet -->
+            </mat-select>
+            <mat-error *ngIf="formControl.get('modele')?.hasError('required')"> 
+              Le modèle est <strong>obligatoire</strong>
+            </mat-error>
+          </mat-form-field>
         </div>
       </div>
 
-      <h3 class="mb-3 mt-4">Informations matériel</h3>
-      <div class="row">
-        <div class="col-lg-3 mb-3">
-          <label>Sélectionnez le matériel :</label>
-          <select class="form-select" aria-label="Default select example">
-            <option selected></option>
-            <option value="1">Ordinateur</option>
-            <option value="2">Webcam</option>
-            <option value="3">Projecteur</option>
-            <option value="4">Casque VR</option>
-          </select>
+      <div class="row d-flex justify-content-center">
+        <div class="col-lg-4 mb-3">
+          <p>Sélectionnez le lieu d'utilisation du materiel*</p>
+          <mat-form-field appearance="fill">
+            <mat-label>Lieu d'utilisation</mat-label>
+            <mat-select formControlName="lieu" [(ngModel)]="idLieuUtilisation"> <!-- Permet d'ajouter id présent dans value à data pour l'envoyer en post -->
+              <mat-option *ngFor="let lieu of listeLieuxUtilisation" [value]=lieu.idLieu>{{ lieu.nomLieuUtilisation}}</mat-option> <!-- [value] permet de récupérer directement la valeur de l'objet -->
+            </mat-select>
+            <mat-error *ngIf="formControl.get('modele')?.hasError('required')"> 
+              Le lieu est <strong>obligatoire</strong>
+            </mat-error>
+          </mat-form-field>
         </div>
+
         <div class="col-lg-3 mb-3">
-          <label>Sélectionnez le lieu :</label>
-          <select class="form-select" aria-label="Default select example">
-            <option selected></option>
-            <option value="1">MNS</option>
-            <option value="2">IFA</option>
-          </select>
-        </div>
-        <div class="col-lg-3 mb-3">
-          <label>Sélectionnez le cadre d'utilisation :</label>
-          <select class="form-select" aria-label="Default select example">
-            <option selected></option>
-            <option value="1">Cours</option>
-            <option value="2">Salon professionnel</option>
-            <option value="3">Réunion</option>
-            <option value="4">Location longue</option>
-          </select>
+          <p>Sélectionnez le cadre d'utilisation du materiel*</p>
+          <mat-form-field appearance="fill">
+            <mat-label>Cadre d'utilisation</mat-label>
+            <mat-select formControlName="cadreUtilisation" [(ngModel)]="idCadreUtilisation"> <!-- Permet d'ajouter id présent dans value à data pour l'envoyer en post -->
+              <mat-option *ngFor="let cadre of listeCadresUtilisation" [value]=cadre.idCadre>{{ cadre.typeEvenement}}</mat-option> <!-- [value] permet de récupérer directement la valeur de l'objet -->
+            </mat-select>
+            <mat-error *ngIf="formControl.get('modele')?.hasError('required')"> 
+              Le cadre d'utilisation est <strong>obligatoire</strong>
+            </mat-error>
+          </mat-form-field>
         </div>
       </div>
+
 
       <h3 class="mb-3 mt-4">Dates de réservation</h3>
         <div class="form-row">
-          <div class="row">
+          <div class="row d-flex justify-content-center">
+            <div class="col-lg-4 mb-4">
+              <p>Date de début d'emprunt*</p>
+              <mat-form-field appearance="fill">
+                <mat-label>Date début</mat-label>
+                <input  formControlName="datesEmprunt" type="date" matInput [(ngModel)]="dateDebutEmprunt"/>
+                <mat-error *ngIf="formControl.get('datesEmprunt')?.hasError('required')"> 
+                  La date de début est <strong>obligatoire</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
             <div class="col-lg-3 mb-3">
+              <p>Date de fin d'emprunt*</p>
+              <mat-form-field appearance="fill">
+                <mat-label>Date fin</mat-label>
+                <input  formControlName="datesEmprunt" type="date" matInput [(ngModel)]="dateFinEmprunt"/>
+                <mat-error *ngIf="formControl.get('datesEmprunt')?.hasError('required')"> 
+                  La date de fin est <strong>obligatoire</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <!-- <div class="col-lg-4 mb-3">
               <label for="validationDefault01">Date de début d'emprunt*</label>
               <input type="date" class="form-control" id="validationDefault01" required>
             </div>
-            <div class="col-lg-3 mb-3">
+            <div class="col-lg-4 mb-3">
               <label for="validationDefault02">Date fin d'emprunt*</label>
               <input type="date" class="form-control" id="validationDefault02" required>
-            </div>
-          </div>
-        </div>
-        <div class="d-flex justify-content-center">
-          <div class="form-group">
-            <div class="form-check mt-4 mb-3">
-              <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
-              <label class="form-check-label" for="invalidCheck2">
-                Je certifie sur l'honneur l'exactitude des renseignements fournis ci-dessus
-              </label>
-            </div>
+            </div> -->
           </div>
         </div>
 
         <div class="d-flex justify-content-center">
-          <button class="btn boutonFormulaire mb-5" type="submit">Envoyer</button>
+          <button class="btn boutonFormulaire mb-5" type="submit" (click)="envoyerFormulaire()">Envoyer</button>
         </div>
   </form>
   <br><br>

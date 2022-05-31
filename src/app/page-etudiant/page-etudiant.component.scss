@@ -17,7 +17,6 @@
 
 h2{
     font-size: 35px;
-    padding-top: 200px;
     color: white;
 }
 
@@ -55,6 +54,15 @@ form{
     display: flex;
     justify-content: start;
     align-items: flex-end;
+}
+
+.titreDemandeLocation{
+    color: black;
+    padding-top: 50px;
+}
+
+.titreMaterielLocation{
+    padding-top: 200px;
 }
 
 

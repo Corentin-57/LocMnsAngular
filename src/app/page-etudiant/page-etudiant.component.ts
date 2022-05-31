@@ -38,9 +38,6 @@ export class PageEtudiantComponent implements OnInit {
   public listeModeles!: any;
   public idModele!: number;
 
-  public listeLieuxUtilisation!: any;
-  public idLieuUtilisation!: number;
-
   public listeCadresUtilisation!: any;
   public idCadreUtilisation!: number;
 
@@ -64,8 +61,6 @@ export class PageEtudiantComponent implements OnInit {
           this.http.get("http://localhost:8080/liste-typeMateriels").subscribe(reponse => this.listeTypesMateriel = reponse); //Récupére la liste des types de matériel
 
           this.http.get("http://localhost:8080/liste-modeles").subscribe(reponse => this.listeModeles = reponse); //Récupére la liste des modèles
-
-          this.http.get("http://localhost:8080/liste-lieux-utilisation").subscribe(reponse => this.listeLieuxUtilisation = reponse); //Récupére la liste des lieux d'utilisation
           
           this.http.get("http://localhost:8080/liste-cadres-utilisation").subscribe(reponse => this.listeCadresUtilisation = reponse); //Récupére la liste des cadres d'utilisation
           
@@ -143,23 +138,21 @@ export class PageEtudiantComponent implements OnInit {
   public cacherMessage(): void{
     this.errorMessage = "";
     this.successMessage = "";
+    this.messageErreurRequete = "";
+    this.messageValidationRequete = "";
   }
-
-
 
   public formControl:FormGroup = this.formBuilder.group(
     {
       "typeMateriel": ["", [Validators.required]],
       "modele": ["", [Validators.required]],
-      "lieu": ["", [Validators.required]],
       "cadreUtilisation": ["", [Validators.required]],
       "datesEmprunt" : ["", [Validators.required]],
     }
   )
 
-  envoyerFormulaire(): void{
-    this.donneesDemandeMateriel = {typeMateriel: {idType: this.idTypeMateriel}, materiel: {modele: {idModele: this.idModele}}, lieuUtilisation: {idLieu: this.idLieuUtilisation}, cadreUtilisation: {idCadre: this.idCadreUtilisation}, dateEmprunt: this.dateDebutEmprunt, dateRetour: this.dateFinEmprunt, utilisateur : {id : this.idUtilisateur}, contient: {idCadre: this.idCadreUtilisation} };
-    console.log(this.donneesDemandeMateriel)
+  envoyerFormulaire(): void{ //Envoie demande emprunt
+    this.donneesDemandeMateriel = {typeMateriel: {idType: this.idTypeMateriel}, materiel: {modele: {idModele: this.idModele}}, cadreUtilisation: {idCadre: this.idCadreUtilisation}, dateEmprunt: this.dateDebutEmprunt, dateRetour: this.dateFinEmprunt, utilisateur : {id : this.idUtilisateur}, contient: {idCadre: this.idCadreUtilisation} };
 
     this.http.post('http://localhost:8080/demande-emprunt', this.donneesDemandeMateriel,{responseType: 'text'} )
     .subscribe(

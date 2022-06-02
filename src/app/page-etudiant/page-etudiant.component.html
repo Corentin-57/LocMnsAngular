@@ -53,7 +53,7 @@
       </div>
     </ng-container>
     <ng-container *ngIf="messageErreurRequete">
-      <div class="alert alert-danger messageValidation">
+      <div class="alert alert-danger messageValidation d-flex justify-content-center">
         <mat-icon class="iconInfo">error</mat-icon>
         {{ messageErreurRequete }}
         <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>

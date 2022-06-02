@@ -28,6 +28,9 @@ export class PageGestionnaireComponent implements OnInit {
   public messageValidationDemandeEmprunt!: any;
 
   public messageErreurValidationDemandeEmprunt!: any;
+
+  public dateDemandeEprunt!: Date;
+  public dateDemandeRetour!: Date;
   
   // permet de vérifier si les informations formulaire sont bien saisies
   public formControl: FormGroup = this.formBuilder.group(
@@ -79,9 +82,7 @@ export class PageGestionnaireComponent implements OnInit {
   }
 
   affichageDemandesPret(): void {
-    //this.client.get("http://localhost:8080/listeDemandesEmprunt").subscribe(reponse => this.listeDemandesEmprunt = reponse); //Récupére la liste des toutes les demandes d'emprunt en cours
     this.client.get("http://localhost:8080/gestionnaire/listeDemandesEmprunt").subscribe(reponse => this.listeDemandesEmprunt = reponse); //Récupére la liste des toutes les demandes d'emprunt en cours
-    console.log(this.listeDemandesEmprunt);
   }
 
   validerDemandeEmprunt(idEmprunt: number){
@@ -96,6 +97,26 @@ export class PageGestionnaireComponent implements OnInit {
       }
     )
     
+  }
+
+  supprimerDemandeEmprunt(idEmprunt: number){
+    this.client.delete('http://localhost:8080/gestionnaire/supprimer-demande-emprunt/' + idEmprunt,{responseType: 'text'} )
+    .subscribe(
+      (reponse) => {
+        this.messageValidationDemandeEmprunt = reponse;
+        this.affichageDemandesPret();
+      },
+      (error) => {
+        this.messageErreurValidationDemandeEmprunt = "Une erreur est survenue, veuillez réessayer plus tard";
+      }
+    )
+    
+  }
+
+  public cacherMessage(): void{
+    this.messageValidationDemandeEmprunt = "";
+    this.messageErreurValidationDemandeEmprunt = "";
+
   }
 
   

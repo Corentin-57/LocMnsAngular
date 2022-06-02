@@ -81,7 +81,36 @@ h3{
     justify-content: space-between;
     align-items: flex-start;
     align-content: flex-start;
+    
 }
+
+//---------------------- Création de compte----------------------------------------
+
+.boutonFormulaire{
+    background-color: #E9731D;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 30px;
+    padding-left: 100px;
+    padding-right: 100px;
+    margin-top: 20px;
+}
+
+form{
+    background-color: white;
+    margin-top: 100px;
+    padding: 30px;
+    border-radius: 30px;
+    font-weight: bold;
+    margin-bottom: 50px;
+}
+
+h2{
+    font-size: 35px;
+    margin-top: 20px;
+}
+
+
 
 
 

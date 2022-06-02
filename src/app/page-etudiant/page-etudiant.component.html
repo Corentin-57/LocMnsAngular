@@ -28,8 +28,10 @@
           </div>
         </div>
       </div>
+
+      <!-- <form (ngSubmit)="donneesEtudiant(registerFrom)" #registerFrom="ngForm"></form> -->
   
-    <form (ngSubmit)="donneesEtudiant(registerFrom)" #registerFrom="ngForm">
+    <form (ngSubmit)="submitListe()" #registerFrom="ngForm">
       <h2 class="text-center mb-5">Demande de location matériel</h2>
       <h3 class="mb-3">Informations personnelles</h3>
         <div class="form-row">
@@ -72,7 +74,7 @@
               </div>
             </div>
             <div class="col-lg-3 mb-3">
-            <form [formGroup]="contactForm" (ngSubmit)="subbmitListe()">
+            <form [formGroup]="contactForm" (ngSubmit)="submitListe()">
               <label>Veuillez choisir votre statut...</label>
               <select formControlName="statutUtilisateur" class="form-select" aria-label="Default select example">
                 <option [ngValue]="null" selected></option>
@@ -81,10 +83,25 @@
               </select>
             </form>
             </div>
-          </div>
+            
+            </div>
         </div>
-  
+
         <h3 class="mb-3 mt-4">Informations matériel</h3>
+        <div class="row">
+          <div class="col-lg-3 mb-3">
+            
+          <form [formGroup]="contactForm1" (ngSubmit)="submitListe()">
+            <label>Sélectionnez le matériel :</label>
+            <select formControlName="materiel" class="form-select" aria-label="Default select example">
+              <option selected></option>
+              <option [ngValue]="null" selected></option>
+                <option *ngFor="let statutt of materiel" [ngValue]="statutt.name">{{statutt.name}}</option>
+            </select>
+          </form>
+          </div>
+  
+        <!-- <h3 class="mb-3 mt-4">Informations matériel</h3>
         <div class="row">
           <div class="col-lg-3 mb-3">
             <label>Sélectionnez le matériel :</label>
@@ -95,24 +112,25 @@
               <option value="3">Projecteur</option>
               <option value="4">Casque VR</option>
             </select>
-          </div>
+          </div> -->
+
           <div class="col-lg-3 mb-3">
+          <form [formGroup]="contactForm2" (ngSubmit)="submitListe()">
             <label>Sélectionnez le lieu :</label>
-            <select class="form-select" aria-label="Default select example">
-              <option selected></option>
-              <option value="1">MNS</option>
-              <option value="2">IFA</option>
+            <select formControlName="lieu" class="form-select" aria-label="Default select example">
+              <option [ngValue]="null" selected></option>
+              <option *ngFor="let statutt of lieu" [ngValue]="statutt.name">{{statutt.name}}</option>
             </select>
+          </form>
           </div>
           <div class="col-lg-3 mb-3">
+          <form [formGroup]="contactForm3" (ngSubmit)="submitListe()">
             <label>Sélectionnez le cadre d'utilisation :</label>
-            <select class="form-select" aria-label="Default select example">
-              <option selected></option>
+            <select formControlName="cadreUtilisation" class="form-select" aria-label="Default select example">
+              <option  selected></option>
               <option value="1">Cours</option>
-              <option value="2">Salon professionnel</option>
-              <option value="3">Réunion</option>
-              <option value="4">Location longue</option>
             </select>
+          </form>
           </div>
         </div>
   

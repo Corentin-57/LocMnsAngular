@@ -19,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TokenInterceptor } from './token.interceptor';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -43,7 +44,9 @@ import { TokenInterceptor } from './token.interceptor';
     MatCardModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule
+    
   ],
   providers: [{provide : HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi : true}],
   bootstrap: [AppComponent]

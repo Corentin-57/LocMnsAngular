@@ -68,7 +68,7 @@
             <h2>Suivi des locations</h2>
         </div>
 
-        <h3>Nouvelles demandes de prêts</h3>
+        <h3>Demandes de prêts</h3>
         <!-- -------------------------------------Tableau nouvelle demande de prêt---------------------- -->
         
         <ng-container *ngIf="messageValidationDemandeEmprunt" >
@@ -122,30 +122,37 @@
             </tbody>
         </table>
 
-        <h3>Retour de prêt du matériel</h3>
+        <h3>Demandes retour de prêt</h3>
         <!-- -----------------------------------------Tableau retour prêt ---------------------- -->
         <table class="table table-light">
             <thead>
                 <tr>
-                    <th scope="col">N° Identification</th>
+                    <!-- <th scope="col">#</th> -->
                     <th scope="col">Nom</th>
                     <th scope="col">Prénom</th>
-                    <th scope="col">Statut</th>
-                    <th scope="col">Etat matériel&emsp;</th>
+                    <th scope="col">Mail</th>
+                    <th scope="col">Type matériel</th>
+                    <th scope="col">Modèle</th>
+                    <th scope="col">Numéro de série</th>
+                    <th scope="col">Date retour initiale</th>
+                    <th scope="col">Date retour souhaitée</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>Opérationnel</td>
-                    <td>Opérationnel</td>
+                <tr *ngFor="let liste of listeRetoursEmprunt">
+                    <td>{{ liste.utilisateur.nom }} </td>
+                    <td>{{ liste.utilisateur.prenom }}</td>
+                    <td>{{ liste.utilisateur.mail }}</td>
+                    <td>{{ liste.materiel.modele.typeMateriel.nomType }}</td>
+                    <td>{{ liste.materiel.modele.nomModele }}</td>
+                    <td>{{ liste.materiel.numeroSerie }}</td>
+                    <td>{{ liste.dateRetour | date:'d/MM/yyyy' }}</td>
+                    <td class="dateRetoursouhaité">{{ liste.dateDemandeRetour | date:'d/MM/yyyy' }}</td>
 
                     <td>
-                        <a type="submit" class="btn btn-outline-success" href="#" role="button">Valider</a>
-                        <a type="submit" class="btn btn-outline-danger" href="#" role="button">Supprimer</a>
+                        <a type="submit" class="btn btn-outline-success" role="button" (click)="validerRetourEmprunt(liste.idEmprunt)">Valider</a>
+                        <a type="submit" class="btn btn-outline-danger"  role="button" (click)="supprimerDemandeEmprunt(liste.idEmprunt)">Supprimer</a>
                     </td>
                 </tr>
             </tbody>

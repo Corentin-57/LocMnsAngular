@@ -22,6 +22,8 @@ export class PageGestionnaireComponent implements OnInit {
 
   public idEmprunt!: number;
   public listeDemandesEmprunt: any;
+  public listeRetoursEmprunt: any;
+
 
   public DemandeEmprunt: any;
 
@@ -58,6 +60,7 @@ export class PageGestionnaireComponent implements OnInit {
     //this.http.get("http://localhost:8080/liste-typeMateriels").subscribe(reponse => this.listeTypesMateriel = reponse)
     //this.affichageDemandesPret;
     this.affichageDemandesPret();
+    this.affichageRetoursPret();
   }
 
   donneesFormulaire(donnees: {nom: string, prenom: string, motDePasse: string, adresse: string, ville: string, codePostale: string, mail: string, numeroTelephone: string, statutUtilisateur:string} ) {
@@ -85,6 +88,11 @@ export class PageGestionnaireComponent implements OnInit {
     this.client.get("http://localhost:8080/gestionnaire/listeDemandesEmprunt").subscribe(reponse => this.listeDemandesEmprunt = reponse); //Récupére la liste des toutes les demandes d'emprunt en cours
   }
 
+  affichageRetoursPret(): void {
+    this.client.get("http://localhost:8080/gestionnaire/listeRetoursEmprunt").subscribe(reponse => this.listeRetoursEmprunt = reponse); //Récupére la liste des toutes les demandes d'emprunt en cours
+    
+  }
+
   validerDemandeEmprunt(idEmprunt: number){
     this.client.post('http://localhost:8080/gestionnaire/valider-demande-emprunt', {idEmprunt: idEmprunt},{responseType: 'text'} )
     .subscribe(
@@ -101,6 +109,20 @@ export class PageGestionnaireComponent implements OnInit {
 
   supprimerDemandeEmprunt(idEmprunt: number){
     this.client.delete('http://localhost:8080/gestionnaire/supprimer-demande-emprunt/' + idEmprunt,{responseType: 'text'} )
+    .subscribe(
+      (reponse) => {
+        this.messageValidationDemandeEmprunt = reponse;
+        this.affichageDemandesPret();
+      },
+      (error) => {
+        this.messageErreurValidationDemandeEmprunt = "Une erreur est survenue, veuillez réessayer plus tard";
+      }
+    )
+    
+  }
+
+  validerRetourEmprunt(idEmprunt: number){
+    this.client.put('http://localhost:8080/gestionnaire/valider-retours-emprunt', {idEmprunt: idEmprunt},{responseType: 'text'} )
     .subscribe(
       (reponse) => {
         this.messageValidationDemandeEmprunt = reponse;

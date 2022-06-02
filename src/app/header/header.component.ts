@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ConnexionDeconnexionService } from '../connexion-deconnexion.service';
 import { TokenIdentificationService } from '../token-identification.service';
 
@@ -12,15 +13,26 @@ export class HeaderComponent implements OnInit {
   cheminLogo:any = "assets/header/logo.svg";
   utilisateurConnecte!: boolean; //Variable qui affiche et cache les boutons connexion/ deconnexion
 
-  constructor(private tokenIdentification: TokenIdentificationService,
-    private connexionDeconnexionService: ConnexionDeconnexionService) { 
+  lienTableauBord: boolean = false;
+
+  constructor(
+    private tokenIdentification: TokenIdentificationService,
+    private connexionDeconnexionService: ConnexionDeconnexionService,
+    ) { 
       this.connexionDeconnexionService.utilisateurConnecte.subscribe( value => { //Permet la maj des boutons quand un changement est effectué sur le service 
         this.utilisateurConnecte = value;
+
+        if(this.tokenIdentification.utilisateur.value.droits.includes("ROLE_GESTIONNAIRE")){ //Change le lien de direction du tableau de bord si etudiant ou gestionnaire
+          this.lienTableauBord = true;
+        }else{
+          this.lienTableauBord = false;
+        }
       })
     
     }
 
   ngOnInit(): void {
+  
   }
 
 

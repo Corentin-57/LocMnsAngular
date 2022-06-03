@@ -124,6 +124,22 @@
 
         <h3>Demandes retour de prêt</h3>
         <!-- -----------------------------------------Tableau retour prêt ---------------------- -->
+        
+        <ng-container *ngIf="messageValidationRetourEmprunt" >
+            <div class="alert alert-success messageValidation d-flex justify-content-center">
+              <mat-icon class="iconInfo">check_circle</mat-icon>
+              <span>{{ messageValidationRetourEmprunt }}</span>
+              <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="messageErreurValidationRetourEmprunt">
+            <div class="alert alert-danger messageValidation d-flex justify-content-center">
+              <mat-icon class="iconInfo">error</mat-icon>
+              {{ messageErreurValidationRetourEmprunt }}
+              <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
+            </div>
+          </ng-container>
+        
         <table class="table table-light">
             <thead>
                 <tr>
@@ -152,7 +168,7 @@
 
                     <td>
                         <a type="submit" class="btn btn-outline-success" role="button" (click)="validerRetourEmprunt(liste.idEmprunt)">Valider</a>
-                        <a type="submit" class="btn btn-outline-danger"  role="button" (click)="supprimerDemandeEmprunt(liste.idEmprunt)">Supprimer</a>
+                        <a type="submit" class="btn btn-outline-danger"  role="button" (click)="supprimerDemandeRetour(liste.idEmprunt)">Supprimer</a>
                     </td>
                 </tr>
             </tbody>

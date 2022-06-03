@@ -28,8 +28,10 @@ export class PageGestionnaireComponent implements OnInit {
   public DemandeEmprunt: any;
 
   public messageValidationDemandeEmprunt!: any;
-
   public messageErreurValidationDemandeEmprunt!: any;
+
+  public messageValidationRetourEmprunt!: any;
+  public messageErreurValidationRetourEmprunt!: any;
 
   public dateDemandeEprunt!: Date;
   public dateDemandeRetour!: Date;
@@ -122,23 +124,37 @@ export class PageGestionnaireComponent implements OnInit {
   }
 
   validerRetourEmprunt(idEmprunt: number){
-    this.client.put('http://localhost:8080/gestionnaire/valider-retours-emprunt', {idEmprunt: idEmprunt},{responseType: 'text'} )
+    this.client.put('http://localhost:8080/gestionnaire/valider-retour-emprunt', {idEmprunt: idEmprunt},{responseType: 'text'} )
     .subscribe(
       (reponse) => {
-        this.messageValidationDemandeEmprunt = reponse;
-        this.affichageDemandesPret();
+        this.messageValidationRetourEmprunt = reponse;
+        this.affichageRetoursPret();
       },
       (error) => {
-        this.messageErreurValidationDemandeEmprunt = "Une erreur est survenue, veuillez réessayer plus tard";
+        this.messageErreurValidationRetourEmprunt = "Une erreur est survenue, veuillez réessayer plus tard";
       }
     )
-    
+  }
+
+  supprimerDemandeRetour(idEmprunt: number){
+    this.client.put('http://localhost:8080/gestionnaire/supprimer-retour-emprunt', {idEmprunt: idEmprunt}, {responseType: 'text'} )
+    .subscribe(
+      (reponse) => {
+        this.messageValidationRetourEmprunt = reponse;
+        this.affichageRetoursPret();
+      },
+      (error) => {
+        this.messageErreurValidationRetourEmprunt = "Une erreur est survenue, veuillez réessayer plus tard";
+        console.log(error);
+      }
+    )
   }
 
   public cacherMessage(): void{
     this.messageValidationDemandeEmprunt = "";
     this.messageErreurValidationDemandeEmprunt = "";
-
+    this.messageErreurValidationRetourEmprunt = "";
+    this.messageValidationRetourEmprunt = "";
   }
 
   

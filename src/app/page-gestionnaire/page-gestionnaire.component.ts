@@ -17,13 +17,22 @@ export class PageGestionnaireComponent implements OnInit {
 
   public listeUtilisateur: any;
   public admin: boolean = false;
+  public idUtilisateurConnecte!: number;
 
   public statutUtilisateur = [ {name:"Etudiant"}, {name:"Intervenant"} ];
 
   public idEmprunt!: number;
+
   public listeDemandesEmprunt: any;
   public listeRetoursEmprunt: any;
-
+  public listeProlongationEmprunt!: any;
+  
+  public nombreDemandesEmprunt!: number;
+  public nombreRetoursEmprunt!: number;
+  public nombreProlongationEmprunt!: number;
+  public nombreMaterielDefectueux!: number;
+  public nombreMaterielRetard!: number;
+  public nombreMaterielOperationnel!: number;
 
   public DemandeEmprunt: any;
 
@@ -32,6 +41,9 @@ export class PageGestionnaireComponent implements OnInit {
 
   public messageValidationRetourEmprunt!: any;
   public messageErreurValidationRetourEmprunt!: any;
+
+  public messageValidationProlongationEmprunt!:any;
+  public messageErreurValidationProlongationEmprunt!: any;
 
   public dateDemandeEprunt!: Date;
   public dateDemandeRetour!: Date;
@@ -60,9 +72,28 @@ export class PageGestionnaireComponent implements OnInit {
   ngOnInit(): void {
     this.contactForm = this.formBuilder.group( { statutUtilisateur: [null]});
     //this.http.get("http://localhost:8080/liste-typeMateriels").subscribe(reponse => this.listeTypesMateriel = reponse)
-    //this.affichageDemandesPret;
+    
+
+    this.tokenIdentification.utilisateur.subscribe( //Vérification token au chargement page
+      utilisateur => {
+        this.admin = utilisateur != null && utilisateur.droits.includes("ROLE_GESTIONNAIRE"); //Vérifie que l'utilisateur a bien role gestionnaire
+        this.idUtilisateurConnecte = utilisateur.id;
+        console.log(utilisateur);
+      }
+    );
+
+    
     this.affichageDemandesPret();
     this.affichageRetoursPret();
+    this.affichageProlongationPret();
+
+    this.affichageNombreDemandesPret();
+    this.affichageNombreRetoursPret();
+    this.affichageNombreProlongation();
+    this.affichageNombreMaterielDefectueux();
+    this.affichageNombreMaterielRetard();
+    this.affichageNombreMaterielOperationnel();
+
   }
 
   donneesFormulaire(donnees: {nom: string, prenom: string, motDePasse: string, adresse: string, ville: string, codePostale: string, mail: string, numeroTelephone: string, statutUtilisateur:string} ) {
@@ -92,7 +123,34 @@ export class PageGestionnaireComponent implements OnInit {
 
   affichageRetoursPret(): void {
     this.client.get("http://localhost:8080/gestionnaire/listeRetoursEmprunt").subscribe(reponse => this.listeRetoursEmprunt = reponse); //Récupére la liste des toutes les demandes d'emprunt en cours
-    
+  }
+
+  affichageProlongationPret(): void {
+    this.client.get("http://localhost:8080/gestionnaire/listeProlongationEmprunt").subscribe(reponse => this.listeProlongationEmprunt = reponse); //Récupére la liste des toutes les demandes d'emprunt en cours
+  }
+
+  affichageNombreDemandesPret(): void{
+    this.client.get("http://localhost:8080/gestionnaire/nombre-demandes-emprunt").subscribe((reponse:any) => this.nombreDemandesEmprunt = reponse); //Récupére le nombre de demandes d'emprunt en cours
+  }
+
+  affichageNombreRetoursPret(): void{
+    this.client.get("http://localhost:8080/gestionnaire/nombre-retours-emprunt").subscribe((reponse:any) => this.nombreRetoursEmprunt = reponse); //Récupére le nombre de demandes d'emprunt en cours
+  }
+
+  affichageNombreProlongation(): void{
+    this.client.get("http://localhost:8080/gestionnaire/nombre-prolongation-emprunt").subscribe((reponse:any) => this.nombreProlongationEmprunt = reponse); //Récupére le nombre de demandes d'emprunt en cours
+  }
+
+  affichageNombreMaterielDefectueux(): void{
+    this.client.get("http://localhost:8080/gestionnaire/nombre-materiels-defectueux").subscribe((reponse:any) => this.nombreMaterielDefectueux = reponse); //Récupére le nombre de demandes d'emprunt en cours
+  }
+
+  affichageNombreMaterielRetard(): void{
+    this.client.get("http://localhost:8080/gestionnaire/nombre-materiels-retard").subscribe((reponse:any) => this.nombreMaterielRetard = reponse); //Récupére le nombre de matériel emprunté en retard (non retourné)
+  }
+
+  affichageNombreMaterielOperationnel(): void{
+    this.client.get("http://localhost:8080/gestionnaire/nombre-materiels-operationnel").subscribe((reponse:any) => this.nombreMaterielOperationnel = reponse); //Récupére le nombre de matériel emprunté en retard (non retourné)
   }
 
   validerDemandeEmprunt(idEmprunt: number){
@@ -101,6 +159,7 @@ export class PageGestionnaireComponent implements OnInit {
       (reponse) => {
         this.messageValidationDemandeEmprunt = reponse;
         this.affichageDemandesPret();
+        this.affichageNombreDemandesPret();
       },
       (error) => {
         this.messageErreurValidationDemandeEmprunt = "Une erreur est survenue, veuillez réessayer plus tard";
@@ -115,6 +174,7 @@ export class PageGestionnaireComponent implements OnInit {
       (reponse) => {
         this.messageValidationDemandeEmprunt = reponse;
         this.affichageDemandesPret();
+        this.affichageNombreDemandesPret();
       },
       (error) => {
         this.messageErreurValidationDemandeEmprunt = "Une erreur est survenue, veuillez réessayer plus tard";
@@ -129,6 +189,7 @@ export class PageGestionnaireComponent implements OnInit {
       (reponse) => {
         this.messageValidationRetourEmprunt = reponse;
         this.affichageRetoursPret();
+        this.affichageNombreRetoursPret();
       },
       (error) => {
         this.messageErreurValidationRetourEmprunt = "Une erreur est survenue, veuillez réessayer plus tard";
@@ -142,10 +203,39 @@ export class PageGestionnaireComponent implements OnInit {
       (reponse) => {
         this.messageValidationRetourEmprunt = reponse;
         this.affichageRetoursPret();
+        this.affichageNombreRetoursPret();
       },
       (error) => {
         this.messageErreurValidationRetourEmprunt = "Une erreur est survenue, veuillez réessayer plus tard";
         console.log(error);
+      }
+    )
+  }
+
+  validerProlongationEmprunt(idEmprunt: number){
+    this.client.put('http://localhost:8080/gestionnaire/valider-prolongation-emprunt', {idEmprunt: idEmprunt},{responseType: 'text'} )
+    .subscribe(
+      (reponse) => {
+        this.messageValidationProlongationEmprunt = reponse;
+        this.affichageProlongationPret();
+        this.affichageNombreProlongation();
+      },
+      (error) => {
+        this.messageErreurValidationProlongationEmprunt = "Une erreur est survenue, veuillez réessayer plus tard";
+      }
+    )
+  }
+
+  supprimerProlongationEmprunt(idEmprunt: number){
+    this.client.put('http://localhost:8080/gestionnaire/supprimer-prolongation-emprunt', {idEmprunt: idEmprunt}, {responseType: 'text'} )
+    .subscribe(
+      (reponse) => {
+        this.messageValidationProlongationEmprunt = reponse;
+        this.affichageProlongationPret();
+        this.affichageNombreProlongation();
+      },
+      (error) => {
+        this.messageErreurValidationProlongationEmprunt = "Une erreur est survenue, veuillez réessayer plus tard";
       }
     )
   }
@@ -155,6 +245,8 @@ export class PageGestionnaireComponent implements OnInit {
     this.messageErreurValidationDemandeEmprunt = "";
     this.messageErreurValidationRetourEmprunt = "";
     this.messageValidationRetourEmprunt = "";
+    this.messageErreurValidationProlongationEmprunt = "";
+    this.messageValidationProlongationEmprunt = "";
   }
 
   

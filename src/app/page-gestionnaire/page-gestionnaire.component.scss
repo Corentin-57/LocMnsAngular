@@ -13,7 +13,7 @@ h1{
     text-align: center;
     color: white;
     margin-bottom: 50px;
-    margin-top: 150px;
+    padding-top: 200px;
 }
 
 h2{
@@ -21,7 +21,7 @@ h2{
     font-weight: bolder;
     text-align: center;
     color: white;
-    margin-top: 70px;
+    padding-top: 70px;
     margin-bottom: 40px;
 }
 
@@ -125,8 +125,19 @@ h2{
     align-items: flex-end;
 }
 
+.datePrevue {
+    color: green;
+}
+
 .dateRetoursouhaité{
-    color: red;
+    color: orange;
     font-weight: bold;
 }
 
+.demandesUtilisateur{
+    color: red;
+    font-weight: bold;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+}

@@ -48,11 +48,12 @@ constructor(
         if(resultat.erreur){
           alert(resultat.erreur) //Affiche le message mauvais login/ mot de passe dans Spring
         }else{
+          console.log(resultat.token)
           localStorage.setItem('token', resultat.token) //Permet de stocker des infos
-
+          
           this.tokenIdentification.raffraichirUtilisateur();
 
-
+          console.log(this.tokenIdentification.utilisateur.value);
           if(this.tokenIdentification.utilisateur.value.droits.includes("ROLE_GESTIONNAIRE")){
             this.router.navigateByUrl("page-gestionnaire");
             this.connexionDeconnexionService.utilisateurConnecte.next(true);

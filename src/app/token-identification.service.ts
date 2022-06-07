@@ -20,9 +20,12 @@ export class TokenIdentificationService {
       //Tous les composants qui ont souscrits à l'observable vont récupérer le corps du token
       }catch{
         this.utilisateur.next(null);
+        console.log("CATCH");
       }
     }else{
       this.utilisateur.next(null);
+      console.log("ELSE");
     }
+    console.log(this.utilisateur);
   }
 }

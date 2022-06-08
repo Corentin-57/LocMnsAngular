@@ -22,10 +22,13 @@ export class PageGestionnaireComponent implements OnInit {
   public statutUtilisateur = [ {name:"Etudiant"}, {name:"Intervenant"} ];
 
   public idEmprunt!: number;
+  public idNumeroMateriel!: number;
 
   public listeDemandesEmprunt: any;
   public listeRetoursEmprunt: any;
   public listeProlongationEmprunt!: any;
+  //public listeNumeroMateriel!: any;
+  public listeNumeroSerieMateriel!: any;
   
   public nombreDemandesEmprunt!: number;
   public nombreRetoursEmprunt!: number;
@@ -45,8 +48,15 @@ export class PageGestionnaireComponent implements OnInit {
   public messageValidationProlongationEmprunt!:any;
   public messageErreurValidationProlongationEmprunt!: any;
 
+  public messageValidationReservation!: any;
+  public messageErreurReservation!: any;
+
   public dateDemandeEprunt!: Date;
   public dateDemandeRetour!: Date;
+  public dateDebutReservation!: Date;
+  public dateFinReservation!: Date;
+
+  public donneesReservation!: any;
   
   // permet de vérifier si les informations formulaire sont bien saisies
   public formControl: FormGroup = this.formBuilder.group(
@@ -58,7 +68,8 @@ export class PageGestionnaireComponent implements OnInit {
       "ville": ["", [Validators.required]],
       "codePostale": ["", [Validators.required]],
       "mail": ["", [Validators.required]],
-      "numeroTelephone": ["", [Validators.required]]
+      "numeroTelephone": ["", [Validators.required]],
+      "numeroSerieMateriels": ["", [Validators.required]],
     }
   );
 
@@ -73,9 +84,13 @@ export class PageGestionnaireComponent implements OnInit {
     this.contactForm = this.formBuilder.group( { statutUtilisateur: [null]});
     //this.http.get("http://localhost:8080/liste-typeMateriels").subscribe(reponse => this.listeTypesMateriel = reponse)
     
+    this.tokenIdentification.raffraichirUtilisateur();
+    console.log("t");
+    console.log("t" + this.tokenIdentification.utilisateur.value);
 
     this.tokenIdentification.utilisateur.subscribe( //Vérification token au chargement page
-      utilisateur => {
+    utilisateur => {
+        console.log(utilisateur);
         this.admin = utilisateur != null && utilisateur.droits.includes("ROLE_GESTIONNAIRE"); //Vérifie que l'utilisateur a bien role gestionnaire
         this.idUtilisateurConnecte = utilisateur.id;
         console.log(utilisateur);
@@ -86,6 +101,7 @@ export class PageGestionnaireComponent implements OnInit {
     this.affichageDemandesPret();
     this.affichageRetoursPret();
     this.affichageProlongationPret();
+    this.affichageNumeroSerie();
 
     this.affichageNombreDemandesPret();
     this.affichageNombreRetoursPret();
@@ -93,6 +109,7 @@ export class PageGestionnaireComponent implements OnInit {
     this.affichageNombreMaterielDefectueux();
     this.affichageNombreMaterielRetard();
     this.affichageNombreMaterielOperationnel();
+
 
   }
 
@@ -151,6 +168,10 @@ export class PageGestionnaireComponent implements OnInit {
 
   affichageNombreMaterielOperationnel(): void{
     this.client.get("http://localhost:8080/gestionnaire/nombre-materiels-operationnel").subscribe((reponse:any) => this.nombreMaterielOperationnel = reponse); //Récupére le nombre de matériel emprunté en retard (non retourné)
+  }
+
+  affichageNumeroSerie(): void{
+    this.client.get("http://localhost:8080/gestionnaire/liste-materiel-numeroSerie").subscribe(reponse => this.listeNumeroSerieMateriel = reponse); //Récupére la liste des toutes les demandes d'emprunt en cours
   }
 
   validerDemandeEmprunt(idEmprunt: number){
@@ -240,6 +261,21 @@ export class PageGestionnaireComponent implements OnInit {
     )
   }
 
+  EnregistrerReservation(): void{ //Envoie demande emprunt
+    this.donneesReservation = {materiel: {idMateriel: this.idNumeroMateriel}, dateEmprunt: this.dateDebutReservation, dateRetour: this.dateFinReservation, gestionnaire : {id : this.idUtilisateurConnecte }};
+    console.log(this.donneesReservation);
+    this.client.post('http://localhost:8080/demande-reservation', this.donneesReservation,{responseType: 'text'} )
+    .subscribe(
+      (reponse) => {
+        this.messageValidationReservation = reponse;
+      },
+      (error) => {
+        this.messageErreurReservation = "Une erreur est survenue, veuillez réessayer plus tard";
+      }
+    )
+
+  }
+
   public cacherMessage(): void{
     this.messageValidationDemandeEmprunt = "";
     this.messageErreurValidationDemandeEmprunt = "";
@@ -247,6 +283,8 @@ export class PageGestionnaireComponent implements OnInit {
     this.messageValidationRetourEmprunt = "";
     this.messageErreurValidationProlongationEmprunt = "";
     this.messageValidationProlongationEmprunt = "";
+    this.messageValidationReservation = "";
+    this.messageErreurReservation = "";
   }
 
   

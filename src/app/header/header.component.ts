@@ -20,7 +20,15 @@ export class HeaderComponent implements OnInit {
     private connexionDeconnexionService: ConnexionDeconnexionService,
     ) { 
       this.connexionDeconnexionService.utilisateurConnecte.subscribe( value => { //Permet la maj des boutons quand un changement est effectué sur le service 
-        this.utilisateurConnecte = value;
+        
+        this.tokenIdentification.raffraichirUtilisateur();
+
+        if(this.tokenIdentification.utilisateur.value != null && (this.tokenIdentification.utilisateur.value.droits.includes("ROLE_GESTIONNAIRE") || this.tokenIdentification.utilisateur.value.droits.includes("ROLE_UTILISATEUR")) ){ //Vérifie si utilisateur est connecté et affiche bouton deconnexion si c'est la cas 
+          this.utilisateurConnecte = true;
+          
+        }else{
+          this.utilisateurConnecte = value;
+        }
 
         if(this.tokenIdentification.utilisateur.value != null && this.tokenIdentification.utilisateur.value.droits.includes("ROLE_GESTIONNAIRE")){ //Change le lien de direction du tableau de bord si etudiant ou gestionnaire
           this.lienTableauBord = true;

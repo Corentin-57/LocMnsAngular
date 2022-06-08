@@ -16,10 +16,11 @@ export class GestionnaireGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      console.log(this.tokenIdentification.utilisateur.value);
-      console.log('caca');
+
+      this.tokenIdentification.raffraichirUtilisateur();
+
+
       if(this.tokenIdentification.utilisateur.value != null && this.tokenIdentification.utilisateur.value.droits.includes("ROLE_GESTIONNAIRE")){
-        console.log("c");
         return true;
       }else{
       return this.router.parseUrl('/connexion');

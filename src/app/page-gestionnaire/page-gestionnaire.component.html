@@ -225,9 +225,80 @@
             <h2>Réservation</h2>
         </div>
 
-        <div class="d-flex justify-content-center">
-            <button class="btnEnregistrer btn-lg px-4" type="submit">Enregistrer une réservation</button>
-        </div>
+        <form [formGroup]="formControl">
+
+
+        <ng-container *ngIf="messageValidationReservation" >
+            <div class="alert alert-warning messageValidation d-flex justify-content-center">
+              <mat-icon class="iconInfo">check_circle</mat-icon>
+              <span>{{ messageValidationReservation }}</span>
+              <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="messageErreurReservation">
+            <div class="alert alert-danger messageValidation d-flex justify-content-center">
+              <mat-icon class="iconInfo">error</mat-icon>
+              {{ messageErreurReservation }}
+              <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
+            </div>
+          </ng-container>
+      
+            <h3 class="mb-3 mt-4">Informations matériel</h3>
+            <div class="row d-flex justify-content-center">
+              <div class="col-lg-4 mb-4">
+                <p>Sélectionnez le numéro de série du matériel*</p>
+                <mat-form-field appearance="fill">
+                  <mat-label>Numéro matériel</mat-label>
+                  <mat-select formControlName="numeroSerieMateriels" [(ngModel)]="idNumeroMateriel"> <!-- Permet d'ajouter id présent dans value à data pour l'envoyer en post -->
+                    <mat-option *ngFor="let numero of listeNumeroSerieMateriel" [value]=numero.idMateriel>{{ numero.numeroSerie }}</mat-option> <!-- [value] permet de récupérer directement la valeur de l'objet -->
+                  </mat-select>
+                  <mat-error *ngIf="formControl.get('numeroSerieMateriels')?.hasError('required')"> 
+                    Le numéro de série est <strong>obligatoire</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+      
+            <h3 class="mb-3 mt-4">Dates de réservation</h3>
+              <div class="form-row">
+                <div class="row d-flex justify-content-center">
+                  <div class="col-lg-4 mb-4">
+                    <p>Date de début*</p>
+                    <mat-form-field appearance="fill">
+                      <mat-label>Date début</mat-label>
+                      <input  formControlName="datesEmprunt" type="date" matInput [(ngModel)]="dateDebutReservation"/>
+                      <mat-error *ngIf="formControl.get('datesEmprunt')?.hasError('required')"> 
+                        La date de début est <strong>obligatoire</strong>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+      
+                  <div class="col-lg-3 mb-3">
+                    <p>Date de fin*</p>
+                    <mat-form-field appearance="fill">
+                      <mat-label>Date fin</mat-label>
+                      <input  formControlName="datesEmprunt" type="date" matInput [(ngModel)]="dateFinReservation"/>
+                      <mat-error *ngIf="formControl.get('datesEmprunt')?.hasError('required')"> 
+                        La date de fin est <strong>obligatoire</strong>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+      
+                  <!-- <div class="col-lg-4 mb-3">
+                    <label for="validationDefault01">Date de début d'emprunt*</label>
+                    <input type="date" class="form-control" id="validationDefault01" required>
+                  </div>
+                  <div class="col-lg-4 mb-3">
+                    <label for="validationDefault02">Date fin d'emprunt*</label>
+                    <input type="date" class="form-control" id="validationDefault02" required>
+                  </div> -->
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-center">
+                <button class="btn btnEnregistrer px-4" type="submit" (click)="EnregistrerReservation()">Enregistrer une réservation</button>
+            </div>
+              </form>
 
         <!-- -----------------------------------Création de compte ---------------------- -->
 

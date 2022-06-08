@@ -16,6 +16,7 @@ export class EtudiantGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    this.tokenIdentification.raffraichirUtilisateur();
     if(this.tokenIdentification.utilisateur.value != null && this.tokenIdentification.utilisateur.value.droits.includes("ROLE_UTILISATEUR")){
       return true;
     }

@@ -132,6 +132,21 @@
         <div class="pageGestionnaire">
             <div class="container">
 
+                <ng-container *ngIf="messageValidationCreationCompte" >
+                    <div class="alert alert-success messageValidation d-flex justify-content-center">
+                      <mat-icon class="iconInfo">check_circle</mat-icon>
+                      <span>{{ messageValidationCreationCompte }}</span>
+                      <mat-icon class="iconClose" (click)="closePopUpCreationCompte()">close</mat-icon>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="messageErreurValidationCreationCompte">
+                    <div class="alert alert-danger messageValidation">
+                      <mat-icon class="iconInfo">error</mat-icon>
+                      {{ messageErreurValidationCreationCompte }}
+                      <mat-icon class="iconClose" (click)="closePopUpCreationCompte()">close</mat-icon>
+                    </div>
+                  </ng-container>
+
                 <form [formGroup]="formControl" #registerFrom="ngForm" (ngSubmit)="donneesFormulaire(registerFrom.value)">
                     <h2 class="text-center text-black mb-5">Création de compte Utilisateur</h2>
                     <h3 class="mb-3">Informations personnelles</h3>
@@ -225,9 +240,9 @@
 
                             <div class="col-lg-3 mb-3">
                                 <mat-form-field appearance="fill">
-                                  <mat-label>Statut*</mat-label>
-                                  <mat-select formControlName="listeStatut" [(ngModel)]="idStatut">  <!-- Permet d'ajouter id présent dans value à data pour l'envoyer en post -->
-                             <mat-option *ngFor="let role of listeStatut" [value]=role.id>{{role.role}}</mat-option> <!--  [value] permet de récupérer directement la valeur de l'objet -->
+                                  <mat-label>Statut</mat-label>
+                                  <mat-select formControlName="idStatut" >  <!-- Permet d'ajouter id présent dans value à data pour l'envoyer en post -->
+                             <mat-option *ngFor="let role of idStatut" [value]=role.id>{{role.role}}</mat-option> <!--  [value] permet de récupérer directement la valeur de l'objet -->
                             </mat-select>
                                   <mat-error *ngIf="formControl.get('listeStatut')?.hasError('required')"> 
                                     Le statut est <strong>obligatoire</strong>
@@ -263,10 +278,10 @@
         <!-- -----------------------------------Filtre de recherche Gestion du Parc ---------------------- -->
         <div class="filtre">
             <div class="col-lg-3 mb-5">
+                <p style="color: white;">À partir du : </p>
                 <input type="date" class="form-control" id="validationDefault01" required>
             </div>
             
-        
             <div class="col-lg-3 mb-3" style="background-color: white;">
                 <mat-form-field appearance="fill">
                   <mat-label>Matériel</mat-label>
@@ -279,23 +294,11 @@
             <div class="col-lg-3 mb-3" style="background-color: white;">
                 <mat-form-field appearance="fill">
                   <mat-label>Lieu</mat-label>
-                  <mat-select formControlName="lieuxStockage">  <!-- Permet d'ajouter id présent dans value à data pour l'envoyer en post -->
-             <mat-option *ngFor="let lieu of lieuxStockage" [value]=lieu.idStock>{{lieu.nomLieuStockage}}</mat-option> <!--  [value] permet de récupérer directement la valeur de l'objet -->
+                  <mat-select formControlName="listeLieuStockage" > 
+            <mat-option *ngFor="let lieu of listeLieuStockage" [value]=lieu.idLieuStockage>{{lieu.nomLieuStockage}}</mat-option> <!--  [value] permet de récupérer directement la valeur de l'objet -->
             </mat-select>
                 </mat-form-field>
             </div>
-        
-            
-            <!-- <div class="col-lg-3 mb-3">
-                <select class="form-select" aria-label="Default select example">
-                    <option class="espace" selected>Sélectionner un matériel</option>
-                    <option class="espace"></option>
-                    <option class="espace" value="1">Pc</option>
-                    <option class="espace" value="2">Casque VR</option>
-                    <option class="espace" value="3">Webcam</option>
-                    <option class="espace" value="4">Projecteur</option>
-                </select>
-            </div> -->
 
             <!-- <div class="col-lg-3 mb-3">
                 <select class="form-select" aria-label="Default select example">
@@ -310,7 +313,7 @@
 
 
         <div class="d-flex justify-content-center">
-            <button class="btnRechercher btn-lg px-4" type="submit">Rechercher</button>
+            <button  class="btnRechercher btn-lg px-4" type="submit">Rechercher</button>
         </div>
 
         <!-- -----------------------------------------Tableau Gestion du Parc ---------------------- -->
@@ -318,22 +321,22 @@
         <table class="table table-light">
             <thead>
                 <tr>
-                    <th scope="col">Emprunteur</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prénom</th>
                     <th scope="col">Stock</th>
-                    <th scope="col">Localisation</th>
                     <th scope="col">Etat</th>
-                    <th scope="col">Documents techniques</th>
-                    <th scope="col">Mode opératoire</th>
+                    <!-- <th scope="col">Documents techniques</th>
+                    <th scope="col">Mode opératoire</th> -->
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <th scope="row">1</th>
+                    <td scope="row">John</td>
+                    <td scope="row">Smith</td>
                     <td>Disponible 60</td>
-                    <td>Emprunté par élève</td>
                     <td>Emprunté</td>
-                    <td>Pilotes d'installations</td>
-                    <td>@mdo</td>
+                    <!-- <td>Pilotes d'installations</td>
+                    <td>@mdo</td> -->
                 </tr>
             </tbody>
         </table>

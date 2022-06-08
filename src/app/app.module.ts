@@ -45,7 +45,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatIconModule
     
   ],
   providers: [{provide : HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi : true}],

@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { TokenIdentificationService } from '../token-identification.service';
 import { ConnexionDeconnexionService } from '../connexion-deconnexion.service';
-import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 
 
 @Component({

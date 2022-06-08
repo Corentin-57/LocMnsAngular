@@ -11,7 +11,7 @@ import { PageGestionnaireComponent } from './page-gestionnaire/page-gestionnaire
 const routes: Routes = [ //Définir les differentes routes pour accéder aux composants
 {path: "", component: AccueilComponent}, //Lancement app envoie sur page accueil
 {path: "accueil", component: AccueilComponent},
-{path: "page-etudiant", component: PageEtudiantComponent}, //, canActivate: [EtudiantGuard]
+{path: "page-etudiant", component: PageEtudiantComponent, canActivate: [EtudiantGuard]},
 {path: "page-gestionnaire", component: PageGestionnaireComponent , canActivate: [GestionnaireGuard]},
 {path: "contact", component: ContactComponent},
 {path: "connexion", component: ConnexionComponent}

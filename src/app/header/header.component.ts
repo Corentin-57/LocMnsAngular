@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { ConnexionDeconnexionService } from '../connexion-deconnexion.service';
 import { TokenIdentificationService } from '../token-identification.service';
 

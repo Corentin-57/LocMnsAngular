@@ -12,16 +12,19 @@
     font-size: 15px;
     border-radius: 30px;
     border: none;
+    margin-bottom: 30px;
 }
 
 h2{
     font-size: 35px;
+    color: white;
+    font-weight: bold;
 }
 
 h3{
     font-size: 25px;
     color: #E9731D ;
-    padding-bottom: 20px;
+    padding-bottom: 40px;
 }
 
 .pageEtudiant{
@@ -39,6 +42,26 @@ form{
     margin-top: 100px;
 }
 
-.formulaire{
-    padding-bottom: 100px;
+.iconInfo{
+    margin-right: 10px;
+}
+
+.iconClose{
+    //margin-left: auto; voir responsive
+    margin-left: 40px;
+}
+
+.messageValidation{
+    display: flex;
+    justify-content: start;
+    align-items: flex-end;
+}
+
+.titreDemandeLocation{
+    color: black;
+    padding-top: 50px;
+}
+
+.titreMaterielLocation{
+    padding-top: 200px;
 }

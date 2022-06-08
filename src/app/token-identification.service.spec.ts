@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TokenIdenticationService } from './token-identication.service';
+import { TokenIdentificationService } from './token-identification.service';
 
 describe('TokenIdenticationService', () => {
-  let service: TokenIdenticationService;
+  let service: TokenIdentificationService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(TokenIdenticationService);
+    service = TestBed.inject(TokenIdentificationService);
   });
 
   it('should be created', () => {

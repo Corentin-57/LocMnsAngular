@@ -1,6 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
-import { Etudiant } from './etudiant';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { DysfonctionnementsComponent } from '../dialog/etudiant/dysfonctionnements/dysfonctionnements.component';
+import { ProlongationComponent } from '../dialog/etudiant/prolongation/prolongation.component';
+import { RetourComponent } from '../dialog/etudiant/retour/retour.component';
+import { TokenIdentificationService } from '../token-identification.service';
 
 @Component({
   selector: 'app-page-etudiant',
@@ -9,43 +14,157 @@ import { Etudiant } from './etudiant';
 })
 export class PageEtudiantComponent implements OnInit {
 
-  public etudiant: Etudiant = new Etudiant();
+  private descriptif: string = "";
+  private dateDysfonctionnement!: Date;  
 
-  public contactForm!:FormGroup;
-  public contactForm1!:FormGroup;
-  public contactForm2!:FormGroup;
-  public contactForm3!:FormGroup;
-  public statutUtilisateur = [ {name:"Etudiant"}, {name:"Intervenant"} ];
-  public materiel = [ {name: "Ordinateur"}, {name: "Webcam"}, {name: "Projecteur"}, {name: "Casque VR"}];
-  public lieu = [ {name: "MNS"}, {name: "IFA"} ];
-  public cadreUtilisation = [ {name: "Cours"}, {name: "Salon professionnel"}, {name: "Réunion"}, {name: "Location longue"},];
+  private dateProlongation!: Date;
 
-  constructor(private formBuilder:FormBuilder) { }
+  private dateDemandeRetour!: Date;
+
+  private idMateriel!: number;  
+  private idUtilisateur!: number;
+  private donneesSaisies!: {};
+
+  public errorMessage!: string;
+  public successMessage!: string;
+
+  public messageValidationRequete!: string;
+  public messageErreurRequete!: string;
+
+  public donneesDemandeMateriel!:any;
+  public listeTypesMateriel: any;
+  public idTypeMateriel!: number;
+
+  public listeModeles!: any;
+  public idModele!: number;
+
+  public listeCadresUtilisation!: any;
+  public idCadreUtilisation!: number;
+
+  public dateDebutEmprunt!: Date;
+  public dateFinEmprunt!: Date;
+
+  constructor(
+    public dialog: MatDialog,
+    private http: HttpClient,
+    private tokenIdentification: TokenIdentificationService,
+    private formBuilder: FormBuilder,
+  ) { }
 
   ngOnInit(): void {
-    this.contactForm = this.formBuilder.group( { statutUtilisateur: [null]});
-    this.contactForm1 = this.formBuilder.group({ materiel: [null]});
-    this.contactForm2 = this.formBuilder.group({ lieu: [null]});
-    this.contactForm3 = this.formBuilder.group({ cadreUtilisation: [null]});
+            this.tokenIdentification.raffraichirUtilisateur();
+            this.tokenIdentification.utilisateur.subscribe(
+              utilisateur =>{
+                this.idUtilisateur = utilisateur.id
+              }
+          ); 
+          this.http.get("http://localhost:8080/liste-typeMateriels").subscribe(reponse => this.listeTypesMateriel = reponse); //Récupére la liste des types de matériel
+
+          this.http.get("http://localhost:8080/liste-modeles").subscribe(reponse => this.listeModeles = reponse); //Récupére la liste des modèles
+          
+          this.http.get("http://localhost:8080/liste-cadres-utilisation").subscribe(reponse => this.listeCadresUtilisation = reponse); //Récupére la liste des cadres d'utilisation
+          
   }
 
-  public donneesEtudiant(registerForm : NgForm) {
-    console.log(registerForm.form);
-    console.log('valeurs: ', JSON.stringify(registerForm.value));
-    console.log('hello');
-    console.log(this.contactForm.value)
+  openDialogDysfonctionnement(): void {
+    const dialogRef = this.dialog.open(DysfonctionnementsComponent, {
+      width: '500px',
+      data: {descriptif: this.descriptif, dateDysfonctionnement: this.dateDysfonctionnement, utilisateur : {id : this.idUtilisateur}, materiel: {idMateriel: this.idMateriel}},
+    });
+
+      dialogRef.afterClosed().subscribe(result => {
+        this.donneesSaisies = result;
+
+          if(this.donneesSaisies != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
+            this.http.post('http://localhost:8080/saisir-dysfonctionnement', this.donneesSaisies,{responseType: 'text'} )
+              .subscribe(
+                (reponse) => {
+                  this.successMessage = reponse;
+                },
+                (error) => {
+                  this.errorMessage = "Une erreur est survenue, veuillez réessayer plus tard";
+                }
+              )
+          }
+        })  
   }
 
-  submitListe() {
-    console.log("FORM Submitted")
-    console.log('valeurs liste déroulante: ', JSON.stringify(this.contactForm.value));
-    console.log('valeurs liste déroulante: ', JSON.stringify(this.contactForm1.value));
-    console.log(this.contactForm.value);
-    console.log(this.contactForm1.value);
-    console.log(this.contactForm2.value);
-    console.log(this.contactForm3.value);
 
+  openDialogProlongation(): void {
+    const dialogRef = this.dialog.open(ProlongationComponent, {
+      width: '500px',
+      data: {dateProlongation: this.dateProlongation, utilisateur : {id : this.idUtilisateur}, materiel: {idMateriel: this.idMateriel}},
+    });
+
+      dialogRef.afterClosed().subscribe(result => {
+        this.donneesSaisies = result;
+
+          if(this.donneesSaisies != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
+            this.http.post('http://localhost:8080/demande-prolongation', this.donneesSaisies,{responseType: 'text'} )
+              .subscribe(
+                (reponse) => {
+                  this.successMessage = reponse;
+                },
+                (error) => {
+                  this.errorMessage = "Une erreur est survenue, veuillez réessayer plus tard";
+                }
+              )
+          }
+        })  
   }
 
+  openDialogRetour(): void {
+    const dialogRef = this.dialog.open(RetourComponent, {
+      width: '500px',
+      data: {dateDemandeRetour: this.dateDemandeRetour, utilisateur : {id : this.idUtilisateur}, materiel: {idMateriel: this.idMateriel}},
+    });
+
+      dialogRef.afterClosed().subscribe(result => {
+        this.donneesSaisies = result;
+          if(this.donneesSaisies != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
+            this.http.post('http://localhost:8080/demande-retour', this.donneesSaisies,{responseType: 'text'} )
+              .subscribe(
+                (reponse) => {
+                  this.successMessage = reponse;
+                },
+                (error) => {
+                  this.errorMessage = "Une erreur est survenue, veuillez réessayer plus tard";
+                }
+              )
+          }
+        })  
+  }
+
+  public cacherMessage(): void{
+    this.errorMessage = "";
+    this.successMessage = "";
+    this.messageErreurRequete = "";
+    this.messageValidationRequete = "";
+  }
+
+  public formControl:FormGroup = this.formBuilder.group(
+    {
+      "typeMateriel": ["", [Validators.required]],
+      "modele": ["", [Validators.required]],
+      "cadreUtilisation": ["", [Validators.required]],
+      "datesEmprunt" : ["", [Validators.required]],
+    }
+  )
+
+  envoyerFormulaire(): void{ //Envoie demande emprunt
+    this.donneesDemandeMateriel = {typeMateriel: {idType: this.idTypeMateriel}, materiel: {modele: {idModele: this.idModele}}, cadreUtilisation: {idCadre: this.idCadreUtilisation}, dateEmprunt: this.dateDebutEmprunt, dateRetour: this.dateFinEmprunt, utilisateur : {id : this.idUtilisateur}, contient: {idCadre: this.idCadreUtilisation} };
+
+    this.http.post('http://localhost:8080/demande-emprunt', this.donneesDemandeMateriel,{responseType: 'text'} )
+    .subscribe(
+      (reponse) => {
+        this.messageValidationRequete = reponse;
+      },
+      (error) => {
+        this.messageErreurRequete = "Une erreur est survenue, veuillez réessayer plus tard";
+      }
+    )
+
+  }
+          
 
 }

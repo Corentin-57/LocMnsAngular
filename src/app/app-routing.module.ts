@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AccueilComponent } from './accueil/accueil.component';
 import { ConnexionComponent } from './connexion/connexion.component';
 import { ContactComponent } from './contact/contact.component';
+import { EtudiantGuard } from './etudiant.guard';
+import { GestionnaireGuard } from './gestionnaire.guard';
 import { PageEtudiantComponent } from './page-etudiant/page-etudiant.component';
 import { PageGestionnaireComponent } from './page-gestionnaire/page-gestionnaire.component';
 
@@ -10,10 +12,10 @@ import { PageGestionnaireComponent } from './page-gestionnaire/page-gestionnaire
 const routes: Routes = [ //Définir les differente routes pour accéder aux composants
 {path: "", component: AccueilComponent},
 {path: "accueil", component: AccueilComponent},
-{path: "page-etudiant", component: PageEtudiantComponent},
+{path: "page-etudiant", component: PageEtudiantComponent, canActivate:[EtudiantGuard]},
 {path: "contact", component: ContactComponent},
 {path: "connexion", component: ConnexionComponent},
-{path: "page-gestionnaire", component: PageGestionnaireComponent}
+{path: "page-gestionnaire", component: PageGestionnaireComponent, canActivate:[GestionnaireGuard]}
 ];
 
 @NgModule({

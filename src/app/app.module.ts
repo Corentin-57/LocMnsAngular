@@ -20,6 +20,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TokenInterceptor } from './token.interceptor';
 import { MatSelectModule } from '@angular/material/select';
+import { DysfonctionnementsComponent } from './dialog/etudiant/dysfonctionnements/dysfonctionnements.component';
+import { ProlongationComponent } from './dialog/etudiant/prolongation/prolongation.component';
+import { RetourComponent } from './dialog/etudiant/retour/retour.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -31,7 +35,10 @@ import { MatSelectModule } from '@angular/material/select';
     PageGestionnaireComponent,
     HeaderComponent,
     AccueilComponent,
-    PageEtudiantComponent
+    PageEtudiantComponent,
+    DysfonctionnementsComponent,
+    ProlongationComponent,
+    RetourComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +53,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule
     
   ],
   providers: [{provide : HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi : true}],

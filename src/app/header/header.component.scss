@@ -6,6 +6,18 @@
     margin-right: 10px;
 }
 
+.seDeconnecter{
+    background-color: red;
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 50px;
+    margin-right: 10px;
+}
+
+.active{
+    text-decoration: underline;
+}
+
 .nav-link{
     color: black;
     font-weight: bold;
@@ -13,14 +25,10 @@
     margin-right: 20px;
 }
 
-// Permet de souligner dans le Header la page ou on se trouve
-.active{
-    text-decoration: underline;
-}
-
 .titreLogo{
     margin-left: 20px;
     font-size: 35px;
+    font-weight: bold;
 }
 
 @media screen and (max-width: 600px){ //fait disparaitre le titre locMNS sur écran inférieur à 600px
@@ -35,4 +43,8 @@
         margin-left: 0;
         margin-right: 0;
     }
+}
+
+.container-fluid{
+    margin: 0;
 }

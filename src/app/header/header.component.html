@@ -1,24 +1,28 @@
 <div class="header">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-      <div class="container-fluid">
-        <a class="navbar-brand">
-          <img [src]="cheminLogo" alt="Logo du site" width="100" height="100"/>
-          <span class="titreLogo"><strong> Loc'MNS </strong></span>
-        </a>
-        
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav ms-auto">
-            <a class="nav-link" aria-current="page" [routerLink]="['accueil']" [routerLinkActive]="['active']">Accueil</a>
-            <a class="nav-link" [routerLink]="['page-etudiant']" [routerLinkActive]="['active']">Tableau de bord</a>
-            <a class="nav-link" [routerLink]="['contact']" [routerLinkActive]="['active']">Contact</a>
-          </div>
-        </div>
-        <div class="d-flex justify-content-end">
-          <button type="button" class="btn seConnecter" [routerLink]="['connexion']">Se connecter</button>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img [src]="cheminLogo" alt="Logo du site" width="100" height="100"/>
+        <span class="titreLogo">Loc'MNS</span>
+      </a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav ms-auto">
+          <a class="nav-link" aria-current="page" [routerLink]="['accueil']" [routerLinkActive]="['active']">Accueil</a>
+          <a class="nav-link" [routerLink]="['page-etudiant']" [routerLinkActive]="['active']" *ngIf="!lienTableauBord">Tableau de bord</a>
+          <a class="nav-link" [routerLink]="['page-gestionnaire']" [routerLinkActive]="['active']" *ngIf="lienTableauBord">Tableau de bord</a>
+          <a class="nav-link" [routerLink]="['contact']" [routerLinkActive]="['active']">Contact</a>
         </div>
       </div>
-    </nav> 
+      <div class="d-flex justify-content-end">
+        <button *ngIf="!utilisateurConnecte" type="button" class="btn seConnecter btn-warning" [routerLink]="['connexion']">Se connecter</button>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button *ngIf="utilisateurConnecte" type="button" class="btn seDeconnecter btn-warning" (click)="Deconnexion()" [routerLink]="['connexion']">Deconnexion</button>
+      </div>
+    </div>
+  </nav> 
 </div>

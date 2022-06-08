@@ -13,7 +13,7 @@
               <p class="text-white-50 ">Entrez votre email et votre mot de passe</p>
               
               <mat-form-field appearance="fill">
-                  <mat-label>mail</mat-label>
+                  <mat-label>Email</mat-label>
                   <input formControlName="mail" matInput/>
                   <mat-error *ngIf="formControl.get('mail')?.hasError('required')"> <!-- protège le fait que valeur soit potentiellement nulle --> 
                     L'email est <strong>obligatoire</strong>
@@ -31,7 +31,7 @@
                   </mat-error>
               </mat-form-field>
 
-              <p class="small"><a class="text-white-50" href="#!">Créer votre compte</a></p>
+              
 
               <button class="btn1 btn-outline-dark btn-lg px-5 "  type="submit">Se connecter</button>
                         

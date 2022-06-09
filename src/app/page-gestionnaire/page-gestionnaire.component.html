@@ -297,22 +297,21 @@
         <div class="pageGestionnaire">
             <div class="container">
 
-                <ng-container *ngIf="messageValidationCreationCompte" >
-                    <div class="alert alert-success messageValidation d-flex justify-content-center">
-                      <mat-icon class="iconInfo">check_circle</mat-icon>
-                      <span>{{ messageValidationCreationCompte }}</span>
-                      <mat-icon class="iconClose" (click)="closePopUpCreationCompte()">close</mat-icon>
-                    </div>
-                  </ng-container>
-                  <ng-container *ngIf="messageErreurValidationCreationCompte">
-                    <div class="alert alert-danger messageValidation">
-                      <mat-icon class="iconInfo">error</mat-icon>
-                      {{ messageErreurValidationCreationCompte }}
-                      <mat-icon class="iconClose" (click)="closePopUpCreationCompte()">close</mat-icon>
-                    </div>
-                  </ng-container>
-
                 <form [formGroup]="formControl" #registerFrom="ngForm" (ngSubmit)="donneesFormulaire(registerFrom.value)">
+                    <ng-container *ngIf="messageValidationCreationCompte" >
+                        <div class="alert alert-success messageValidation d-flex justify-content-center">
+                          <mat-icon class="iconInfo">check_circle</mat-icon>
+                          <span>{{ messageValidationCreationCompte }}</span>
+                          <mat-icon class="iconClose" (click)="closePopUpCreationCompte()">close</mat-icon>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngIf="messageErreurValidationCreationCompte">
+                        <div class="alert alert-danger messageValidation">
+                          <mat-icon class="iconInfo">error</mat-icon>
+                          {{ messageErreurValidationCreationCompte }}
+                          <mat-icon class="iconClose" (click)="closePopUpCreationCompte()">close</mat-icon>
+                        </div>
+                      </ng-container>
                     <h2 class="text-center text-black mb-5">Création de compte Utilisateur</h2>
                     <h3 class="mb-3">Informations personnelles</h3>
                     <div class="form-row">

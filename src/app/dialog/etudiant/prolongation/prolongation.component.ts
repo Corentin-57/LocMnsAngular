@@ -3,6 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TokenIdentificationService } from 'src/app/token-identification.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-prolongation',
@@ -30,7 +31,7 @@ export class ProlongationComponent implements OnInit {
       }
     );
 
-  this.http.get("http://localhost:8080/liste-materiels-utilisateur/" + this.idUtilisateur).subscribe(reponse => this.listeNumSerieMateriels = reponse); //Récupére la liste matériels des utilisateurs à chaque chargement du pop up
+  this.http.get("http://" + environment.adresseServeur + "/liste-materiels-utilisateur/" + this.idUtilisateur).subscribe(reponse => this.listeNumSerieMateriels = reponse); //Récupére la liste matériels des utilisateurs à chaque chargement du pop up
   }
 
   public formControl:FormGroup = this.formBuilder.group(

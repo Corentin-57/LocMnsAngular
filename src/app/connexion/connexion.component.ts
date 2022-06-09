@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { TokenIdentificationService } from '../token-identification.service';
 import { ConnexionDeconnexionService } from '../connexion-deconnexion.service';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -42,7 +43,7 @@ constructor(
 
     if(this.formControl.valid){
       const utilisateur = this.formControl.value; //Récupère un objet avec les champs précisés
-      this.client.post("http://localhost:8080/connexion", utilisateur) //Passe un objet utilisateur transformé en Java
+      this.client.post("http://" + environment.adresseServeur + "/connexion", utilisateur) //Passe un objet utilisateur transformé en Java
       .subscribe((resultat:any) =>{
         if(resultat.erreur){
           alert(resultat.erreur) //Affiche le message mauvais login/ mot de passe dans Spring

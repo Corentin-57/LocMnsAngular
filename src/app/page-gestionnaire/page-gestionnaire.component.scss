@@ -12,7 +12,7 @@ h1{
     text-align: center;
     color: white;
     margin-bottom: 50px;
-    margin-top: 150px;
+    padding-top: 200px;
 }
 
 h2{
@@ -20,7 +20,7 @@ h2{
     font-weight: bolder;
     text-align: center;
     color: white;
-    margin-top: 70px;
+    padding-top: 70px;
     margin-bottom: 40px;
 }
 
@@ -43,6 +43,7 @@ h3{
     padding-left: 100px;
     padding-right: 100px;
     margin-top: 30px;
+    border: none;
 }
 
 .btnEnregistrer:hover {
@@ -81,7 +82,6 @@ h3{
     justify-content: space-between;
     align-items: flex-start;
     align-content: flex-start;
-    
 }
 
 //---------------------- Création de compte----------------------------------------
@@ -110,15 +110,11 @@ h2{
     margin-top: 20px;
 }
 
-
-// Pop-up création de compte
-
 .iconInfo{
     margin-right: 10px;
 }
 
 .iconClose{
-    //margin-left: auto; voir responsive
     margin-left: 40px;
 }
 
@@ -128,6 +124,19 @@ h2{
     align-items: flex-end;
 }
 
+.datePrevue {
+    color: green;
+}
 
+.dateRetoursouhaité{
+    color: orange;
+    font-weight: bold;
+}
 
-
+.demandesUtilisateur{
+    color: red;
+    font-weight: bold;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+}

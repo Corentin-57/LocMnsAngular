@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { environment } from 'src/environments/environment';
 import { DysfonctionnementsComponent } from '../dialog/etudiant/dysfonctionnements/dysfonctionnements.component';
 import { ProlongationComponent } from '../dialog/etudiant/prolongation/prolongation.component';
 import { RetourComponent } from '../dialog/etudiant/retour/retour.component';
@@ -58,11 +59,11 @@ export class PageEtudiantComponent implements OnInit {
                 this.idUtilisateur = utilisateur.id
               }
           ); 
-          this.http.get("http://localhost:8080/liste-typeMateriels").subscribe(reponse => this.listeTypesMateriel = reponse); //Récupére la liste des types de matériel
+          this.http.get("http://"+ environment.adresseServeur +"/liste-typeMateriels").subscribe(reponse => this.listeTypesMateriel = reponse); //Récupére la liste des types de matériel
 
-          this.http.get("http://localhost:8080/liste-modeles").subscribe(reponse => this.listeModeles = reponse); //Récupére la liste des modèles
+          this.http.get("http://"+ environment.adresseServeur +"/liste-modeles").subscribe(reponse => this.listeModeles = reponse); //Récupére la liste des modèles
           
-          this.http.get("http://localhost:8080/liste-cadres-utilisation").subscribe(reponse => this.listeCadresUtilisation = reponse); //Récupére la liste des cadres d'utilisation
+          this.http.get("http://"+ environment.adresseServeur +"/liste-cadres-utilisation").subscribe(reponse => this.listeCadresUtilisation = reponse); //Récupére la liste des cadres d'utilisation
           
   }
 
@@ -76,7 +77,7 @@ export class PageEtudiantComponent implements OnInit {
         this.donneesSaisies = result;
 
           if(this.donneesSaisies != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
-            this.http.post('http://localhost:8080/saisir-dysfonctionnement', this.donneesSaisies,{responseType: 'text'} )
+            this.http.post('http://"+ environment.adresseServeur +"/saisir-dysfonctionnement', this.donneesSaisies,{responseType: 'text'} )
               .subscribe(
                 (reponse) => {
                   this.successMessage = reponse;
@@ -100,7 +101,7 @@ export class PageEtudiantComponent implements OnInit {
         this.donneesSaisies = result;
 
           if(this.donneesSaisies != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
-            this.http.post('http://localhost:8080/demande-prolongation', this.donneesSaisies,{responseType: 'text'} )
+            this.http.post('http://"+ environment.adresseServeur +"/demande-prolongation', this.donneesSaisies,{responseType: 'text'} )
               .subscribe(
                 (reponse) => {
                   this.successMessage = reponse;
@@ -122,7 +123,7 @@ export class PageEtudiantComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         this.donneesSaisies = result;
           if(this.donneesSaisies != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
-            this.http.post('http://localhost:8080/demande-retour', this.donneesSaisies,{responseType: 'text'} )
+            this.http.post('http://"+ environment.adresseServeur +"/demande-retour', this.donneesSaisies,{responseType: 'text'} )
               .subscribe(
                 (reponse) => {
                   this.successMessage = reponse;
@@ -154,7 +155,7 @@ export class PageEtudiantComponent implements OnInit {
   envoyerFormulaire(): void{ //Envoie demande emprunt
     this.donneesDemandeMateriel = {typeMateriel: {idType: this.idTypeMateriel}, materiel: {modele: {idModele: this.idModele}}, cadreUtilisation: {idCadre: this.idCadreUtilisation}, dateEmprunt: this.dateDebutEmprunt, dateRetour: this.dateFinEmprunt, utilisateur : {id : this.idUtilisateur}, contient: {idCadre: this.idCadreUtilisation} };
 
-    this.http.post('http://localhost:8080/demande-emprunt', this.donneesDemandeMateriel,{responseType: 'text'} )
+    this.http.post('http://"+ environment.adresseServeur +"/demande-emprunt', this.donneesDemandeMateriel,{responseType: 'text'} )
     .subscribe(
       (reponse) => {
         this.messageValidationRequete = reponse;

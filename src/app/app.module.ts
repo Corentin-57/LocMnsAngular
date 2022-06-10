@@ -27,6 +27,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { DysfonctionnementsComponent } from './dialog/etudiant/dysfonctionnements/dysfonctionnements.component';
 import { ProlongationComponent } from './dialog/etudiant/prolongation/prolongation.component';
 import { RetourComponent } from './dialog/etudiant/retour/retour.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 
 @NgModule({
@@ -58,7 +59,10 @@ import { RetourComponent } from './dialog/etudiant/retour/retour.component';
     MatDialogModule,
     MatSelectModule,
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+    {provide: LocationStrategy, useClass: HashLocationStrategy}, //Permet d'effectuer hash approach pour raffraichissement page (erreur 404)
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

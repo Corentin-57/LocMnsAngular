@@ -1,4 +1,4 @@
-import { Injectable, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -20,13 +20,15 @@ import {MatIconModule} from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TokenInterceptor } from './token.interceptor';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
 
 
 import { DysfonctionnementsComponent } from './dialog/etudiant/dysfonctionnements/dysfonctionnements.component';
 import { ProlongationComponent } from './dialog/etudiant/prolongation/prolongation.component';
 import { RetourComponent } from './dialog/etudiant/retour/retour.component';
+import { RouterModule } from '@angular/router';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 
 @NgModule({
@@ -57,8 +59,13 @@ import { RetourComponent } from './dialog/etudiant/retour/retour.component';
     MatInputModule,
     MatDialogModule,
     MatSelectModule,
+    RouterModule,
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+            {provide: MatDialogRef, useValue: {} },
+            {provide: MAT_DIALOG_DATA, useValue: {} },
+            {provide: LocationStrategy, useClass: HashLocationStrategy}, //Permet d'effectuer hash approach pour raffraichissement page (erreur 404)
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

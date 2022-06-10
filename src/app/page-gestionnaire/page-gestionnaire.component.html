@@ -65,22 +65,23 @@
 
         <h3>Demandes de prêts</h3>
         <!-- -------------------------------------Tableau nouvelle demande de prêt---------------------- -->
-        <ng-container *ngIf="messageValidationDemandeEmprunt">
+        
+        <ng-container *ngIf="messageValidationDemandeEmprunt" >
             <div class="alert alert-success messageValidation d-flex justify-content-center">
-                <mat-icon class="iconInfo">check_circle</mat-icon>
-                <span>{{ messageValidationDemandeEmprunt }}</span>
-                <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
+              <mat-icon class="iconInfo">check_circle</mat-icon>
+              <span>{{ messageValidationDemandeEmprunt }}</span>
+              <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
             </div>
-        </ng-container>
-        <ng-container *ngIf="messageErreurValidationDemandeEmprunt">
+          </ng-container>
+          <ng-container *ngIf="messageErreurValidationDemandeEmprunt">
             <div class="alert alert-danger messageValidation d-flex justify-content-center">
-                <mat-icon class="iconInfo">error</mat-icon>
-                {{ messageErreurValidationDemandeEmprunt }}
-                <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
+              <mat-icon class="iconInfo">error</mat-icon>
+              {{ messageErreurValidationDemandeEmprunt }}
+              <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
             </div>
-        </ng-container>
-
-        <table class="table table-light">
+          </ng-container>
+        
+        <table class="table table-light overflow-auto">
             <thead>
                 <tr>
                     <!-- <th scope="col">#</th> -->
@@ -109,32 +110,32 @@
                     <td>{{ liste.dateRetour | date:'d/MM/yyyy' }}</td>
 
                     <td>
-                        <a type="submit" class="btn btn-outline-success" role="button"
-                            (click)="validerDemandeEmprunt(liste.idEmprunt)">Valider</a>
-                        <a type="submit" class="btn btn-outline-danger" role="button"
-                            (click)="supprimerDemandeEmprunt(liste.idEmprunt)">Supprimer</a>
+                        <a type="submit" class="btn btn-outline-success" role="button" (click)="validerDemandeEmprunt(liste.idEmprunt)">Valider</a>
+                        <a type="submit" class="btn btn-outline-danger"  role="button" (click)="supprimerDemandeEmprunt(liste.idEmprunt)">Supprimer</a>
                     </td>
                 </tr>
             </tbody>
         </table>
+    
 
         <h3>Demandes retour de prêt</h3>
         <!-- -----------------------------------------Tableau retour prêt ---------------------- -->
-        <ng-container *ngIf="messageValidationRetourEmprunt">
+        
+        <ng-container *ngIf="messageValidationRetourEmprunt" >
             <div class="alert alert-success messageValidation d-flex justify-content-center">
-                <mat-icon class="iconInfo">check_circle</mat-icon>
-                <span>{{ messageValidationRetourEmprunt }}</span>
-                <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
+              <mat-icon class="iconInfo">check_circle</mat-icon>
+              <span>{{ messageValidationRetourEmprunt }}</span>
+              <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
             </div>
-        </ng-container>
-        <ng-container *ngIf="messageErreurValidationRetourEmprunt">
+          </ng-container>
+          <ng-container *ngIf="messageErreurValidationRetourEmprunt">
             <div class="alert alert-danger messageValidation d-flex justify-content-center">
-                <mat-icon class="iconInfo">error</mat-icon>
-                {{ messageErreurValidationRetourEmprunt }}
-                <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
+              <mat-icon class="iconInfo">error</mat-icon>
+              {{ messageErreurValidationRetourEmprunt }}
+              <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
             </div>
-        </ng-container>
-
+          </ng-container>
+        
         <table class="table table-light">
             <thead>
                 <tr>
@@ -162,34 +163,32 @@
                     <td class="dateRetoursouhaité">{{ liste.dateDemandeRetour | date:'d/MM/yyyy' }}</td>
 
                     <td>
-                        <a type="submit" class="btn btn-outline-success" role="button"
-                            (click)="validerRetourEmprunt(liste.idEmprunt)">Valider</a>
-                        <a type="submit" class="btn btn-outline-danger" role="button"
-                            (click)="supprimerDemandeRetour(liste.idEmprunt)">Supprimer</a>
+                        <a type="submit" class="btn btn-outline-success" role="button" (click)="validerRetourEmprunt(liste.idEmprunt)">Valider</a>
+                        <a type="submit" class="btn btn-outline-danger"  role="button" (click)="supprimerDemandeRetour(liste.idEmprunt)">Supprimer</a>
                     </td>
                 </tr>
             </tbody>
-        </table> 
-        
+        </table>
+
         <!-- -----------------------------------------Tableau prolongation prêt ---------------------- -->
 
         <h3>Demandes de prolongation</h3>
 
-        <ng-container *ngIf="messageValidationProlongationEmprunt">
+        <ng-container *ngIf="messageValidationProlongationEmprunt" >
             <div class="alert alert-success messageValidation d-flex justify-content-center">
-                <mat-icon class="iconInfo">check_circle</mat-icon>
-                <span>{{ messageValidationProlongationEmprunt }}</span>
-                <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
+              <mat-icon class="iconInfo">check_circle</mat-icon>
+              <span>{{ messageValidationProlongationEmprunt }}</span>
+              <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
             </div>
-        </ng-container>
-        <ng-container *ngIf="messageErreurValidationProlongationEmprunt">
+          </ng-container>
+          <ng-container *ngIf="messageErreurValidationProlongationEmprunt">
             <div class="alert alert-danger messageValidation d-flex justify-content-center">
-                <mat-icon class="iconInfo">error</mat-icon>
-                {{ messageErreurValidationProlongationEmprunt }}
-                <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
+              <mat-icon class="iconInfo">error</mat-icon>
+              {{ messageErreurValidationProlongationEmprunt }}
+              <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
             </div>
-        </ng-container>
-
+          </ng-container>
+        
         <table class="table table-light">
             <thead>
                 <tr>
@@ -216,16 +215,12 @@
                     <td class="dateRetoursouhaité">{{ liste.dateProlongation | date:'d/MM/yyyy' }}</td>
 
                     <td>
-                        <a type="submit" class="btn btn-outline-success" role="button"
-                            (click)="validerProlongationEmprunt(liste.idEmprunt)">Valider</a>
-                        <a type="submit" class="btn btn-outline-danger" role="button"
-                            (click)="supprimerProlongationEmprunt(liste.idEmprunt)">Supprimer</a>
+                        <a type="submit" class="btn btn-outline-success" role="button" (click)="validerProlongationEmprunt(liste.idEmprunt)">Valider</a>
+                        <a type="submit" class="btn btn-outline-danger"  role="button" (click)="supprimerProlongationEmprunt(liste.idEmprunt)">Supprimer</a>
                     </td>
                 </tr>
             </tbody>
         </table>
-
-        <!-- -----------------------------------------Réservation ---------------------- -->
 
         <!-- <div class="titre">
             <h2>Réservation</h2>
@@ -234,99 +229,90 @@
         <form [formGroup]="formControl">
 
 
-            <ng-container *ngIf="messageValidationReservation">
-                <div class="alert alert-warning messageValidation d-flex justify-content-center">
-                    <mat-icon class="iconInfo">check_circle</mat-icon>
-                    <span>{{ messageValidationReservation }}</span>
-                    <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
-                </div>
-            </ng-container>
-            <ng-container *ngIf="messageErreurReservation">
-                <div class="alert alert-danger messageValidation d-flex justify-content-center">
-                    <mat-icon class="iconInfo">error</mat-icon>
-                    {{ messageErreurReservation }}
-                    <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
-                </div>
-            </ng-container>
-
+        <ng-container *ngIf="messageValidationReservation" >
+            <div class="alert alert-warning messageValidation d-flex justify-content-center">
+              <mat-icon class="iconInfo">check_circle</mat-icon>
+              <span>{{ messageValidationReservation }}</span>
+              <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="messageErreurReservation">
+            <div class="alert alert-danger messageValidation d-flex justify-content-center">
+              <mat-icon class="iconInfo">error</mat-icon>
+              {{ messageErreurReservation }}
+              <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
+            </div>
+          </ng-container>
+      
             <h3 class="mb-3 mt-4">Informations matériel</h3>
             <div class="row d-flex justify-content-center">
-                <div class="col-lg-4 mb-4">
-                    <p>Sélectionnez le numéro de série du matériel*</p>
-                    <mat-form-field appearance="fill">
-                        <mat-label>Numéro matériel</mat-label>
-                        <mat-select formControlName="numeroSerieMateriels" [(ngModel)]="idNumeroMateriel">
-                            
-                            <mat-option *ngFor="let numero of listeNumeroSerieMateriel" [value]=numero.idMateriel>{{
-                                numero.numeroSerie }}</mat-option>
-                            
-                        </mat-select>
-                        <mat-error *ngIf="formControl.get('numeroSerieMateriels')?.hasError('required')">
-                            Le numéro de série est <strong>obligatoire</strong>
-                        </mat-error>
-                    </mat-form-field>
-                </div>
+              <div class="col-lg-4 mb-4">
+                <p>Sélectionnez le numéro de série du matériel*</p>
+                <mat-form-field appearance="fill">
+                  <mat-label>Numéro matériel</mat-label>
+                  <mat-select formControlName="numeroSerieMateriels" [(ngModel)]="idNumeroMateriel"> //Permet d'ajouter id présent dans value à data pour l'envoyer en post 
+                    <mat-option *ngFor="let numero of listeNumeroSerieMateriel" [value]=numero.idMateriel>{{ numero.numeroSerie }}</mat-option> //[value] permet de récupérer directement la valeur de l'objet
+                  </mat-select>
+                  <mat-error *ngIf="formControl.get('numeroSerieMateriels')?.hasError('required')"> 
+                    Le numéro de série est <strong>obligatoire</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
             </div>
-
-
-
+      
             <h3 class="mb-3 mt-4">Dates de réservation</h3>
-            <div class="form-row">
+              <div class="form-row">
                 <div class="row d-flex justify-content-center">
-                    <div class="col-lg-4 mb-4">
-                        <p>Date de début*</p>
-                        <mat-form-field appearance="fill">
-                            <mat-label>Date début</mat-label>
-                            <input formControlName="datesEmprunt" type="date" matInput
-                                [(ngModel)]="dateDebutReservation" />
-                            <mat-error *ngIf="formControl.get('datesEmprunt')?.hasError('required')">
-                                La date de début est <strong>obligatoire</strong>
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-
-                    <div class="col-lg-3 mb-3">
-                        <p>Date de fin*</p>
-                        <mat-form-field appearance="fill">
-                            <mat-label>Date fin</mat-label>
-                            <input formControlName="datesEmprunt" type="date" matInput
-                                [(ngModel)]="dateFinReservation" />
-                            <mat-error *ngIf="formControl.get('datesEmprunt')?.hasError('required')">
-                                La date de fin est <strong>obligatoire</strong>
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
+                  <div class="col-lg-4 mb-4">
+                    <p>Date de début*</p>
+                    <mat-form-field appearance="fill">
+                      <mat-label>Date début</mat-label>
+                      <input  formControlName="datesEmprunt" type="date" matInput [(ngModel)]="dateDebutReservation"/>
+                      <mat-error *ngIf="formControl.get('datesEmprunt')?.hasError('required')"> 
+                        La date de début est <strong>obligatoire</strong>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+      
+                  <div class="col-lg-3 mb-3">
+                    <p>Date de fin*</p>
+                    <mat-form-field appearance="fill">
+                      <mat-label>Date fin</mat-label>
+                      <input  formControlName="datesEmprunt" type="date" matInput [(ngModel)]="dateFinReservation"/>
+                      <mat-error *ngIf="formControl.get('datesEmprunt')?.hasError('required')"> 
+                        La date de fin est <strong>obligatoire</strong>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+      
                 </div>
-            </div>
+              </div>
 
-            <div class="d-flex justify-content-center">
-                <button class="btn btnEnregistrer px-4" type="submit" (click)="EnregistrerReservation()">Enregistrer une
-                    réservation</button>
+              <div class="d-flex justify-content-center">
+                <button class="btn btnEnregistrer px-4" type="submit" (click)="EnregistrerReservation()">Enregistrer une réservation</button>
             </div>
-        </form> -->
+              </form> -->
 
         <!-- -----------------------------------Création de compte ---------------------- -->
 
         <div class="pageGestionnaire">
             <div class="container">
 
-                <ng-container *ngIf="messageValidationCreationCompte">
-                    <div class="alert alert-success messageValidation d-flex justify-content-center">
-                        <mat-icon class="iconInfo">check_circle</mat-icon>
-                        <span>{{ messageValidationCreationCompte }}</span>
-                        <mat-icon class="iconClose" (click)="closePopUpCreationCompte()">close</mat-icon>
-                    </div>
-                </ng-container>
-                <ng-container *ngIf="messageErreurValidationCreationCompte">
-                    <div class="alert alert-danger messageValidation">
-                        <mat-icon class="iconInfo">error</mat-icon>
-                        {{ messageErreurValidationCreationCompte }}
-                        <mat-icon class="iconClose" (click)="closePopUpCreationCompte()">close</mat-icon>
-                    </div>
-                </ng-container>
-
-                <form [formGroup]="formControl" #registerFrom="ngForm"
-                    (ngSubmit)="donneesFormulaire(registerFrom.value)">
+                <form [formGroup]="formControl" #registerFrom="ngForm" (ngSubmit)="donneesFormulaire(registerFrom.value)">
+                    <ng-container *ngIf="messageValidationCreationCompte" >
+                        <div class="alert alert-success messageValidation d-flex justify-content-center">
+                          <mat-icon class="iconInfo">check_circle</mat-icon>
+                          <span>{{ messageValidationCreationCompte }}</span>
+                          <mat-icon class="iconClose" (click)="closePopUpCreationCompte()">close</mat-icon>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngIf="messageErreurValidationCreationCompte">
+                        <div class="alert alert-danger messageValidation">
+                          <mat-icon class="iconInfo">error</mat-icon>
+                          {{ messageErreurValidationCreationCompte }}
+                          <mat-icon class="iconClose" (click)="closePopUpCreationCompte()">close</mat-icon>
+                        </div>
+                      </ng-container>
                     <h2 class="text-center text-black mb-5">Création de compte Utilisateur</h2>
                     <h3 class="mb-3">Informations personnelles</h3>
                     <div class="form-row">
@@ -334,7 +320,8 @@
                             <div class="col-lg-4 mb-3">
                                 <mat-form-field appearance="fill">
                                     <label>Nom*</label>
-                                    <input type="text" class="form-control" required formControlName="nom" matInput>
+                                    <input type="text" class="form-control" required formControlName="nom"
+                                        matInput>
                                     <mat-error *ngIf="formControl.get('nom')?.hasError('required')">
                                         Le nom est <strong>obligatoire</strong>
                                     </mat-error>
@@ -343,7 +330,8 @@
                             <div class="col-lg-4 mb-3">
                                 <mat-form-field appearance="fill">
                                     <label>Prénom*</label>
-                                    <input type="text" class="form-control" required formControlName="prenom" matInput>
+                                    <input type="text" class="form-control" required formControlName="prenom"
+                                        matInput>
                                     <mat-error *ngIf="formControl.get('prenom')?.hasError('required')">
                                         Le prénom est <strong>obligatoire</strong>
                                     </mat-error>
@@ -352,8 +340,8 @@
                             <div class="col-lg-3 mb-3">
                                 <mat-form-field appearance="fill">
                                     <label>Choisir un mot de passe*</label>
-                                    <input type="password" class="form-control" required formControlName="motDePasse"
-                                        matInput>
+                                    <input type="password" class="form-control" required
+                                        formControlName="motDePasse" matInput>
                                     <mat-error *ngIf="formControl.get('motDePasse')?.hasError('required')">
                                         Le mot de passe est <strong>obligatoire</strong>
                                     </mat-error>
@@ -365,7 +353,7 @@
                                 <mat-form-field appearance="fill">
                                     <label>Adresse*</label>
                                     <input type="text" class="form-control" placeholder="Numéro et nom de rue" required
-                                        formControlName="adresse" matInput>
+                                         formControlName="adresse" matInput>
                                     <mat-error *ngIf="formControl.get('adresse')?.hasError('required')">
                                         L'adresse est <strong>obligatoire</strong>
                                     </mat-error>
@@ -374,7 +362,8 @@
                             <div class="col-lg-3 mb-3">
                                 <mat-form-field appearance="fill">
                                     <label>Ville*</label>
-                                    <input type="text" class="form-control" required formControlName="ville" matInput>
+                                    <input type="text" class="form-control" required formControlName="ville"
+                                        matInput>
                                     <mat-error *ngIf="formControl.get('ville')?.hasError('required')">
                                         La ville est <strong>obligatoire</strong>
                                     </mat-error>
@@ -383,8 +372,8 @@
                             <div class="col-lg-3 mb-3">
                                 <mat-form-field appearance="fill">
                                     <label>Code postal*</label>
-                                    <input type="text" class="form-control" required formControlName="codePostale"
-                                        matInput>
+                                    <input type="text" class="form-control" required
+                                        formControlName="codePostale" matInput>
                                     <mat-error *ngIf="formControl.get('codePostale')?.hasError('required')">
                                         Le code postale est <strong>obligatoire</strong>
                                     </mat-error>
@@ -396,7 +385,7 @@
                                 <mat-form-field appearance="fill">
                                     <label>Mail*</label>
                                     <input type="text" class="form-control" placeholder="exemple@gmail.com" required
-                                        formControlName="mail" matInput>
+                                         formControlName="mail" matInput>
                                     <mat-error *ngIf="formControl.get('mail')?.hasError('required')">
                                         Le mail est <strong>obligatoire</strong>
                                     </mat-error>
@@ -406,8 +395,8 @@
                             <div class="col-lg-3 mb-3">
                                 <mat-form-field appearance="fill">
                                     <label>Numéro de téléphone*</label>
-                                    <input type="tel" class="form-control" required formControlName="numeroTelephone"
-                                        matInput>
+                                    <input type="tel" class="form-control" required
+                                        formControlName="numeroTelephone" matInput>
                                     <mat-error *ngIf="formControl.get('numeroTelephone')?.hasError('required')">
                                         Le numéro de téléphone est <strong>obligatoire</strong>
                                     </mat-error>
@@ -416,18 +405,15 @@
 
                             <div class="col-lg-3 mb-3">
                                 <mat-form-field appearance="fill">
-                                    <mat-label>Statut</mat-label>
-                                    <mat-select formControlName="idStatut">
-                                        <!-- Permet d'ajouter id présent dans value à data pour l'envoyer en post -->
-                                        <mat-option *ngFor="let role of idStatut" [value]=role.id>{{role.role}}
-                                        </mat-option>
-                                        <!--  [value] permet de récupérer directement la valeur de l'objet -->
-                                    </mat-select>
-                                    <mat-error *ngIf="formControl.get('listeStatut')?.hasError('required')">
-                                        Le statut est <strong>obligatoire</strong>
-                                    </mat-error>
+                                  <mat-label>Statut</mat-label>
+                                  <mat-select formControlName="idStatut" >  <!-- Permet d'ajouter id présent dans value à data pour l'envoyer en post -->
+                             <mat-option *ngFor="let role of idStatut" [value]=role.id>{{role.role}}</mat-option> <!--  [value] permet de récupérer directement la valeur de l'objet -->
+                            </mat-select>
+                                  <mat-error *ngIf="formControl.get('listeStatut')?.hasError('required')"> 
+                                    Le statut est <strong>obligatoire</strong>
+                                  </mat-error>
                                 </mat-form-field>
-                            </div>
+                            </div>   
 
                             <!-- <div class="col-lg-3 mb-3">
                             <form [formGroup]="contactForm" (ngSubmit)="submitListe()">
@@ -445,8 +431,7 @@
 
                     <div class="d-flex justify-content-center">
                         <!-- [disabled] permet d'afficher le bouton uniquement lorsque toutes les données sont renseigner -->
-                        <button [disabled]="!this.formControl.valid" class="btn boutonFormulaire mb-5"
-                            type="submit">Envoyer</button>
+                        <button [disabled]="!this.formControl.valid" class="btn boutonFormulaire mb-5" type="submit">Envoyer</button>
                     </div>
                 </form>
             </div>
@@ -515,6 +500,8 @@
         </table>
         <br>
         <br> -->
+        <br>
+        <br>
 
     </div>
 </div>

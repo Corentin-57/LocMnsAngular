@@ -1,6 +1,8 @@
 
 .page-gestionnaire{
     background-attachment: scroll ;
+    background-color: #313E6f;
+    overflow-y: auto ;
 }
 
 
@@ -35,9 +37,6 @@ h3{
     margin-bottom: 20px;
 }
 
-.card{
-    background-color: rgb(17, 95, 183, 0.1);
-}
 
 //-------------------------Bouton Enregistrer Réservation---------------------
 
@@ -103,7 +102,7 @@ h3{
 }
 
 form{
-    background-color: rgb(17, 95, 183, 0.1);
+    background-color: white;
     margin-top: 100px;
     padding: 30px;
     border-radius: 30px;

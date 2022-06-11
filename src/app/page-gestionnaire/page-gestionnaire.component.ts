@@ -184,7 +184,7 @@ donneesFormulaire(donnees: { nom: string, prenom: string, motDePasse: string, ad
   }
 
   validerDemandeEmprunt(idEmprunt: number){
-    this.http.post("http://" + environment.adresseServeur + "/gestionnaire/valider-demande-emprunt", {idEmprunt: idEmprunt},{responseType: 'text'} )
+    this.http.post("http://" + environment.adresseServeur + "/gestionnaire/valider-demande-emprunt/" + this.idUtilisateurConnecte, {idEmprunt: idEmprunt},{responseType: 'text'} )
     .subscribe(
       (reponse) => {
         this.messageValidationDemandeEmprunt = reponse;
@@ -214,7 +214,7 @@ donneesFormulaire(donnees: { nom: string, prenom: string, motDePasse: string, ad
   }
 
   validerRetourEmprunt(idEmprunt: number){
-    this.http.put("http://" + environment.adresseServeur + "/gestionnaire/valider-retour-emprunt", {idEmprunt: idEmprunt},{responseType: 'text'} )
+    this.http.put("http://" + environment.adresseServeur + "/gestionnaire/valider-retour-emprunt/" + this.idUtilisateurConnecte, {idEmprunt: idEmprunt},{responseType: 'text'} )
     .subscribe(
       (reponse) => {
         this.messageValidationRetourEmprunt = reponse;
@@ -243,7 +243,7 @@ donneesFormulaire(donnees: { nom: string, prenom: string, motDePasse: string, ad
   }
 
   validerProlongationEmprunt(idEmprunt: number){
-    this.http.put("http://" + environment.adresseServeur + "/gestionnaire/valider-prolongation-emprunt", {idEmprunt: idEmprunt},{responseType: 'text'} )
+    this.http.put("http://" + environment.adresseServeur + "/gestionnaire/valider-prolongation-emprunt/" + this.idUtilisateurConnecte, {idEmprunt: idEmprunt},{responseType: 'text'} )
     .subscribe(
       (reponse) => {
         this.messageValidationProlongationEmprunt = reponse;

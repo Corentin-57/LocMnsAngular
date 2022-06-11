@@ -75,6 +75,7 @@ export class PageEtudiantComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         this.donneesSaisies = result;
+        console.log(this.donneesSaisies);
 
           if(this.donneesSaisies != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
             this.http.post("http://"+ environment.adresseServeur +"/saisir-dysfonctionnement", this.donneesSaisies,{responseType: 'text'} )
@@ -153,7 +154,7 @@ export class PageEtudiantComponent implements OnInit {
   )
 
   envoyerFormulaire(): void{ //Envoie demande emprunt
-    this.donneesDemandeMateriel = {typeMateriel: {idType: this.idTypeMateriel}, materiel: {modele: {idModele: this.idModele}}, cadreUtilisation: {idCadre: this.idCadreUtilisation}, dateEmprunt: this.dateDebutEmprunt, dateRetour: this.dateFinEmprunt, utilisateur : {id : this.idUtilisateur}, contient: {idCadre: this.idCadreUtilisation} };
+    this.donneesDemandeMateriel = {typeMateriel: {idType: this.idTypeMateriel}, materiel: {modele: {idModele: this.idModele}}, cadreUtilisation: {idCadre: this.idCadreUtilisation}, dateEmprunt: this.dateDebutEmprunt + " 00:00:00", dateRetour: this.dateFinEmprunt + " 00:00:00", utilisateur : {id : this.idUtilisateur}, contient: {idCadre: this.idCadreUtilisation} };
 
     this.http.post("http://" + environment.adresseServeur + "/demande-emprunt", this.donneesDemandeMateriel,{responseType: 'text'} )
     .subscribe(

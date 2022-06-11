@@ -24,6 +24,7 @@ export class PageGestionnaireComponent implements OnInit {
 
   public idEmprunt!: number;
   public idNumeroMateriel!: number;
+  public idNumeroMaterielHistorique!: number;
 
   public idStatut!: any;
 
@@ -34,6 +35,7 @@ export class PageGestionnaireComponent implements OnInit {
   public listeNumeroSerieMateriel!: any;
   public listeMateriel: any;
   public listeLieuStockage: any;
+  public listeHistoriqueMateriels: any;
   
   public nombreDemandesEmprunt!: number;
   public nombreRetoursEmprunt!: number;
@@ -77,8 +79,15 @@ export class PageGestionnaireComponent implements OnInit {
       "codePostale": ["", [Validators.required]],
       "mail": ["", [Validators.required]],
       "numeroTelephone": ["", [Validators.required]],
-      //"numeroSerieMateriels": ["", [Validators.required]],
       "idStatut": ["", [Validators.required]],
+    }
+  );
+
+  public formControlReservation: FormGroup = this.formBuilder.group(
+    {
+      "numeroSerieMateriels": ["", [Validators.required]],
+      "dateEmpruntReservation":  ["", [Validators.required]],
+      "dateRetourReservation":  ["", [Validators.required]],
     }
   );
 
@@ -94,7 +103,6 @@ export class PageGestionnaireComponent implements OnInit {
     this.http.get("http://" + environment.adresseServeur + "/liste-statut").subscribe(reponse => this.idStatut = reponse); //permet de récupérer la liste depuis la BDD
     this.http.get("http://" + environment.adresseServeur + "/liste-typeMateriels").subscribe(reponse => this.listeMateriel = reponse);
     this.http.get("http://" + environment.adresseServeur + "/gestionnaire/liste-lieuxStockage").subscribe(reponse => this.listeLieuStockage = reponse);
-    //this.http.get("http://" + environment.adresseServeur + "/liste-typeMateriels").subscribe(reponse => this.listeTypesMateriel = reponse)
     
     this.tokenIdentification.raffraichirUtilisateur();
 
@@ -117,6 +125,7 @@ export class PageGestionnaireComponent implements OnInit {
     this.affichageNombreMaterielDefectueux();
     this.affichageNombreMaterielRetard();
     this.affichageNombreMaterielOperationnel();
+    this.affichageHitoriqueMateriels();
 
 
   }
@@ -261,10 +270,10 @@ donneesFormulaire(donnees: { nom: string, prenom: string, motDePasse: string, ad
     )
   }
 
-  EnregistrerReservation(): void{ //Envoie demande emprunt
-    this.donneesReservation = {materiel: {idMateriel: this.idNumeroMateriel}, dateEmprunt: this.dateDebutReservation, dateRetour: this.dateFinReservation, gestionnaire : {id : this.idUtilisateurConnecte }};
+  EnregistrerReservation(){ //Envoie demande emprunt
+    this.donneesReservation = {materiel: {idMateriel: this.idNumeroMateriel}, dateEmprunt: this.dateDebutReservation + " 00:00:00", dateRetour: this.dateFinReservation + " 00:00:00", gestionnaire: {id : this.idUtilisateurConnecte} };
     console.log(this.donneesReservation);
-    this.http.post("http://" + environment.adresseServeur + "/demande-reservation", this.donneesReservation,{responseType: 'text'} )
+    this.http.post("http://" + environment.adresseServeur + "/gestionnaire/demande-reservation", this.donneesReservation,{responseType: 'text'} )
     .subscribe(
       (reponse) => {
         this.messageValidationReservation = reponse;
@@ -273,8 +282,13 @@ donneesFormulaire(donnees: { nom: string, prenom: string, motDePasse: string, ad
         this.messageErreurReservation = "Une erreur est survenue, veuillez réessayer plus tard";
       }
     )
-
   }
+
+  affichageHitoriqueMateriels(){
+    this.http.get("http://" + environment.adresseServeur + "/gestionnaire/historique-materiels").subscribe(reponse => /*console.log(reponse)*/ this.listeHistoriqueMateriels = reponse);
+  }
+
+
 
   public cacherMessage(): void{
     this.messageValidationDemandeEmprunt = "";

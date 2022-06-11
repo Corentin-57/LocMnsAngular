@@ -76,7 +76,7 @@ export class PageGestionnaireComponent implements OnInit {
       "mail": ["", [Validators.required]],
       "numeroTelephone": ["", [Validators.required]],
       "idStatut": ["", [Validators.required]],
-      "numeroSerieMateriels": ["", [Validators.required]],
+      //"numeroSerieMateriels": ["", [Validators.required]],
     }
   );
 

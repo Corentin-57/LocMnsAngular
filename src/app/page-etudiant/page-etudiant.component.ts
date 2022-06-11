@@ -77,7 +77,7 @@ export class PageEtudiantComponent implements OnInit {
         this.donneesSaisies = result;
 
           if(this.donneesSaisies != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
-            this.http.post('http://"+ environment.adresseServeur +"/saisir-dysfonctionnement', this.donneesSaisies,{responseType: 'text'} )
+            this.http.post("http://"+ environment.adresseServeur +"/saisir-dysfonctionnement", this.donneesSaisies,{responseType: 'text'} )
               .subscribe(
                 (reponse) => {
                   this.successMessage = reponse;
@@ -101,7 +101,7 @@ export class PageEtudiantComponent implements OnInit {
         this.donneesSaisies = result;
 
           if(this.donneesSaisies != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
-            this.http.post('http://"+ environment.adresseServeur +"/demande-prolongation', this.donneesSaisies,{responseType: 'text'} )
+            this.http.post("http://"+ environment.adresseServeur +"/demande-prolongation", this.donneesSaisies,{responseType: 'text'} )
               .subscribe(
                 (reponse) => {
                   this.successMessage = reponse;
@@ -123,7 +123,7 @@ export class PageEtudiantComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         this.donneesSaisies = result;
           if(this.donneesSaisies != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
-            this.http.post('http://"+ environment.adresseServeur +"/demande-retour', this.donneesSaisies,{responseType: 'text'} )
+            this.http.post("http://"+ environment.adresseServeur +"/demande-retour", this.donneesSaisies,{responseType: 'text'} )
               .subscribe(
                 (reponse) => {
                   this.successMessage = reponse;
@@ -155,7 +155,7 @@ export class PageEtudiantComponent implements OnInit {
   envoyerFormulaire(): void{ //Envoie demande emprunt
     this.donneesDemandeMateriel = {typeMateriel: {idType: this.idTypeMateriel}, materiel: {modele: {idModele: this.idModele}}, cadreUtilisation: {idCadre: this.idCadreUtilisation}, dateEmprunt: this.dateDebutEmprunt, dateRetour: this.dateFinEmprunt, utilisateur : {id : this.idUtilisateur}, contient: {idCadre: this.idCadreUtilisation} };
 
-    this.http.post('http://"+ environment.adresseServeur +"/demande-emprunt', this.donneesDemandeMateriel,{responseType: 'text'} )
+    this.http.post("http://"+ environment.adresseServeur +"/demande-emprunt", this.donneesDemandeMateriel,{responseType: 'text'} )
     .subscribe(
       (reponse) => {
         this.messageValidationRequete = reponse;

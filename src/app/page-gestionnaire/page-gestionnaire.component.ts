@@ -121,7 +121,7 @@ export class PageGestionnaireComponent implements OnInit {
   donneesFormulaire(donnees: { nom: string, prenom: string, motDePasse: string, adresse: string, ville: string, codePostale: string, mail: string, numeroTelephone: string, statut: { idStatut: number } }) {
 
     //this.donneesFormulaire = donnees: {nom : donnees.nom, prenom: donnees.prenom, motDePasse:donnees.motDePasse, adresse:donnees.adresse, ville:donnees.ville, codePostale:donnees.codePostale, mail:donnees.mail, numeroTelephone:donnees, statut: {idStatut: number} })
-    this.http.post('http://"+ environment.adresseServeur +"/donnees-CreationCompte', donnees, { responseType: 'text' })
+    this.http.post("http://"+ environment.adresseServeur +"/donnees-CreationCompte", donnees, { responseType: 'text' })
       .subscribe((response) => {
         this.messageValidationCreationCompte = response;
         alert("Le compte à bien été crée")
@@ -177,7 +177,7 @@ export class PageGestionnaireComponent implements OnInit {
   }
 
   validerDemandeEmprunt(idEmprunt: number){
-    this.http.post('http://"+ environment.adresseServeur +"/gestionnaire/valider-demande-emprunt', {idEmprunt: idEmprunt},{responseType: 'text'} )
+    this.http.post("http://"+ environment.adresseServeur +"/gestionnaire/valider-demande-emprunt", {idEmprunt: idEmprunt},{responseType: 'text'} )
     .subscribe(
       (reponse) => {
         this.messageValidationDemandeEmprunt = reponse;
@@ -192,7 +192,7 @@ export class PageGestionnaireComponent implements OnInit {
   }
 
   supprimerDemandeEmprunt(idEmprunt: number){
-    this.http.delete('http://"+ environment.adresseServeur +"/gestionnaire/supprimer-demande-emprunt/' + idEmprunt,{responseType: 'text'} )
+    this.http.delete("http://"+ environment.adresseServeur +"/gestionnaire/supprimer-demande-emprunt/" + idEmprunt,{responseType: 'text'} )
     .subscribe(
       (reponse) => {
         this.messageValidationDemandeEmprunt = reponse;
@@ -207,7 +207,7 @@ export class PageGestionnaireComponent implements OnInit {
   }
 
   validerRetourEmprunt(idEmprunt: number){
-    this.http.put('http://"+ environment.adresseServeur +"/gestionnaire/valider-retour-emprunt', {idEmprunt: idEmprunt},{responseType: 'text'} )
+    this.http.put("http://"+ environment.adresseServeur +"/gestionnaire/valider-retour-emprunt", {idEmprunt: idEmprunt},{responseType: 'text'} )
     .subscribe(
       (reponse) => {
         this.messageValidationRetourEmprunt = reponse;
@@ -221,7 +221,7 @@ export class PageGestionnaireComponent implements OnInit {
   }
 
   supprimerDemandeRetour(idEmprunt: number){
-    this.http.put('http://"+ environment.adresseServeur +"/gestionnaire/supprimer-retour-emprunt', {idEmprunt: idEmprunt}, {responseType: 'text'} )
+    this.http.put("http://"+ environment.adresseServeur +"/gestionnaire/supprimer-retour-emprunt", {idEmprunt: idEmprunt}, {responseType: 'text'} )
     .subscribe(
       (reponse) => {
         this.messageValidationRetourEmprunt = reponse;
@@ -236,7 +236,7 @@ export class PageGestionnaireComponent implements OnInit {
   }
 
   validerProlongationEmprunt(idEmprunt: number){
-    this.http.put('http://"+ environment.adresseServeur +"/gestionnaire/valider-prolongation-emprunt', {idEmprunt: idEmprunt},{responseType: 'text'} )
+    this.http.put("http://"+ environment.adresseServeur +"/gestionnaire/valider-prolongation-emprunt", {idEmprunt: idEmprunt},{responseType: 'text'} )
     .subscribe(
       (reponse) => {
         this.messageValidationProlongationEmprunt = reponse;
@@ -250,7 +250,7 @@ export class PageGestionnaireComponent implements OnInit {
   }
 
   supprimerProlongationEmprunt(idEmprunt: number){
-    this.http.put('http://"+ environment.adresseServeur +"/gestionnaire/supprimer-prolongation-emprunt', {idEmprunt: idEmprunt}, {responseType: 'text'} )
+    this.http.put("http://"+ environment.adresseServeur +"/gestionnaire/supprimer-prolongation-emprunt", {idEmprunt: idEmprunt}, {responseType: 'text'} )
     .subscribe(
       (reponse) => {
         this.messageValidationProlongationEmprunt = reponse;
@@ -266,7 +266,7 @@ export class PageGestionnaireComponent implements OnInit {
   EnregistrerReservation(): void{ //Envoie demande emprunt
     this.donneesReservation = {materiel: {idMateriel: this.idNumeroMateriel}, dateEmprunt: this.dateDebutReservation, dateRetour: this.dateFinReservation, gestionnaire : {id : this.idUtilisateurConnecte }};
     console.log(this.donneesReservation);
-    this.http.post('http://"+ environment.adresseServeur +"/demande-reservation', this.donneesReservation,{responseType: 'text'} )
+    this.http.post("http://"+ environment.adresseServeur +"/demande-reservation", this.donneesReservation,{responseType: 'text'} )
     .subscribe(
       (reponse) => {
         this.messageValidationReservation = reponse;

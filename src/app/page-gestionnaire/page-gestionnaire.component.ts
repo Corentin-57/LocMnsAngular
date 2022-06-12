@@ -2,8 +2,10 @@
 import { HttpClient} from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { DemandeEmpruntComponent } from '../dialog/gestionnaire/demande-emprunt/demande-emprunt.component';
 import { TokenIdentificationService } from '../token-identification.service';
 
 
@@ -25,6 +27,7 @@ export class PageGestionnaireComponent implements OnInit {
   public idEmprunt!: number;
   public idNumeroMateriel!: number;
   public idNumeroMaterielHistorique!: number;
+  public idMateriel!: number;
 
   public idStatut!: any;
 
@@ -61,6 +64,12 @@ export class PageGestionnaireComponent implements OnInit {
   public messageValidationCreationCompte!: any;
   public messageErreurValidationCreationCompte!: any;
 
+  public messageValidationModificationDemandeEmprunt!: string;
+  public messageErreurModificationDemandeEmprunt!: string;
+
+  public donneesSaisies!: any;
+
+
   public dateDemandeEprunt!: Date;
   public dateDemandeRetour!: Date;
   public dateDebutReservation!: Date;
@@ -94,8 +103,8 @@ export class PageGestionnaireComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private tokenIdentification: TokenIdentificationService,
-    private router: Router,
-    private formBuilder:FormBuilder
+    private formBuilder:FormBuilder,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -288,6 +297,30 @@ donneesFormulaire(donnees: { nom: string, prenom: string, motDePasse: string, ad
     this.http.get("http://" + environment.adresseServeur + "/gestionnaire/historique-materiels").subscribe(reponse => /*console.log(reponse)*/ this.listeHistoriqueMateriels = reponse);
   }
 
+  openDialogModificationDemandeEmprunt(idEmprunt: number): void {
+    const dialogRef = this.dialog.open(DemandeEmpruntComponent, {
+      width: '500px',
+      data: { materiel: {idMateriel: this.idMateriel}, idEmprunt : idEmprunt},
+    });
+
+      dialogRef.afterClosed().subscribe(result => {
+        this.donneesSaisies = result;
+
+          if(this.donneesSaisies != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
+            this.http.put("http://"+ environment.adresseServeur +"/gestionnaire/modification-demande-emprunt", this.donneesSaisies,{responseType: 'text'} )
+              .subscribe(
+                (reponse) => {
+                  this.messageValidationModificationDemandeEmprunt = reponse;
+                  this.affichageDemandesPret();
+                },
+                (error) => {
+                  this.messageErreurModificationDemandeEmprunt = "Une erreur est survenue, veuillez réessayer plus tard";
+                }
+              )
+          }
+        })  
+  }
+
 
 
   public cacherMessage(): void{
@@ -299,6 +332,8 @@ donneesFormulaire(donnees: { nom: string, prenom: string, motDePasse: string, ad
     this.messageValidationProlongationEmprunt = "";
     this.messageValidationReservation = "";
     this.messageErreurReservation = "";
+    this.messageValidationModificationDemandeEmprunt = "";
+    this.messageErreurModificationDemandeEmprunt = "";
   }
 
   closePopUpCreationCompte() {

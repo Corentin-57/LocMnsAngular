@@ -29,6 +29,7 @@ import { ProlongationComponent } from './dialog/etudiant/prolongation/prolongati
 import { RetourComponent } from './dialog/etudiant/retour/retour.component';
 import { RouterModule } from '@angular/router';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { DemandeEmpruntComponent } from './dialog/gestionnaire/demande-emprunt/demande-emprunt.component';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     DysfonctionnementsComponent,
     ProlongationComponent,
     RetourComponent,
+    DemandeEmpruntComponent,
   ],
   imports: [
     BrowserModule,

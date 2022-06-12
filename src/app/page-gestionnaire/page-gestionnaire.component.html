@@ -64,6 +64,21 @@
         </div>
 
         <h3>Demandes de prêt</h3>
+
+        <ng-container *ngIf="messageValidationModificationDemandeEmprunt" >
+            <div class="alert alert-success messageValidation d-flex justify-content-center">
+              <mat-icon class="iconInfo">check_circle</mat-icon>
+              <span>{{ messageValidationModificationDemandeEmprunt }}</span>
+              <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="messageErreurModificationDemandeEmprunt">
+            <div class="alert alert-danger messageValidation d-flex justify-content-center">
+              <mat-icon class="iconInfo">error</mat-icon>
+              {{ messageErreurModificationDemandeEmprunt }}
+              <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
+            </div>
+          </ng-container>
         <!-- -------------------------------------Tableau nouvelle demande de prêt---------------------- -->
         
         <ng-container *ngIf="messageValidationDemandeEmprunt" >
@@ -111,6 +126,7 @@
 
                     <td>
                         <a type="submit" class="btn btn-outline-success" role="button" (click)="validerDemandeEmprunt(liste.idEmprunt)">Valider</a>
+                        <a type="submit" class="btn btn-outline-warning" role="button" (click)="openDialogModificationDemandeEmprunt(liste.idEmprunt)">Modifier</a>
                         <a type="submit" class="btn btn-outline-danger"  role="button" (click)="supprimerDemandeEmprunt(liste.idEmprunt)">Supprimer</a>
                     </td>
                 </tr>
@@ -300,6 +316,10 @@
         <div class="pageGestionnaire">
             <div class="container">
 
+                <div class="titre">
+                    <h2>Création de compte utilisateur</h2>
+                </div>
+
                 <form [formGroup]="formControl" #registerFrom="ngForm" (ngSubmit)="donneesFormulaire(registerFrom.value)">
                     <ng-container *ngIf="messageValidationCreationCompte" >
                         <div class="alert alert-success messageValidation d-flex justify-content-center">
@@ -315,7 +335,6 @@
                           <mat-icon class="iconClose" (click)="closePopUpCreationCompte()">close</mat-icon>
                         </div>
                       </ng-container>
-                    <h2 class="text-center text-black mb-5">Création de compte Utilisateur</h2>
                     <h3 class="mb-3">Informations personnelles</h3>
                     <div class="form-row">
                         <div class="row">

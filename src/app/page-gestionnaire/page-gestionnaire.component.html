@@ -8,7 +8,7 @@
             <div class="col-12 col-md-6 col-lg-4 mb-3">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Demandes d'emprunt</h4>
+                        <h4 class="card-title">Demandes de prêt</h4>
                         <p class="card-text demandesUtilisateur">{{ nombreDemandesEmprunt }} </p>
                     </div>
                 </div>
@@ -99,7 +99,6 @@
         <table class="table table-light overflow-auto">
             <thead>
                 <tr>
-                    <!-- <th scope="col">#</th> -->
                     <th scope="col">Nom</th>
                     <th scope="col">Prénom</th>
                     <th scope="col">Mail</th>
@@ -133,7 +132,7 @@
             </tbody>
         </table>
 
-        <h3>Demandes retour de prêt</h3>
+        <h3>Demandes de retour</h3>
         <!-- -----------------------------------------Tableau retour prêt ---------------------- -->
         
         <ng-container *ngIf="messageValidationRetourEmprunt" >
@@ -154,7 +153,6 @@
         <table class="table table-light">
             <thead>
                 <tr>
-                    <!-- <th scope="col">#</th> -->
                     <th scope="col">Nom</th>
                     <th scope="col">Prénom</th>
                     <th scope="col">Mail</th>

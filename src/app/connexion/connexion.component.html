@@ -16,10 +16,10 @@
                 <mat-form-field appearance="fill">
                     <mat-label>Email</mat-label>
                     <input formControlName="mail" matInput/>
-                    <mat-error *ngIf="formControl.get('mail')?.hasError('required')"> <!-- protège le fait que valeur soit potentiellement nulle --> 
+                    <mat-error *ngIf="formControl.get('mail')?.hasError('required')"> <!-- Indique à l'utilisateur que la valeur est obligatoire --> 
                       L'email est <strong>obligatoire</strong>
                     </mat-error>
-                    <mat-error *ngIf="formControl.get('mail')?.hasError('mail')"> <!-- protège le fait que valeur soit potentiellement nulle --> 
+                    <mat-error *ngIf="formControl.get('mail')?.hasError('mail')"> 
                       L'email est <strong>mal formé</strong>
                     </mat-error>
                 </mat-form-field>
@@ -27,7 +27,7 @@
                 <mat-form-field appearance="fill">
                     <mat-label>Mot de passe</mat-label>
                     <input type="password" formControlName="motDePasse"  matInput/>
-                    <mat-error *ngIf="formControl.get('motDePasse')?.hasError('required')"> <!-- protège le fait que valeur soit potentiellement nulle --> 
+                    <mat-error *ngIf="formControl.get('motDePasse')?.hasError('required')">
                       Le mot de passe est <strong>obligatoire</strong>
                     </mat-error>
                 </mat-form-field>

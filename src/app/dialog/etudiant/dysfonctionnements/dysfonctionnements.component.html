@@ -7,7 +7,7 @@
       <mat-form-field appearance="fill">
         <mat-label>Identifiant</mat-label>
         <mat-select formControlName="numeroSerie" [(ngModel)]="dataDysfonctionnement.materiel.idMateriel"> <!-- Permet d'ajouter id présent dans value à data pour l'envoyer en post-->
-          <mat-option *ngFor="let numSerie of listeNumSerieMateriels" [value]=numSerie.idMateriel>{{ numSerie.numeroSerie}}</mat-option> <!-- [value] permet de récupérer directement la valeur de l'objet -->
+          <mat-option *ngFor="let numSerie of listeNumSerieMateriels" [value]=numSerie.idMateriel>{{ numSerie.numeroSerie}}</mat-option> <!-- [value] permet de récupérer directement la valeur de l'objet" -->
         </mat-select>
         <mat-error *ngIf="formControl.get('numeroSerie')?.hasError('required')"> 
           Le numéro de série est <strong>obligatoire</strong>

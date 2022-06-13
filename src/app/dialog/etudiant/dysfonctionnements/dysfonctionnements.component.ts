@@ -14,6 +14,7 @@ export class DysfonctionnementsComponent implements OnInit {
 
   public listeNumSerieMateriels: any;
   private idUtilisateur!: number;
+  public idMateriel!: number;
 
   constructor( 
     public dialogRef: MatDialogRef<DysfonctionnementsComponent>,

@@ -3,7 +3,6 @@ import { HttpClient} from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { DemandeEmpruntComponent } from '../dialog/gestionnaire/demande-emprunt/demande-emprunt.component';
 import { TokenIdentificationService } from '../token-identification.service';
@@ -34,7 +33,6 @@ export class PageGestionnaireComponent implements OnInit {
   public listeDemandesEmprunt: any;
   public listeRetoursEmprunt: any;
   public listeProlongationEmprunt!: any;
-  //public listeNumeroMateriel!: any;
   public listeNumeroSerieMateriel!: any;
   public listeMateriel: any;
   public listeLieuStockage: any;
@@ -77,7 +75,7 @@ export class PageGestionnaireComponent implements OnInit {
 
   public donneesReservation!: any;
   
-  // permet de vérifier si les informations formulaire sont bien saisies
+  // Permet de vérifier si les informations du formulaire sont bien saisies
   public formControl: FormGroup = this.formBuilder.group(
     {
       "nom": ["", [Validators.required]],
@@ -139,7 +137,7 @@ export class PageGestionnaireComponent implements OnInit {
 
   }
 
-//méthode pour envoyer les données du formulaire dans la BDD avec mdp hashé
+//Méthode pour envoyer les données du formulaire dans la BDD avec mdp hashé
 donneesFormulaire(donnees: { nom: string, prenom: string, motDePasse: string, adresse: string, ville: string, codePostale: string, mail: string, numeroTelephone: string, statut: { idStatut: number } }) {
 
   this.http.post("http://" + environment.adresseServeur + "/donnees-CreationCompte", donnees, { responseType: 'text' })
@@ -246,7 +244,6 @@ donneesFormulaire(donnees: { nom: string, prenom: string, motDePasse: string, ad
       },
       (error) => {
         this.messageErreurValidationRetourEmprunt = "Une erreur est survenue, veuillez réessayer plus tard";
-        console.log(error);
       }
     )
   }
@@ -281,7 +278,6 @@ donneesFormulaire(donnees: { nom: string, prenom: string, motDePasse: string, ad
 
   EnregistrerReservation(){ //Envoie demande emprunt
     this.donneesReservation = {materiel: {idMateriel: this.idNumeroMateriel}, dateEmprunt: this.dateDebutReservation + " 00:00:00", dateRetour: this.dateFinReservation + " 00:00:00", gestionnaire: {id : this.idUtilisateurConnecte} };
-    console.log(this.donneesReservation);
     this.http.post("http://" + environment.adresseServeur + "/gestionnaire/demande-reservation", this.donneesReservation,{responseType: 'text'} )
     .subscribe(
       (reponse) => {

@@ -6,7 +6,7 @@ import {
   HttpInterceptor,
   HttpHeaders
 } from '@angular/common/http';
-import { EMPTY, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { TokenIdentificationService } from './token-identification.service';
 
 @Injectable()

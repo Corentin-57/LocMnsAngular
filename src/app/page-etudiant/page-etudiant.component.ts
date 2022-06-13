@@ -75,7 +75,6 @@ export class PageEtudiantComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         this.donneesSaisies = result;
-        console.log(this.donneesSaisies);
 
           if(this.donneesSaisies != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
             this.http.post("http://"+ environment.adresseServeur +"/saisir-dysfonctionnement", this.donneesSaisies,{responseType: 'text'} )

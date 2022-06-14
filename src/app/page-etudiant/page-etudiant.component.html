@@ -3,7 +3,7 @@
     <h2 class="text-center mb-5 titreMaterielLocation">Matériel en location</h2>
 
     <div class="row text-center">
-     
+
       <div class="col-12 pt-1 d-flex justify-content-center">
         <div class="card text-center p-5">
           <div class="card-body">
@@ -34,8 +34,8 @@
       </div>
     </div>
 
+  <h2 class="text-center mb-5 titreDemandeLocation">Demande de location matériel</h2>
   <form [formGroup]="formControl">
-    <h2 class="text-center mb-5 titreDemandeLocation">Demande de location matériel</h2>
     <ng-container *ngIf="messageValidationRequete" >
       <div class="alert alert-warning messageValidation d-flex justify-content-center">
         <mat-icon class="iconInfo">check_circle</mat-icon>
@@ -130,3 +130,6 @@
 
   </div>
 </div>
+
+
+  

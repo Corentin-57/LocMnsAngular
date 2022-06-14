@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { DemandeEmpruntComponent } from '../dialog/gestionnaire/demande-emprunt/demande-emprunt.component';
 import { TokenIdentificationService } from '../token-identification.service';
 
 
@@ -40,11 +41,13 @@ export class PageGestionnaireComponent implements OnInit {
 
   public idEmprunt!: number;
   public idNumeroMateriel!: number;
+  public idMateriel!: number;
 
   public listeDemandesEmprunt: any;
   public listeRetoursEmprunt: any;
   public listeProlongationEmprunt!: any;
   public listeNumeroSerieMateriel!: any;
+  public listeHistoriqueMateriels: any;
 
   public nombreDemandesEmprunt!: number;
   public nombreRetoursEmprunt!: number;
@@ -67,12 +70,16 @@ export class PageGestionnaireComponent implements OnInit {
   public messageValidationReservation!: any;
   public messageErreurReservation!: any;
 
+  public messageValidationModificationDemandeEmprunt!: string;
+  public messageErreurModificationDemandeEmprunt!: string;
+
   public dateDemandeEprunt!: Date;
   public dateDemandeRetour!: Date;
   public dateDebutReservation!: Date;
   public dateFinReservation!: Date;
 
   public donneesReservation!: any;
+  public donneesSaisies!: any;
   
   public listeMateriel: any;
   public listeLieuStockage: any;
@@ -93,6 +100,15 @@ export class PageGestionnaireComponent implements OnInit {
     }
   );
 
+  // form Control pour enregistrer une reservation
+  public formControlReservation: FormGroup = this.formBuilder.group(
+    {
+      "numeroSerieMateriels": ["", [Validators.required]],
+      "dateEmpruntReservation":  ["", [Validators.required]],
+      "dateRetourReservation":  ["", [Validators.required]],
+    }
+  );
+
   constructor(
     public dialog: MatDialog,
     private http: HttpClient,
@@ -102,6 +118,7 @@ export class PageGestionnaireComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.affichageHitoriqueMateriels();
     this.http.get("http://"+ environment.adresseServeur +"/liste-statut").subscribe(reponse => this.listeStatut = reponse); //permet de récupérer la liste depuis la BDD
     this.http.get("http://"+ environment.adresseServeur +"/liste-typeMateriels").subscribe(reponse => this.listeMateriel = reponse);
     this.http.get("http://"+ environment.adresseServeur +"/gestionnaire/liste-lieuxStockage").subscribe(reponse => this.listeLieuStockage = reponse);
@@ -272,9 +289,9 @@ export class PageGestionnaireComponent implements OnInit {
     )
   }
 
-  EnregistrerReservation(): void{ //Envoie demande emprunt
-    this.donneesReservation = {materiel: {idMateriel: this.idNumeroMateriel}, dateEmprunt: this.dateDebutReservation, dateRetour: this.dateFinReservation, gestionnaire : {id : this.idUtilisateurConnecte }};
-    this.http.post("http://"+ environment.adresseServeur +"/demande-reservation", this.donneesReservation,{responseType: 'text'} )
+  EnregistrerReservation(){ //Envoie demande emprunt
+    this.donneesReservation = {materiel: {idMateriel: this.idNumeroMateriel}, dateEmprunt: this.dateDebutReservation + " 00:00:00", dateRetour: this.dateFinReservation + " 00:00:00", gestionnaire: {id : this.idUtilisateurConnecte} };
+    this.http.post("http://" + environment.adresseServeur + "/gestionnaire/demande-reservation", this.donneesReservation,{responseType: 'text'} )
     .subscribe(
       (reponse) => {
         this.messageValidationReservation = reponse;
@@ -283,7 +300,6 @@ export class PageGestionnaireComponent implements OnInit {
         this.messageErreurReservation = "Une erreur est survenue, veuillez réessayer plus tard";
       }
     )
-
   }
 
   public cacherMessage(): void{
@@ -296,4 +312,32 @@ export class PageGestionnaireComponent implements OnInit {
     this.messageValidationReservation = "";
     this.messageErreurReservation = "";
   }
+
+  affichageHitoriqueMateriels(){
+    this.http.get("http://" + environment.adresseServeur + "/gestionnaire/historique-materiels").subscribe(reponse =>this.listeHistoriqueMateriels = reponse);
+  }
+
+  openDialogModificationDemandeEmprunt(idEmprunt: number): void {
+    const dialogRef = this.dialog.open(DemandeEmpruntComponent, {
+      width: '500px',
+      data: { materiel: {idMateriel: this.idMateriel}, idEmprunt : idEmprunt},
+    });
+
+      dialogRef.afterClosed().subscribe(result => {
+        this.donneesSaisies = result;
+
+          if(this.donneesSaisies != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
+            this.http.put("http://"+ environment.adresseServeur +"/gestionnaire/modification-demande-emprunt", this.donneesSaisies,{responseType: 'text'} )
+              .subscribe(
+                (reponse) => {
+                  this.messageValidationModificationDemandeEmprunt = reponse;
+                  this.affichageDemandesPret();
+                },
+                (error) => {
+                  this.messageErreurModificationDemandeEmprunt = "Une erreur est survenue, veuillez réessayer plus tard";
+                }
+              )
+          }
+        })  
+  } 
 }

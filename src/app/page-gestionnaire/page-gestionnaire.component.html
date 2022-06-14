@@ -84,7 +84,6 @@
         <table class="table table-light overflow-auto">
             <thead>
                 <tr>
-                    <!-- <th scope="col">#</th> -->
                     <th scope="col">Nom</th>
                     <th scope="col">Prénom</th>
                     <th scope="col">Mail</th>
@@ -111,6 +110,7 @@
 
                     <td>
                         <a type="submit" class="btn btn-outline-success" role="button" (click)="validerDemandeEmprunt(liste.idEmprunt)">Valider</a>
+                        <a type="submit" class="btn btn-outline-warning" role="button" (click)="openDialogModificationDemandeEmprunt(liste.idEmprunt)">Modifier</a>
                         <a type="submit" class="btn btn-outline-danger"  role="button" (click)="supprimerDemandeEmprunt(liste.idEmprunt)">Supprimer</a>
                     </td>
                 </tr>
@@ -222,83 +222,96 @@
             </tbody>
         </table>
 
-        <!-- <div class="titre">
-            <h2>Réservation</h2>
-        </div>
+         <!-- -----------------------------------Réservation ---------------------- -->
 
-        <form [formGroup]="formControl">
+         <h2>Réservation</h2>
 
 
-        <ng-container *ngIf="messageValidationReservation" >
-            <div class="alert alert-warning messageValidation d-flex justify-content-center">
-              <mat-icon class="iconInfo">check_circle</mat-icon>
-              <span>{{ messageValidationReservation }}</span>
-              <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
-            </div>
-          </ng-container>
-          <ng-container *ngIf="messageErreurReservation">
-            <div class="alert alert-danger messageValidation d-flex justify-content-center">
-              <mat-icon class="iconInfo">error</mat-icon>
-              {{ messageErreurReservation }}
-              <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
-            </div>
-          </ng-container>
-      
-            <h3 class="mb-3 mt-4">Informations matériel</h3>
-            <div class="row d-flex justify-content-center">
-              <div class="col-lg-4 mb-4">
-                <p>Sélectionnez le numéro de série du matériel*</p>
-                <mat-form-field appearance="fill">
-                  <mat-label>Numéro matériel</mat-label>
-                  <mat-select formControlName="numeroSerieMateriels" [(ngModel)]="idNumeroMateriel"> //Permet d'ajouter id présent dans value à data pour l'envoyer en post 
-                    <mat-option *ngFor="let numero of listeNumeroSerieMateriel" [value]=numero.idMateriel>{{ numero.numeroSerie }}</mat-option> //[value] permet de récupérer directement la valeur de l'objet
-                  </mat-select>
-                  <mat-error *ngIf="formControl.get('numeroSerieMateriels')?.hasError('required')"> 
-                    Le numéro de série est <strong>obligatoire</strong>
-                  </mat-error>
-                </mat-form-field>
-              </div>
-            </div>
-      
-            <h3 class="mb-3 mt-4">Dates de réservation</h3>
-              <div class="form-row">
-                <div class="row d-flex justify-content-center">
-                  <div class="col-lg-4 mb-4">
-                    <p>Date de début*</p>
-                    <mat-form-field appearance="fill">
-                      <mat-label>Date début</mat-label>
-                      <input  formControlName="datesEmprunt" type="date" matInput [(ngModel)]="dateDebutReservation"/>
-                      <mat-error *ngIf="formControl.get('datesEmprunt')?.hasError('required')"> 
-                        La date de début est <strong>obligatoire</strong>
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-      
-                  <div class="col-lg-3 mb-3">
-                    <p>Date de fin*</p>
-                    <mat-form-field appearance="fill">
-                      <mat-label>Date fin</mat-label>
-                      <input  formControlName="datesEmprunt" type="date" matInput [(ngModel)]="dateFinReservation"/>
-                      <mat-error *ngIf="formControl.get('datesEmprunt')?.hasError('required')"> 
-                        La date de fin est <strong>obligatoire</strong>
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-      
-                </div>
-              </div>
-
-              <div class="d-flex justify-content-center">
-                <button class="btn btnEnregistrer px-4" type="submit" (click)="EnregistrerReservation()">Enregistrer une réservation</button>
-            </div>
-              </form> -->
+         <form [formGroup]="formControlReservation">
+ 
+ 
+         <ng-container *ngIf="messageValidationReservation" >
+             <div class="alert alert-success messageValidation d-flex justify-content-center">
+               <mat-icon class="iconInfo">check_circle</mat-icon>
+               <span>{{ messageValidationReservation }}</span>
+               <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
+             </div>
+           </ng-container>
+           <ng-container *ngIf="messageErreurReservation">
+             <div class="alert alert-danger messageValidation d-flex justify-content-center">
+               <mat-icon class="iconInfo">error</mat-icon>
+               {{ messageErreurReservation }}
+               <mat-icon class="iconClose" (click)="cacherMessage()">close</mat-icon>
+             </div>
+           </ng-container>
+       
+             <h3 class="mb-3 mt-4">Informations matériel</h3>
+             <div class="row d-flex justify-content-center">
+               <div class="col-lg-4 mb-4">
+                 <p>Sélectionnez le numéro de série du matériel*</p>
+                 <mat-form-field appearance="fill">
+                   <mat-label>Numéro matériel</mat-label>
+                   <mat-select formControlName="numeroSerieMateriels" [(ngModel)]="idNumeroMateriel"> <!-- Permet d'ajouter id présent dans value à data pour l'envoyer en post -->
+                     <mat-option *ngFor="let numero of listeNumeroSerieMateriel" [value]=numero.idMateriel>{{ numero.numeroSerie }}</mat-option> <!-- [value] permet de récupérer directement la valeur de l'objet -->
+                   </mat-select>
+                   <mat-error *ngIf="formControl.get('numeroSerieMateriels')?.hasError('required')"> 
+                     Le numéro de série est <strong>obligatoire</strong>
+                   </mat-error>
+                 </mat-form-field>
+               </div>
+             </div>
+       
+             <h3 class="mb-3 mt-4">Dates de réservation</h3>
+               <div class="form-row">
+                 <div class="row d-flex justify-content-center">
+                   <div class="col-lg-4 mb-4">
+                     <p>Date de début*</p>
+                     <mat-form-field appearance="fill">
+                       <mat-label>Date début</mat-label>
+                       <input  formControlName="dateEmpruntReservation" type="date" matInput [(ngModel)]="dateDebutReservation"/>
+                       <mat-error *ngIf="formControl.get('dateEmpruntReservation')?.hasError('required')"> 
+                         La date de début est <strong>obligatoire</strong>
+                       </mat-error>
+                     </mat-form-field>
+                   </div>
+       
+                   <div class="col-lg-3 mb-3">
+                     <p>Date de fin*</p>
+                     <mat-form-field appearance="fill">
+                       <mat-label>Date fin</mat-label>
+                       <input  formControlName="dateRetourReservation" type="date" matInput [(ngModel)]="dateFinReservation"/>
+                       <mat-error *ngIf="formControl.get('dateRetourReservation')?.hasError('required')"> 
+                         La date de fin est <strong>obligatoire</strong>
+                       </mat-error>
+                     </mat-form-field>
+                   </div>
+       
+                 </div>
+               </div>
+ 
+               <div class="d-flex justify-content-center">
+                 <button class="btn btnEnregistrer px-4" [disabled]="!this.formControlReservation.valid" (click)="EnregistrerReservation()">Enregistrer une réservation</button>
+             </div>
+               </form>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 
         <!-- -----------------------------------Création de compte ---------------------- -->
 
         <div class="pageGestionnaire">
             <div class="container">
-
-                <!-- <form [formGroup]="formControl" #registerFrom="ngForm" (ngSubmit)="donneesFormulaire(registerFrom.value)"> -->
+                <h2 class="text-center mb-5">Création de compte Utilisateur</h2>
                 <form [formGroup]="formControl">
                     <ng-container *ngIf="messageValidationCreationCompte" >
                         <div class="alert alert-success messageValidation d-flex justify-content-center">
@@ -314,7 +327,7 @@
                           <mat-icon class="iconClose" (click)="closePopUpCreationCompte()">close</mat-icon>
                         </div>
                       </ng-container>
-                    <h2 class="text-center text-black mb-5">Création de compte Utilisateur</h2>
+                    
                     <h3 class="mb-3">Informations personnelles</h3>
                      <div class="form-row">
                        <div class="row">
@@ -351,7 +364,6 @@
                         </div>
 
                         <div class="row">
-
                             <div class="col-lg-3 mb-3">
                                 <mat-form-field appearance="fill">
                                     <label>Numéro de téléphone*</label>
@@ -410,69 +422,34 @@
             </div>
         </div>
 
+<!-- ----------------------------------------- Tableau historique matériels ---------------------- -->
 
-        <!-- <h2 class="titreGestion">Gestion du parc</h2> -->
+        <h2>Historique matériels</h2>
 
-        <!-- -----------------------------------Filtre de recherche Gestion du Parc ---------------------- -->
-        <!-- <div class="filtre">
-            <div class="col-lg-3 mb-5">
-                <p style="color: white;">À partir du : </p>
-                <input type="date" class="form-control" id="validationDefault01" required>
-            </div>
-
-            <div class="col-lg-3 mb-3" style="background-color: white;">
-                <mat-form-field appearance="fill">
-                    <mat-label>Matériel</mat-label>
-                    <mat-select formControlName="listeMateriel">
-                        <mat-option *ngFor="let materiel of listeMateriel" [value]=materiel.idType>{{materiel.nomType}}
-                        </mat-option> 
-                    </mat-select>
-                </mat-form-field>
-            </div>
-
-            <div class="col-lg-3 mb-3" style="background-color: white;">
-                <mat-form-field appearance="fill">
-                    <mat-label>Lieu</mat-label>
-                    <mat-select formControlName="listeLieuStockage">
-                        <mat-option *ngFor="let lieu of listeLieuStockage" [value]=lieu.idLieuStockage>
-                            {{lieu.nomLieuStockage}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-        </div> -->
-
-
-<!-- 
-        <div class="d-flex justify-content-center">
-            <button class="btnRechercher btn-lg px-4" type="submit">Rechercher</button>
-        </div> -->
-
-        <!-- -----------------------------------------Tableau Gestion du Parc ---------------------- -->
-
-        <!-- <table class="table table-light">
+        <table class="table table-light">
             <thead>
                 <tr>
+                    <th scope="col">Type matériel</th>
+                    <th scope="col">Modèle</th>
+                    <th scope="col">Date d'emprunt</th>
+                    <th scope="col">Date retour</th>
                     <th scope="col">Nom</th>
                     <th scope="col">Prénom</th>
-                    <th scope="col">Stock</th>
-                    <th scope="col">Etat</th>
-                     <th scope="col">Documents techniques</th>
-                    <th scope="col">Mode opératoire</th> 
+                    <th scope="col">Mail</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td scope="row">John</td>
-                    <td scope="row">Smith</td>
-                    <td>Disponible 60</td>
-                    <td>Emprunté</td>
-                     <td>Pilotes d'installations</td>
-                    <td>@mdo</td> 
+                <tr *ngFor="let listeHisto of listeHistoriqueMateriels">
+                    <td>{{ listeHisto.materiel.modele.typeMateriel.nomType }}</td>
+                    <td>{{ listeHisto.materiel.modele.nomModele }}</td>
+                    <td>{{ listeHisto.dateEmprunt | date:'d/MM/yyyy' }}</td>
+                    <td>{{ listeHisto.dateRetour | date:'d/MM/yyyy' }}</td>
+                    <td>{{ listeHisto.utilisateur.nom }} </td>
+                    <td>{{ listeHisto.utilisateur.prenom }}</td>
+                    <td>{{ listeHisto.utilisateur.mail }}</td>
                 </tr>
             </tbody>
         </table>
-        <br>
-        <br> -->
         <br>
         <br>
 

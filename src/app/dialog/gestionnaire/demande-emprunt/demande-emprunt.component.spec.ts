@@ -2,20 +2,20 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ProlongationComponent } from './prolongation.component';
-describe('ProlongationComponent', () => {
-  let component: ProlongationComponent;
-  let fixture: ComponentFixture<ProlongationComponent>;
+import { DemandeEmpruntComponent } from './demande-emprunt.component';
+describe('DemandeEmpruntComponent', () => {
+  let component: DemandeEmpruntComponent;
+  let fixture: ComponentFixture<DemandeEmpruntComponent>;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProlongationComponent ],
-      providers: [ {provide: MatDialogRef, useValue: {}}, {provide: MAT_DIALOG_DATA, useValue: {}}, FormBuilder ],
+      declarations: [ DemandeEmpruntComponent ],
+      providers: [ FormBuilder, {provide: MatDialogRef, useValue: {}}, {provide: MAT_DIALOG_DATA, useValue: {}}  ],
       imports: [HttpClientTestingModule]
     })
     .compileComponents();
   });
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProlongationComponent);
+    fixture = TestBed.createComponent(DemandeEmpruntComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

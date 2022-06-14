@@ -1,4 +1,7 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { ConnexionComponent } from './connexion.component';
 
@@ -8,7 +11,9 @@ describe('ConnexionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConnexionComponent ]
+      declarations: [ ConnexionComponent ],
+      imports: [HttpClientModule, RouterTestingModule, ReactiveFormsModule],
+      providers: [FormBuilder]
     })
     .compileComponents();
   });

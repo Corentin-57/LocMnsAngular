@@ -24,7 +24,10 @@ export class PageEtudiantComponent implements OnInit {
 
   private idMateriel!: number;  
   private idUtilisateur!: number;
-  private donneesSaisies!: {};
+
+  private donneesSaisiesDysfonctionnement!: any;
+  private donneesSaisiesProlongation!: {dateProlongation: any, utilisateur : {id : number}, materiel: {idMateriel: number}};
+  private donneesSaisiesRetour!: {dateDemandeRetour: any, utilisateur : {id : number}, materiel: {idMateriel: number}};
 
   public errorMessage!: string;
   public successMessage!: string;
@@ -59,9 +62,9 @@ export class PageEtudiantComponent implements OnInit {
                 this.idUtilisateur = utilisateur.id
               }
           ); 
-          this.http.get("http://"+ environment.adresseServeur +"/liste-typeMateriels").subscribe(reponse => this.listeTypesMateriel = reponse); //Récupére la liste des types de matériel
+          this.http.get("http://" + environment.adresseServeur + "/liste-typeMateriels").subscribe(reponse => this.listeTypesMateriel = reponse); //Récupére la liste des types de matériel
 
-          this.http.get("http://"+ environment.adresseServeur +"/liste-modeles").subscribe(reponse => this.listeModeles = reponse); //Récupére la liste des modèles
+          this.http.get("http://" + environment.adresseServeur +"/liste-modeles").subscribe(reponse => this.listeModeles = reponse); //Récupére la liste des modèles
           
           this.http.get("http://"+ environment.adresseServeur +"/liste-cadres-utilisation").subscribe(reponse => this.listeCadresUtilisation = reponse); //Récupére la liste des cadres d'utilisation
           
@@ -74,10 +77,10 @@ export class PageEtudiantComponent implements OnInit {
     });
 
       dialogRef.afterClosed().subscribe(result => {
-        this.donneesSaisies = result;
+        this.donneesSaisiesDysfonctionnement = result;
 
-          if(this.donneesSaisies != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
-            this.http.post("http://"+ environment.adresseServeur +"/saisir-dysfonctionnement", this.donneesSaisies,{responseType: 'text'} )
+          if(this.donneesSaisiesDysfonctionnement != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
+            this.http.post("http://"+ environment.adresseServeur +"/saisir-dysfonctionnement", this.donneesSaisiesDysfonctionnement,{responseType: 'text'} )
               .subscribe(
                 (reponse) => {
                   this.successMessage = reponse;
@@ -98,10 +101,11 @@ export class PageEtudiantComponent implements OnInit {
     });
 
       dialogRef.afterClosed().subscribe(result => {
-        this.donneesSaisies = result;
-
-          if(this.donneesSaisies != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
-            this.http.post("http://"+ environment.adresseServeur +"/demande-prolongation", this.donneesSaisies,{responseType: 'text'} )
+        this.donneesSaisiesProlongation = result;
+        this.donneesSaisiesProlongation = {dateProlongation: this.donneesSaisiesProlongation.dateProlongation + " 00:00:00", utilisateur: {id: this.donneesSaisiesProlongation.utilisateur.id}, materiel: {idMateriel: this.donneesSaisiesProlongation.materiel.idMateriel} };
+       
+          if(this.donneesSaisiesProlongation != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
+            this.http.post("http://" + environment.adresseServeur + "/demande-prolongation", this.donneesSaisiesProlongation,{responseType: 'text'} )
               .subscribe(
                 (reponse) => {
                   this.successMessage = reponse;
@@ -121,9 +125,11 @@ export class PageEtudiantComponent implements OnInit {
     });
 
       dialogRef.afterClosed().subscribe(result => {
-        this.donneesSaisies = result;
-          if(this.donneesSaisies != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
-            this.http.post("http://"+ environment.adresseServeur +"/demande-retour", this.donneesSaisies,{responseType: 'text'} )
+        this.donneesSaisiesRetour = result;
+        this.donneesSaisiesRetour = {dateDemandeRetour: this.donneesSaisiesRetour.dateDemandeRetour + " 00:00:00", utilisateur: {id: this.donneesSaisiesRetour.utilisateur.id}, materiel: {idMateriel: this.donneesSaisiesRetour.materiel.idMateriel} };
+
+          if(this.donneesSaisiesRetour != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
+            this.http.post("http://"+ environment.adresseServeur +"/demande-retour", this.donneesSaisiesRetour,{responseType: 'text'} )
               .subscribe(
                 (reponse) => {
                   this.successMessage = reponse;
@@ -153,9 +159,9 @@ export class PageEtudiantComponent implements OnInit {
   )
 
   envoyerFormulaire(): void{ //Envoie demande emprunt
-    this.donneesDemandeMateriel = {typeMateriel: {idType: this.idTypeMateriel}, materiel: {modele: {idModele: this.idModele}}, cadreUtilisation: {idCadre: this.idCadreUtilisation}, dateEmprunt: this.dateDebutEmprunt, dateRetour: this.dateFinEmprunt, utilisateur : {id : this.idUtilisateur}, contient: {idCadre: this.idCadreUtilisation} };
-
-    this.http.post("http://"+ environment.adresseServeur +"/demande-emprunt", this.donneesDemandeMateriel,{responseType: 'text'} )
+    this.donneesDemandeMateriel = {typeMateriel: {idType: this.idTypeMateriel}, materiel: {modele: {idModele: this.idModele}}, cadreUtilisation: {idCadre: this.idCadreUtilisation}, dateEmprunt: this.dateDebutEmprunt + " 00:00:00", dateRetour: this.dateFinEmprunt + " 00:00:00", utilisateur : {id : this.idUtilisateur} };
+    console.log(this.donneesDemandeMateriel);
+    this.http.post("http://" + environment.adresseServeur + "/demande-emprunt", this.donneesDemandeMateriel,{responseType: 'text'} )
     .subscribe(
       (reponse) => {
         this.messageValidationRequete = reponse;
@@ -169,3 +175,4 @@ export class PageEtudiantComponent implements OnInit {
           
 
 }
+

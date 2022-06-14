@@ -87,8 +87,6 @@ export class PageGestionnaireComponent implements OnInit {
       "prenom": ["", [Validators.required]],
       "motDePasse": ["", [Validators.required]],
       "adresse": ["", [Validators.required]],
-      "ville": ["", [Validators.required]],
-      "codePostale": ["", [Validators.required]],
       "mail": ["", [Validators.required]],
       "numeroTelephone": ["", [Validators.required]],
       "listeStatut": ["", [Validators.required]],
@@ -276,7 +274,6 @@ export class PageGestionnaireComponent implements OnInit {
 
   EnregistrerReservation(): void{ //Envoie demande emprunt
     this.donneesReservation = {materiel: {idMateriel: this.idNumeroMateriel}, dateEmprunt: this.dateDebutReservation, dateRetour: this.dateFinReservation, gestionnaire : {id : this.idUtilisateurConnecte }};
-    console.log(this.donneesReservation);
     this.http.post("http://"+ environment.adresseServeur +"/demande-reservation", this.donneesReservation,{responseType: 'text'} )
     .subscribe(
       (reponse) => {

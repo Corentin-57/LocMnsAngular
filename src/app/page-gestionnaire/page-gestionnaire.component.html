@@ -338,18 +338,6 @@
                                     </mat-error>
                                 </mat-form-field>
                             </div>
-                            <div class="col-lg-3 mb-3">
-                                <mat-form-field appearance="fill">
-                                    <label>Choisir un mot de passe*</label>
-                                    <input type="password" class="form-control" required
-                                        formControlName="motDePasse" [(ngModel)]="mdpSaisie" matInput>
-                                    <mat-error *ngIf="formControl.get('motDePasse')?.hasError('required')">
-                                        Le mot de passe est <strong>obligatoire</strong>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="row">
                             <div class="col-lg-4 mb-3">
                                 <mat-form-field appearance="fill">
                                     <label>Adresse*</label>
@@ -360,28 +348,21 @@
                                     </mat-error>
                                 </mat-form-field>
                             </div>
-                            <div class="col-lg-3 mb-3">
-                                <mat-form-field appearance="fill">
-                                    <label>Ville*</label>
-                                    <input type="text" class="form-control" required formControlName="ville" [(ngModel)]="villeSaisie"
-                                        matInput>
-                                    <mat-error *ngIf="formControl.get('ville')?.hasError('required')">
-                                        La ville est <strong>obligatoire</strong>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-lg-3 mb-3">
-                                <mat-form-field appearance="fill">
-                                    <label>Code postal*</label>
-                                    <input type="text" class="form-control" required
-                                        formControlName="codePostale" [(ngModel)]="codePostalSaisie" matInput>
-                                    <mat-error *ngIf="formControl.get('codePostale')?.hasError('required')">
-                                        Le code postale est <strong>obligatoire</strong>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
                         </div>
+
                         <div class="row">
+
+                            <div class="col-lg-3 mb-3">
+                                <mat-form-field appearance="fill">
+                                    <label>Numéro de téléphone*</label>
+                                    <input type="tel" class="form-control" required
+                                        formControlName="numeroTelephone" [(ngModel)]="telephoneSaisie"  matInput>
+                                    <mat-error *ngIf="formControl.get('numeroTelephone')?.hasError('required')">
+                                        Le numéro de téléphone est <strong>obligatoire</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
                             <div class="col-lg-3 mb-3">
                                 <mat-form-field appearance="fill">
                                     <label>Mail*</label>
@@ -395,15 +376,17 @@
 
                             <div class="col-lg-3 mb-3">
                                 <mat-form-field appearance="fill">
-                                    <label>Numéro de téléphone*</label>
-                                    <input type="tel" class="form-control" required
-                                        formControlName="numeroTelephone" [(ngModel)]="telephoneSaisie"  matInput>
-                                    <mat-error *ngIf="formControl.get('numeroTelephone')?.hasError('required')">
-                                        Le numéro de téléphone est <strong>obligatoire</strong>
+                                    <label>Choisir un mot de passe*</label>
+                                    <input type="password" class="form-control" required
+                                        formControlName="motDePasse" [(ngModel)]="mdpSaisie" matInput>
+                                    <mat-error *ngIf="formControl.get('motDePasse')?.hasError('required')">
+                                        Le mot de passe est <strong>obligatoire</strong>
                                     </mat-error>
                                 </mat-form-field>
-                            </div>
-
+                            </div>    
+                        </div>
+                        
+                        <div class="row">
                             <div class="col-lg-3 mb-3">
                                 <mat-form-field appearance="fill">
                                   <mat-label>Statut</mat-label>

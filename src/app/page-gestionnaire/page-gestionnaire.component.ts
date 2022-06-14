@@ -74,6 +74,22 @@ export class PageGestionnaireComponent implements OnInit {
   public dateFinReservation!: Date;
 
   public donneesReservation!: any;
+
+
+  public listeStatut: any;
+  public donneesDemandeCreationCompte!:any;
+  public donnees:any;
+  public statut:any;
+  
+  //formulaire création de compte
+  public nomSaisie!: any;
+  public prenomSaisie!: any;
+  public mdpSaisie!: any;
+  public adresseSaisie!: any;
+  public villeSaisie!: any;
+  public codePostalSaisie!: any;
+  public mailSaisie!: any;
+  public telephoneSaisie!: any;
   
   // Permet de vérifier si les informations du formulaire sont bien saisies
   public formControl: FormGroup = this.formBuilder.group(
@@ -82,11 +98,9 @@ export class PageGestionnaireComponent implements OnInit {
       "prenom": ["", [Validators.required]],
       "motDePasse": ["", [Validators.required]],
       "adresse": ["", [Validators.required]],
-      "ville": ["", [Validators.required]],
-      "codePostale": ["", [Validators.required]],
       "mail": ["", [Validators.required]],
       "numeroTelephone": ["", [Validators.required]],
-      "idStatut": ["", [Validators.required]],
+      "listeStatut": ["", [Validators.required]],
     }
   );
 
@@ -106,8 +120,7 @@ export class PageGestionnaireComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.contactForm = this.formBuilder.group( { statutUtilisateur: [null]});
-    this.http.get("http://" + environment.adresseServeur + "/liste-statut").subscribe(reponse => this.idStatut = reponse); //permet de récupérer la liste depuis la BDD
+    this.http.get("http://" + environment.adresseServeur + "/liste-statut").subscribe(reponse => this.listeStatut = reponse); //permet de récupérer la liste depuis la BDD
     this.http.get("http://" + environment.adresseServeur + "/liste-typeMateriels").subscribe(reponse => this.listeMateriel = reponse);
     this.http.get("http://" + environment.adresseServeur + "/gestionnaire/liste-lieuxStockage").subscribe(reponse => this.listeLieuStockage = reponse);
     
@@ -137,16 +150,16 @@ export class PageGestionnaireComponent implements OnInit {
 
   }
 
-//Méthode pour envoyer les données du formulaire dans la BDD avec mdp hashé
-donneesFormulaire(donnees: { nom: string, prenom: string, motDePasse: string, adresse: string, ville: string, codePostale: string, mail: string, numeroTelephone: string, statut: { idStatut: number } }) {
-
-  this.http.post("http://" + environment.adresseServeur + "/donnees-CreationCompte", donnees, { responseType: 'text' })
-    .subscribe((response) => {
-      this.messageValidationCreationCompte = response;
-    }, (error) => {
-      this.messageErreurValidationCreationCompte = "Une erreur est survenue lors de la création du compte"
-    }
-    );
+ //méthode pour envoyer les données du formulaire dans la BDD avec mdp hasher 
+ donneesFormulaire():void {
+  this.donnees = { nom: this.nomSaisie,prenom : this.prenomSaisie,motDePasse: this.mdpSaisie, mail: this.mailSaisie, adresse : this.adresseSaisie,ville : this.villeSaisie, codePostale: this.codePostalSaisie, numeroTelephone :this.telephoneSaisie, statut : {id: this.idStatut} } ;
+  this.http.post("http://"+ environment.adresseServeur +"/donnees-CreationCompte", this.donnees, { responseType: 'text' })
+  .subscribe((response) => {
+    this.messageValidationCreationCompte = response;
+  }, (error) => {
+    this.messageErreurValidationCreationCompte = "Une erreur est survenue lors de la création du compte";
+  }
+  );
 }
 
 
@@ -290,7 +303,7 @@ donneesFormulaire(donnees: { nom: string, prenom: string, motDePasse: string, ad
   }
 
   affichageHitoriqueMateriels(){
-    this.http.get("http://" + environment.adresseServeur + "/gestionnaire/historique-materiels").subscribe(reponse => /*console.log(reponse)*/ this.listeHistoriqueMateriels = reponse);
+    this.http.get("http://" + environment.adresseServeur + "/gestionnaire/historique-materiels").subscribe(reponse => this.listeHistoriqueMateriels = reponse);
   }
 
   openDialogModificationDemandeEmprunt(idEmprunt: number): void {

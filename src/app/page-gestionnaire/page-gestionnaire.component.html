@@ -59,9 +59,8 @@
             </div>
         </div>
 
-        <div class="titre">
             <h2>Suivi des locations</h2>
-        </div>
+
 
         <h3>Demandes de prêt</h3>
 
@@ -237,10 +236,8 @@
 
         <!-- -----------------------------------Réservation ---------------------- -->
 
-
-        <div class="titre">
             <h2>Réservation</h2>
-        </div>
+
 
         <form [formGroup]="formControlReservation">
 
@@ -313,12 +310,9 @@
 
         <div class="pageGestionnaire">
             <div class="container">
+                    <h2 class="text-center mb-5">Création de compte Utilisateur</h2>
 
-                <div class="titre">
-                    <h2>Création de compte utilisateur</h2>
-                </div>
-
-                <form [formGroup]="formControl" #registerFrom="ngForm" (ngSubmit)="donneesFormulaire(registerFrom.value)">
+                <form [formGroup]="formControl">
                     <ng-container *ngIf="messageValidationCreationCompte" >
                         <div class="alert alert-success messageValidation d-flex justify-content-center">
                           <mat-icon class="iconInfo">check_circle</mat-icon>
@@ -333,13 +327,14 @@
                           <mat-icon class="iconClose" (click)="closePopUpCreationCompte()">close</mat-icon>
                         </div>
                       </ng-container>
+
                     <h3 class="mb-3">Informations personnelles</h3>
-                    <div class="form-row">
-                        <div class="row">
+                     <div class="form-row">
+                       <div class="row">
                             <div class="col-lg-4 mb-3">
                                 <mat-form-field appearance="fill">
                                     <label>Nom*</label>
-                                    <input type="text" class="form-control" required formControlName="nom"
+                                    <input type="text" class="form-control" required formControlName="nom" [(ngModel)]="nomSaisie"
                                         matInput>
                                     <mat-error *ngIf="formControl.get('nom')?.hasError('required')">
                                         Le nom est <strong>obligatoire</strong>
@@ -349,73 +344,32 @@
                             <div class="col-lg-4 mb-3">
                                 <mat-form-field appearance="fill">
                                     <label>Prénom*</label>
-                                    <input type="text" class="form-control" required formControlName="prenom"
+                                    <input type="text" class="form-control" required formControlName="prenom" [(ngModel)]="prenomSaisie"
                                         matInput>
                                     <mat-error *ngIf="formControl.get('prenom')?.hasError('required')">
                                         Le prénom est <strong>obligatoire</strong>
                                     </mat-error>
                                 </mat-form-field>
                             </div>
-                            <div class="col-lg-3 mb-3">
-                                <mat-form-field appearance="fill">
-                                    <label>Choisir un mot de passe*</label>
-                                    <input type="password" class="form-control" required
-                                        formControlName="motDePasse" matInput>
-                                    <mat-error *ngIf="formControl.get('motDePasse')?.hasError('required')">
-                                        Le mot de passe est <strong>obligatoire</strong>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="row">
                             <div class="col-lg-4 mb-3">
                                 <mat-form-field appearance="fill">
                                     <label>Adresse*</label>
                                     <input type="text" class="form-control" placeholder="Numéro et nom de rue" required
-                                         formControlName="adresse" matInput>
+                                         formControlName="adresse" [(ngModel)]="adresseSaisie" matInput>
                                     <mat-error *ngIf="formControl.get('adresse')?.hasError('required')">
                                         L'adresse est <strong>obligatoire</strong>
                                     </mat-error>
                                 </mat-form-field>
                             </div>
-                            <div class="col-lg-3 mb-3">
-                                <mat-form-field appearance="fill">
-                                    <label>Ville*</label>
-                                    <input type="text" class="form-control" required formControlName="ville"
-                                        matInput>
-                                    <mat-error *ngIf="formControl.get('ville')?.hasError('required')">
-                                        La ville est <strong>obligatoire</strong>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-lg-3 mb-3">
-                                <mat-form-field appearance="fill">
-                                    <label>Code postal*</label>
-                                    <input type="text" class="form-control" required
-                                        formControlName="codePostale" matInput>
-                                    <mat-error *ngIf="formControl.get('codePostale')?.hasError('required')">
-                                        Le code postale est <strong>obligatoire</strong>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
                         </div>
+
                         <div class="row">
-                            <div class="col-lg-3 mb-3">
-                                <mat-form-field appearance="fill">
-                                    <label>Mail*</label>
-                                    <input type="text" class="form-control" placeholder="exemple@gmail.com" required
-                                         formControlName="mail" matInput>
-                                    <mat-error *ngIf="formControl.get('mail')?.hasError('required')">
-                                        Le mail est <strong>obligatoire</strong>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
 
                             <div class="col-lg-3 mb-3">
                                 <mat-form-field appearance="fill">
                                     <label>Numéro de téléphone*</label>
                                     <input type="tel" class="form-control" required
-                                        formControlName="numeroTelephone" matInput>
+                                        formControlName="numeroTelephone" [(ngModel)]="telephoneSaisie"  matInput>
                                     <mat-error *ngIf="formControl.get('numeroTelephone')?.hasError('required')">
                                         Le numéro de téléphone est <strong>obligatoire</strong>
                                     </mat-error>
@@ -424,108 +378,55 @@
 
                             <div class="col-lg-3 mb-3">
                                 <mat-form-field appearance="fill">
+                                    <label>Mail*</label>
+                                    <input type="text" class="form-control" placeholder="exemple@gmail.com" required
+                                         formControlName="mail" [(ngModel)]="mailSaisie" matInput>
+                                    <mat-error *ngIf="formControl.get('mail')?.hasError('required')">
+                                        Le mail est <strong>obligatoire</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-lg-3 mb-3">
+                                <mat-form-field appearance="fill">
+                                    <label>Choisir un mot de passe*</label>
+                                    <input type="password" class="form-control" required
+                                        formControlName="motDePasse" [(ngModel)]="mdpSaisie" matInput>
+                                    <mat-error *ngIf="formControl.get('motDePasse')?.hasError('required')">
+                                        Le mot de passe est <strong>obligatoire</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>    
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-3 mb-3">
+                                <mat-form-field appearance="fill">
                                   <mat-label>Statut</mat-label>
-                                  <mat-select formControlName="idStatut" >  <!-- Permet d'ajouter id présent dans value à data pour l'envoyer en post -->
-                             <mat-option *ngFor="let role of idStatut" [value]=role.id>{{role.role}}</mat-option> <!--  [value] permet de récupérer directement la valeur de l'objet -->
+                                  <mat-select formControlName="listeStatut" [(ngModel)]="idStatut" >  <!-- Permet d'ajouter id présent dans value à data pour l'envoyer en post -->
+                             <mat-option *ngFor="let role of listeStatut" [value]=role.id>{{role.role}}</mat-option> <!--  [value] permet de récupérer directement la valeur de l'objet id et role font référence à la BDD -->
                             </mat-select>
                                   <mat-error *ngIf="formControl.get('listeStatut')?.hasError('required')"> 
                                     Le statut est <strong>obligatoire</strong>
                                   </mat-error>
                                 </mat-form-field>
-                            </div>   
-
-                            <!-- <div class="col-lg-3 mb-3">
-                            <form [formGroup]="contactForm" (ngSubmit)="submitListe()">
-                                <p>Veuillez choisir votre statut...</p>
-                                <select formControlName="statutUtilisateur" class="form-select"
-                                    aria-label="Default select example">
-                                    <option [ngValue]="null" selected></option>
-                                    <option *ngFor="let statut of statutUtilisateur" [ngValue]="statut.name">
-                                        {{statut.name}}</option>
-                                </select>
-                            </form>
-                            </div> -->
+                            </div> 
                         </div>
-                    </div>
+                    </div> 
 
                     <div class="d-flex justify-content-center">
-                        <!-- [disabled] permet d'afficher le bouton uniquement lorsque toutes les données sont renseigner -->
-                        <button [disabled]="!this.formControl.valid" class="btn boutonFormulaire mb-5" type="submit">Envoyer</button>
+                        <button [disabled]="!this.formControl.valid" class="btn boutonFormulaire mb-5" type="submit" (click)="donneesFormulaire()">Envoyer</button>
                     </div>
                 </form>
             </div>
         </div>
-
-
-        <!-- <h2 class="titreGestion">Gestion du parc</h2> -->
-
-        <!-- -----------------------------------Filtre de recherche Gestion du Parc ---------------------- -->
-         <!-- <div class="filtre">
-            <div class="col-lg-3 mb-5">
-                <input type="date" class="form-control" id="validationDefault01" required>
-            </div>
-            <div class="col-lg-3 mb-3">
-
-
-                <select class="form-select" aria-label="Default select example">
-                    <option class="espace" selected>Sélectionner un matériel</option>
-                    <option class="espace"></option>
-                    <option class="espace" value="1">Pc</option>
-                    <option class="espace" value="2">Casque VR</option>
-                    <option class="espace" value="3">Webcam</option>
-                    <option class="espace" value="4">Projecteur</option>
-                </select>
-            </div>
-
-            <div class="col-lg-3 mb-3">
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Sélectionner le lieu</option>
-                    <option></option>
-                    <option value="1">MNS</option>
-                    <option value="2">IFA</option>
-                </select>
-            </div>
-        </div>
-
-
-
-        <div class="d-flex justify-content-center">
-            <button class="btnRechercher btn-lg px-4" type="submit">Rechercher</button>
-        </div>  -->
-
-        <!-- -----------------------------------------Tableau Gestion du Parc ---------------------- -->
-
-        <!-- <table class="table table-light">
-            <thead>
-                <tr>
-                    <th scope="col">Emprunteur</th>
-                    <th scope="col">Stock</th>
-                    <th scope="col">Localisation</th>
-                    <th scope="col">Etat</th>
-                    <th scope="col">Documents techniques</th>
-                    <th scope="col">Mode opératoire</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Disponible 60</td>
-                    <td>Emprunté par élève</td>
-                    <td>Emprunté</td>
-                    <td>Pilotes d'installations</td>
-                    <td>@mdo</td>
-                </tr>
-            </tbody>
-        </table> -->
+ 
         <br>
         <br>
 
         <!-- ----------------------------------------- Tableau historique matériels ---------------------- -->
 
-
-        <div class="titre">
             <h2>Historique matériels</h2>
-        </div>
 
         <table class="table table-light">
             <thead>

@@ -298,7 +298,8 @@
         <div class="pageGestionnaire">
             <div class="container">
 
-                <form [formGroup]="formControl" #registerFrom="ngForm" (ngSubmit)="donneesFormulaire(registerFrom.value)">
+                <!-- <form [formGroup]="formControl" #registerFrom="ngForm" (ngSubmit)="donneesFormulaire(registerFrom.value)"> -->
+                <form [formGroup]="formControl">
                     <ng-container *ngIf="messageValidationCreationCompte" >
                         <div class="alert alert-success messageValidation d-flex justify-content-center">
                           <mat-icon class="iconInfo">check_circle</mat-icon>
@@ -315,12 +316,12 @@
                       </ng-container>
                     <h2 class="text-center text-black mb-5">Création de compte Utilisateur</h2>
                     <h3 class="mb-3">Informations personnelles</h3>
-                    <div class="form-row">
-                        <div class="row">
+                     <div class="form-row">
+                       <div class="row">
                             <div class="col-lg-4 mb-3">
                                 <mat-form-field appearance="fill">
                                     <label>Nom*</label>
-                                    <input type="text" class="form-control" required formControlName="nom"
+                                    <input type="text" class="form-control" required formControlName="nom" [(ngModel)]="nomSaisie"
                                         matInput>
                                     <mat-error *ngIf="formControl.get('nom')?.hasError('required')">
                                         Le nom est <strong>obligatoire</strong>
@@ -330,7 +331,7 @@
                             <div class="col-lg-4 mb-3">
                                 <mat-form-field appearance="fill">
                                     <label>Prénom*</label>
-                                    <input type="text" class="form-control" required formControlName="prenom"
+                                    <input type="text" class="form-control" required formControlName="prenom" [(ngModel)]="prenomSaisie"
                                         matInput>
                                     <mat-error *ngIf="formControl.get('prenom')?.hasError('required')">
                                         Le prénom est <strong>obligatoire</strong>
@@ -341,7 +342,7 @@
                                 <mat-form-field appearance="fill">
                                     <label>Choisir un mot de passe*</label>
                                     <input type="password" class="form-control" required
-                                        formControlName="motDePasse" matInput>
+                                        formControlName="motDePasse" [(ngModel)]="mdpSaisie" matInput>
                                     <mat-error *ngIf="formControl.get('motDePasse')?.hasError('required')">
                                         Le mot de passe est <strong>obligatoire</strong>
                                     </mat-error>
@@ -353,7 +354,7 @@
                                 <mat-form-field appearance="fill">
                                     <label>Adresse*</label>
                                     <input type="text" class="form-control" placeholder="Numéro et nom de rue" required
-                                         formControlName="adresse" matInput>
+                                         formControlName="adresse" [(ngModel)]="adresseSaisie" matInput>
                                     <mat-error *ngIf="formControl.get('adresse')?.hasError('required')">
                                         L'adresse est <strong>obligatoire</strong>
                                     </mat-error>
@@ -362,7 +363,7 @@
                             <div class="col-lg-3 mb-3">
                                 <mat-form-field appearance="fill">
                                     <label>Ville*</label>
-                                    <input type="text" class="form-control" required formControlName="ville"
+                                    <input type="text" class="form-control" required formControlName="ville" [(ngModel)]="villeSaisie"
                                         matInput>
                                     <mat-error *ngIf="formControl.get('ville')?.hasError('required')">
                                         La ville est <strong>obligatoire</strong>
@@ -373,7 +374,7 @@
                                 <mat-form-field appearance="fill">
                                     <label>Code postal*</label>
                                     <input type="text" class="form-control" required
-                                        formControlName="codePostale" matInput>
+                                        formControlName="codePostale" [(ngModel)]="codePostalSaisie" matInput>
                                     <mat-error *ngIf="formControl.get('codePostale')?.hasError('required')">
                                         Le code postale est <strong>obligatoire</strong>
                                     </mat-error>
@@ -385,7 +386,7 @@
                                 <mat-form-field appearance="fill">
                                     <label>Mail*</label>
                                     <input type="text" class="form-control" placeholder="exemple@gmail.com" required
-                                         formControlName="mail" matInput>
+                                         formControlName="mail" [(ngModel)]="mailSaisie" matInput>
                                     <mat-error *ngIf="formControl.get('mail')?.hasError('required')">
                                         Le mail est <strong>obligatoire</strong>
                                     </mat-error>
@@ -396,7 +397,7 @@
                                 <mat-form-field appearance="fill">
                                     <label>Numéro de téléphone*</label>
                                     <input type="tel" class="form-control" required
-                                        formControlName="numeroTelephone" matInput>
+                                        formControlName="numeroTelephone" [(ngModel)]="telephoneSaisie"  matInput>
                                     <mat-error *ngIf="formControl.get('numeroTelephone')?.hasError('required')">
                                         Le numéro de téléphone est <strong>obligatoire</strong>
                                     </mat-error>
@@ -406,32 +407,21 @@
                             <div class="col-lg-3 mb-3">
                                 <mat-form-field appearance="fill">
                                   <mat-label>Statut</mat-label>
-                                  <mat-select formControlName="idStatut" >  <!-- Permet d'ajouter id présent dans value à data pour l'envoyer en post -->
-                             <mat-option *ngFor="let role of idStatut" [value]=role.id>{{role.role}}</mat-option> <!--  [value] permet de récupérer directement la valeur de l'objet -->
+                                  <mat-select formControlName="listeStatut" [(ngModel)]="idStatut" >  <!-- Permet d'ajouter id présent dans value à data pour l'envoyer en post -->
+                             <mat-option *ngFor="let role of listeStatut" [value]=role.id>{{role.role}}</mat-option> <!--  [value] permet de récupérer directement la valeur de l'objet id et role font référence à la BDD -->
                             </mat-select>
                                   <mat-error *ngIf="formControl.get('listeStatut')?.hasError('required')"> 
                                     Le statut est <strong>obligatoire</strong>
                                   </mat-error>
                                 </mat-form-field>
-                            </div>   
-
-                            <!-- <div class="col-lg-3 mb-3">
-                            <form [formGroup]="contactForm" (ngSubmit)="submitListe()">
-                                <p>Veuillez choisir votre statut...</p>
-                                <select formControlName="statutUtilisateur" class="form-select"
-                                    aria-label="Default select example">
-                                    <option [ngValue]="null" selected></option>
-                                    <option *ngFor="let statut of statutUtilisateur" [ngValue]="statut.name">
-                                        {{statut.name}}</option>
-                                </select>
-                            </form>
-                            </div> -->
+                            </div> 
                         </div>
-                    </div>
+                    </div> 
+
+                    
 
                     <div class="d-flex justify-content-center">
-                        <!-- [disabled] permet d'afficher le bouton uniquement lorsque toutes les données sont renseigner -->
-                        <button [disabled]="!this.formControl.valid" class="btn boutonFormulaire mb-5" type="submit">Envoyer</button>
+                        <button [disabled]="!this.formControl.valid" class="btn boutonFormulaire mb-5" type="submit" (click)="donneesFormulaire()">Envoyer</button>
                     </div>
                 </form>
             </div>

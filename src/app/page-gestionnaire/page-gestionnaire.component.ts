@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { TokenIdentificationService } from '../token-identification.service';
@@ -15,6 +16,23 @@ export class PageGestionnaireComponent implements OnInit {
 
   public contactForm!: FormGroup;
 
+  public listeStatut: any;
+  public donneesDemandeCreationCompte!:any;
+  public donnees:any;
+  public statut:any;
+  public idStatut!: number;
+  
+  //formulaire création de compte
+  public nomSaisie!: any;
+  public prenomSaisie!: any;
+  public mdpSaisie!: any;
+  public adresseSaisie!: any;
+  public villeSaisie!: any;
+  public codePostalSaisie!: any;
+  public mailSaisie!: any;
+  public telephoneSaisie!: any;
+
+
   public listeUtilisateur: any;
   public admin: boolean = false;
   public idUtilisateurConnecte!: number;
@@ -26,7 +44,6 @@ export class PageGestionnaireComponent implements OnInit {
   public listeDemandesEmprunt: any;
   public listeRetoursEmprunt: any;
   public listeProlongationEmprunt!: any;
-  //public listeNumeroMateriel!: any;
   public listeNumeroSerieMateriel!: any;
 
   public nombreDemandesEmprunt!: number;
@@ -57,7 +74,6 @@ export class PageGestionnaireComponent implements OnInit {
 
   public donneesReservation!: any;
   
-  public idStatut: any;
   public listeMateriel: any;
   public listeLieuStockage: any;
   public messageValidationCreationCompte: any;
@@ -75,12 +91,12 @@ export class PageGestionnaireComponent implements OnInit {
       "codePostale": ["", [Validators.required]],
       "mail": ["", [Validators.required]],
       "numeroTelephone": ["", [Validators.required]],
-      "idStatut": ["", [Validators.required]],
-      //"numeroSerieMateriels": ["", [Validators.required]],
+      "listeStatut": ["", [Validators.required]],
     }
   );
 
   constructor(
+    public dialog: MatDialog,
     private http: HttpClient,
     private tokenIdentification: TokenIdentificationService,
     private router: Router,
@@ -88,8 +104,7 @@ export class PageGestionnaireComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.contactForm = this.formBuilder.group({ statutUtilisateur: [null] });
-    this.http.get("http://"+ environment.adresseServeur +"/liste-statut").subscribe(reponse => this.idStatut = reponse); //permet de récupérer la liste depuis la BDD
+    this.http.get("http://"+ environment.adresseServeur +"/liste-statut").subscribe(reponse => this.listeStatut = reponse); //permet de récupérer la liste depuis la BDD
     this.http.get("http://"+ environment.adresseServeur +"/liste-typeMateriels").subscribe(reponse => this.listeMateriel = reponse);
     this.http.get("http://"+ environment.adresseServeur +"/gestionnaire/liste-lieuxStockage").subscribe(reponse => this.listeLieuStockage = reponse);
 
@@ -97,10 +112,8 @@ export class PageGestionnaireComponent implements OnInit {
 
     this.tokenIdentification.utilisateur.subscribe( //Vérification token au chargement page
     utilisateur => {
-        console.log(utilisateur);
         this.admin = utilisateur != null && utilisateur.droits.includes("ROLE_GESTIONNAIRE"); //Vérifie que l'utilisateur a bien role gestionnaire
         this.idUtilisateurConnecte = utilisateur.id;
-        console.log(utilisateur);
       }
     );
 
@@ -118,19 +131,17 @@ export class PageGestionnaireComponent implements OnInit {
   }
 
   //méthode pour envoyer les données du formulaire dans la BDD avec mdp hasher 
-  donneesFormulaire(donnees: { nom: string, prenom: string, motDePasse: string, adresse: string, ville: string, codePostale: string, mail: string, numeroTelephone: string, statut: { idStatut: number } }) {
-
-    //this.donneesFormulaire = donnees: {nom : donnees.nom, prenom: donnees.prenom, motDePasse:donnees.motDePasse, adresse:donnees.adresse, ville:donnees.ville, codePostale:donnees.codePostale, mail:donnees.mail, numeroTelephone:donnees, statut: {idStatut: number} })
-    this.http.post("http://"+ environment.adresseServeur +"/donnees-CreationCompte", donnees, { responseType: 'text' })
+  donneesFormulaire():void {
+      this.donnees = { nom: this.nomSaisie,prenom : this.prenomSaisie,motDePasse: this.mdpSaisie, mail: this.mailSaisie, adresse : this.adresseSaisie,ville : this.villeSaisie, codePostale: this.codePostalSaisie, numeroTelephone :this.telephoneSaisie, statut : {id: this.idStatut} } ;
+      this.http.post("http://"+ environment.adresseServeur +"/donnees-CreationCompte", this.donnees, { responseType: 'text' })
       .subscribe((response) => {
         this.messageValidationCreationCompte = response;
-        alert("Le compte à bien été crée")
-        console.log(response)
       }, (error) => {
-        this.messageErreurValidationCreationCompte = "Une erreur est survenue lors de la création du compte"
+        this.messageErreurValidationCreationCompte = "Une erreur est survenue lors de la création du compte";
       }
       );
-  }
+  } 
+
 
   closePopUpCreationCompte() {
     this.messageErreurValidationCreationCompte = '';
@@ -230,7 +241,7 @@ export class PageGestionnaireComponent implements OnInit {
       },
       (error) => {
         this.messageErreurValidationRetourEmprunt = "Une erreur est survenue, veuillez réessayer plus tard";
-        console.log(error);
+
       }
     )
   }

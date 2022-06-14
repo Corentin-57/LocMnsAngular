@@ -64,8 +64,8 @@ import { DemandeEmpruntComponent } from './dialog/gestionnaire/demande-emprunt/d
     RouterModule,
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
-            {provide: MatDialogRef, useValue: {} },
-            {provide: MAT_DIALOG_DATA, useValue: {} },
+            /*{provide: MatDialogRef, useValue: {} },
+            {provide: MAT_DIALOG_DATA, useValue: {} },*/
             {provide: LocationStrategy, useClass: HashLocationStrategy}, //Permet d'effectuer hash approach pour raffraichissement page (erreur 404)
   ],
   bootstrap: [AppComponent]

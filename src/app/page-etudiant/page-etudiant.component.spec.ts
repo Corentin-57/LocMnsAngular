@@ -34,27 +34,4 @@ describe('PageEtudiantComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it ('vérification liste types matériel', () =>{
-    const testTypesMateriel: any = [
-      {"idType": 1, "nomType": "ordinateur portable"},
-      {"idType": 2, "nomType": "projecteur"},
-      {"idType": 3, "nomType": "Webcam"},
-      {"idType": 4, "nomType": "casque VR"}
-    ];
-
-    http.get("http://" + environment.adresseServeur + "/liste-typeMateriels").subscribe((TypesMateriels)=>{
-      expect(testTypesMateriel).toBe(TypesMateriels, 'should check mocked data')
-    });
-
-    const requete = httpTestCtrl.expectOne("http://" + environment.adresseServeur + "/liste-typeMateriels");
-
-    expect(requete.cancelled).toBeFalsy;
-    expect(requete.request.responseType).toEqual('json');
-    
-    requete.flush(testTypesMateriel);
-  }
-   )
-
-
-
 });

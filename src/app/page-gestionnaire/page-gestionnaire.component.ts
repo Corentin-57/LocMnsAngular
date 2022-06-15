@@ -126,12 +126,16 @@ export class PageGestionnaireComponent implements OnInit {
     
     this.tokenIdentification.raffraichirUtilisateur();
 
+
     this.tokenIdentification.utilisateur.subscribe( //Vérification token au chargement page
     utilisateur => {
         this.admin = utilisateur != null && utilisateur.droits.includes("ROLE_GESTIONNAIRE"); //Vérifie que l'utilisateur a bien role gestionnaire
-        this.idUtilisateurConnecte = utilisateur.id;
+        if(utilisateur != null){
+          this.idUtilisateurConnecte = utilisateur.id;
+        }
       }
     );
+    
 
     
     this.affichageDemandesPret();

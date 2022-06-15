@@ -57,11 +57,15 @@ export class PageEtudiantComponent implements OnInit {
 
   ngOnInit(): void {
             this.tokenIdentification.raffraichirUtilisateur();
+            
             this.tokenIdentification.utilisateur.subscribe(
               utilisateur =>{
-                this.idUtilisateur = utilisateur.id
+                if(utilisateur != null){
+                  this.idUtilisateur = utilisateur.id
+                }
               }
-          ); 
+            ); 
+          
           this.http.get("http://" + environment.adresseServeur + "/liste-typeMateriels").subscribe(reponse => this.listeTypesMateriel = reponse); //Récupére la liste des types de matériel
 
           this.http.get("http://" + environment.adresseServeur +"/liste-modeles").subscribe(reponse => this.listeModeles = reponse); //Récupére la liste des modèles
@@ -102,9 +106,9 @@ export class PageEtudiantComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         this.donneesSaisiesProlongation = result;
-        this.donneesSaisiesProlongation = {dateProlongation: this.donneesSaisiesProlongation.dateProlongation + " 00:00:00", utilisateur: {id: this.donneesSaisiesProlongation.utilisateur.id}, materiel: {idMateriel: this.donneesSaisiesProlongation.materiel.idMateriel} };
        
           if(this.donneesSaisiesProlongation != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
+            this.donneesSaisiesProlongation = {dateProlongation: this.donneesSaisiesProlongation.dateProlongation + " 00:00:00", utilisateur: {id: this.donneesSaisiesProlongation.utilisateur.id}, materiel: {idMateriel: this.donneesSaisiesProlongation.materiel.idMateriel} };
             this.http.post("http://" + environment.adresseServeur + "/demande-prolongation", this.donneesSaisiesProlongation,{responseType: 'text'} )
               .subscribe(
                 (reponse) => {
@@ -126,9 +130,9 @@ export class PageEtudiantComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         this.donneesSaisiesRetour = result;
-        this.donneesSaisiesRetour = {dateDemandeRetour: this.donneesSaisiesRetour.dateDemandeRetour + " 00:00:00", utilisateur: {id: this.donneesSaisiesRetour.utilisateur.id}, materiel: {idMateriel: this.donneesSaisiesRetour.materiel.idMateriel} };
 
           if(this.donneesSaisiesRetour != undefined){ //N'effectue pas la requête si l'objet est vide (en cas d'annulation)
+            this.donneesSaisiesRetour = {dateDemandeRetour: this.donneesSaisiesRetour.dateDemandeRetour + " 00:00:00", utilisateur: {id: this.donneesSaisiesRetour.utilisateur.id}, materiel: {idMateriel: this.donneesSaisiesRetour.materiel.idMateriel} };
             this.http.post("http://"+ environment.adresseServeur +"/demande-retour", this.donneesSaisiesRetour,{responseType: 'text'} )
               .subscribe(
                 (reponse) => {
@@ -160,7 +164,6 @@ export class PageEtudiantComponent implements OnInit {
 
   envoyerFormulaire(): void{ //Envoie demande emprunt
     this.donneesDemandeMateriel = {typeMateriel: {idType: this.idTypeMateriel}, materiel: {modele: {idModele: this.idModele}}, cadreUtilisation: {idCadre: this.idCadreUtilisation}, dateEmprunt: this.dateDebutEmprunt + " 00:00:00", dateRetour: this.dateFinEmprunt + " 00:00:00", utilisateur : {id : this.idUtilisateur} };
-    console.log(this.donneesDemandeMateriel);
     this.http.post("http://" + environment.adresseServeur + "/demande-emprunt", this.donneesDemandeMateriel,{responseType: 'text'} )
     .subscribe(
       (reponse) => {

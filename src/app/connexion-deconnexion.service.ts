@@ -7,4 +7,5 @@ import { BehaviorSubject } from 'rxjs';
 export class ConnexionDeconnexionService { //Service qui permet d'utiliser le behaviorSubject sur connexion et header et maj à chaque changement
   public utilisateurConnecte: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   constructor() { }
+
 }

@@ -1,8 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { DemandeEmpruntComponent } from '../dialog/gestionnaire/demande-emprunt/demande-emprunt.component';
 import { TokenIdentificationService } from '../token-identification.service';
@@ -15,40 +14,29 @@ import { TokenIdentificationService } from '../token-identification.service';
 })
 export class PageGestionnaireComponent implements OnInit {
 
-  public contactForm!: FormGroup;
-
-  public listeStatut: any;
-  public donneesDemandeCreationCompte!:any;
-  public donnees:any;
-  public statut:any;
-  public idStatut!: number;
-  
-  //formulaire création de compte
-  public nomSaisie!: any;
-  public prenomSaisie!: any;
-  public mdpSaisie!: any;
-  public adresseSaisie!: any;
-  public villeSaisie!: any;
-  public codePostalSaisie!: any;
-  public mailSaisie!: any;
-  public telephoneSaisie!: any;
-
+  public contactForm!:FormGroup;
 
   public listeUtilisateur: any;
   public admin: boolean = false;
   public idUtilisateurConnecte!: number;
-  public statutUtilisateur: any;
+
+  public statutUtilisateur!: any;
 
   public idEmprunt!: number;
   public idNumeroMateriel!: number;
+  public idNumeroMaterielHistorique!: number;
   public idMateriel!: number;
+
+  public idStatut!: any;
 
   public listeDemandesEmprunt: any;
   public listeRetoursEmprunt: any;
   public listeProlongationEmprunt!: any;
   public listeNumeroSerieMateriel!: any;
+  public listeMateriel: any;
+  public listeLieuStockage: any;
   public listeHistoriqueMateriels: any;
-
+  
   public nombreDemandesEmprunt!: number;
   public nombreRetoursEmprunt!: number;
   public nombreProlongationEmprunt!: number;
@@ -70,8 +58,14 @@ export class PageGestionnaireComponent implements OnInit {
   public messageValidationReservation!: any;
   public messageErreurReservation!: any;
 
+  public messageValidationCreationCompte!: any;
+  public messageErreurValidationCreationCompte!: any;
+
   public messageValidationModificationDemandeEmprunt!: string;
   public messageErreurModificationDemandeEmprunt!: string;
+
+  public donneesSaisies!: any;
+
 
   public dateDemandeEprunt!: Date;
   public dateDemandeRetour!: Date;
@@ -79,15 +73,24 @@ export class PageGestionnaireComponent implements OnInit {
   public dateFinReservation!: Date;
 
   public donneesReservation!: any;
-  public donneesSaisies!: any;
+
+
+  public listeStatut: any;
+  public donneesDemandeCreationCompte!:any;
+  public donnees:any;
+  public statut:any;
   
-  public listeMateriel: any;
-  public listeLieuStockage: any;
-  public messageValidationCreationCompte: any;
-  public messageErreurValidationCreationCompte: any;
-
-
-  // permet de vérifier si les informations formulaire sont bien saisies
+  //formulaire création de compte
+  public nomSaisie!: any;
+  public prenomSaisie!: any;
+  public mdpSaisie!: any;
+  public adresseSaisie!: any;
+  public villeSaisie!: any;
+  public codePostalSaisie!: any;
+  public mailSaisie!: any;
+  public telephoneSaisie!: any;
+  
+  // Permet de vérifier si les informations du formulaire sont bien saisies
   public formControl: FormGroup = this.formBuilder.group(
     {
       "nom": ["", [Validators.required]],
@@ -100,7 +103,6 @@ export class PageGestionnaireComponent implements OnInit {
     }
   );
 
-  // form Control pour enregistrer une reservation
   public formControlReservation: FormGroup = this.formBuilder.group(
     {
       "numeroSerieMateriels": ["", [Validators.required]],
@@ -110,19 +112,17 @@ export class PageGestionnaireComponent implements OnInit {
   );
 
   constructor(
-    public dialog: MatDialog,
     private http: HttpClient,
     private tokenIdentification: TokenIdentificationService,
-    private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder:FormBuilder,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
-    this.affichageHitoriqueMateriels();
-    this.http.get("http://"+ environment.adresseServeur +"/liste-statut").subscribe(reponse => this.listeStatut = reponse); //permet de récupérer la liste depuis la BDD
-    this.http.get("http://"+ environment.adresseServeur +"/liste-typeMateriels").subscribe(reponse => this.listeMateriel = reponse);
-    this.http.get("http://"+ environment.adresseServeur +"/gestionnaire/liste-lieuxStockage").subscribe(reponse => this.listeLieuStockage = reponse);
-
+    this.http.get("http://" + environment.adresseServeur + "/liste-statut").subscribe(reponse => this.listeStatut = reponse); //permet de récupérer la liste depuis la BDD
+    this.http.get("http://" + environment.adresseServeur + "/liste-typeMateriels").subscribe(reponse => this.listeMateriel = reponse);
+    this.http.get("http://" + environment.adresseServeur + "/gestionnaire/liste-lieuxStockage").subscribe(reponse => this.listeLieuStockage = reponse);
+    
     this.tokenIdentification.raffraichirUtilisateur();
 
     this.tokenIdentification.utilisateur.subscribe( //Vérification token au chargement page
@@ -132,6 +132,7 @@ export class PageGestionnaireComponent implements OnInit {
       }
     );
 
+    
     this.affichageDemandesPret();
     this.affichageRetoursPret();
     this.affichageProlongationPret();
@@ -143,67 +144,66 @@ export class PageGestionnaireComponent implements OnInit {
     this.affichageNombreMaterielDefectueux();
     this.affichageNombreMaterielRetard();
     this.affichageNombreMaterielOperationnel();
+    this.affichageHitoriqueMateriels();
+
+
   }
 
-  //méthode pour envoyer les données du formulaire dans la BDD avec mdp hasher 
-  donneesFormulaire():void {
-      this.donnees = { nom: this.nomSaisie,prenom : this.prenomSaisie,motDePasse: this.mdpSaisie, mail: this.mailSaisie, adresse : this.adresseSaisie,ville : this.villeSaisie, codePostale: this.codePostalSaisie, numeroTelephone :this.telephoneSaisie, statut : {id: this.idStatut} } ;
-      this.http.post("http://"+ environment.adresseServeur +"/donnees-CreationCompte", this.donnees, { responseType: 'text' })
-      .subscribe((response) => {
-        this.messageValidationCreationCompte = response;
-      }, (error) => {
-        this.messageErreurValidationCreationCompte = "Une erreur est survenue lors de la création du compte";
-      }
-      );
-  } 
-
-
-  closePopUpCreationCompte() {
-    this.messageErreurValidationCreationCompte = '';
+ //méthode pour envoyer les données du formulaire dans la BDD avec mdp hasher 
+ donneesFormulaire():void {
+  this.donnees = { nom: this.nomSaisie,prenom : this.prenomSaisie,motDePasse: this.mdpSaisie, mail: this.mailSaisie, adresse : this.adresseSaisie,ville : this.villeSaisie, codePostale: this.codePostalSaisie, numeroTelephone :this.telephoneSaisie, statut : {id: this.idStatut} } ;
+  this.http.post("http://"+ environment.adresseServeur +"/donnees-CreationCompte", this.donnees, { responseType: 'text' })
+  .subscribe((response) => {
+    this.messageValidationCreationCompte = response;
+  }, (error) => {
+    this.messageErreurValidationCreationCompte = "Une erreur est survenue lors de la création du compte";
   }
+  );
+}
+
 
   affichageDemandesPret(): void {
-    this.http.get("http://"+ environment.adresseServeur +"/gestionnaire/listeDemandesEmprunt").subscribe(reponse => this.listeDemandesEmprunt = reponse); //Récupére la liste des toutes les demandes d'emprunt en cours
+    this.http.get("http://"+ environment.adresseServeur + "/gestionnaire/listeDemandesEmprunt").subscribe(reponse => this.listeDemandesEmprunt = reponse); //Récupére la liste des toutes les demandes d'emprunt en cours
   }
 
   affichageRetoursPret(): void {
-    this.http.get("http://"+ environment.adresseServeur +"/gestionnaire/listeRetoursEmprunt").subscribe(reponse => this.listeRetoursEmprunt = reponse); //Récupére la liste des toutes les demandes d'emprunt en cours
+    this.http.get("http://" + environment.adresseServeur + "/gestionnaire/listeRetoursEmprunt").subscribe(reponse => this.listeRetoursEmprunt = reponse); //Récupére la liste des toutes les demandes d'emprunt en cours
   }
 
   affichageProlongationPret(): void {
-    this.http.get("http://"+ environment.adresseServeur +"/gestionnaire/listeProlongationEmprunt").subscribe(reponse => this.listeProlongationEmprunt = reponse); //Récupére la liste des toutes les demandes d'emprunt en cours
+    this.http.get("http://" + environment.adresseServeur + "/gestionnaire/listeProlongationEmprunt").subscribe(reponse => this.listeProlongationEmprunt = reponse); //Récupére la liste des toutes les demandes d'emprunt en cours
   }
 
   affichageNombreDemandesPret(): void{
-    this.http.get("http://"+ environment.adresseServeur +"/gestionnaire/nombre-demandes-emprunt").subscribe((reponse:any) => this.nombreDemandesEmprunt = reponse); //Récupére le nombre de demandes d'emprunt en cours
+    this.http.get("http://" + environment.adresseServeur + "/gestionnaire/nombre-demandes-emprunt").subscribe((reponse:any) => this.nombreDemandesEmprunt = reponse); //Récupére le nombre de demandes d'emprunt en cours
   }
 
   affichageNombreRetoursPret(): void{
-    this.http.get("http://"+ environment.adresseServeur +"/gestionnaire/nombre-retours-emprunt").subscribe((reponse:any) => this.nombreRetoursEmprunt = reponse); //Récupére le nombre de demandes d'emprunt en cours
+    this.http.get("http://" + environment.adresseServeur + "/gestionnaire/nombre-retours-emprunt").subscribe((reponse:any) => this.nombreRetoursEmprunt = reponse); //Récupére le nombre de demandes d'emprunt en cours
   }
 
   affichageNombreProlongation(): void{
-    this.http.get("http://"+ environment.adresseServeur +"/gestionnaire/nombre-prolongation-emprunt").subscribe((reponse:any) => this.nombreProlongationEmprunt = reponse); //Récupére le nombre de demandes d'emprunt en cours
+    this.http.get("http://" + environment.adresseServeur + "/gestionnaire/nombre-prolongation-emprunt").subscribe((reponse:any) => this.nombreProlongationEmprunt = reponse); //Récupére le nombre de demandes d'emprunt en cours
   }
 
   affichageNombreMaterielDefectueux(): void{
-    this.http.get("http://"+ environment.adresseServeur +"/gestionnaire/nombre-materiels-defectueux").subscribe((reponse:any) => this.nombreMaterielDefectueux = reponse); //Récupére le nombre de demandes d'emprunt en cours
+    this.http.get("http://" + environment.adresseServeur + "/gestionnaire/nombre-materiels-defectueux").subscribe((reponse:any) => this.nombreMaterielDefectueux = reponse); //Récupére le nombre de demandes d'emprunt en cours
   }
 
   affichageNombreMaterielRetard(): void{
-    this.http.get("http://"+ environment.adresseServeur +"/gestionnaire/nombre-materiels-retard").subscribe((reponse:any) => this.nombreMaterielRetard = reponse); //Récupére le nombre de matériel emprunté en retard (non retourné)
+    this.http.get("http://" + environment.adresseServeur + "/gestionnaire/nombre-materiels-retard").subscribe((reponse:any) => this.nombreMaterielRetard = reponse); //Récupére le nombre de matériel emprunté en retard (non retourné)
   }
 
   affichageNombreMaterielOperationnel(): void{
-    this.http.get("http://"+ environment.adresseServeur +"/gestionnaire/nombre-materiels-operationnel").subscribe((reponse:any) => this.nombreMaterielOperationnel = reponse); //Récupére le nombre de matériel emprunté en retard (non retourné)
+    this.http.get("http://" + environment.adresseServeur + "/gestionnaire/nombre-materiels-operationnel").subscribe((reponse:any) => this.nombreMaterielOperationnel = reponse); //Récupére le nombre de matériel emprunté en retard (non retourné)
   }
 
   affichageNumeroSerie(): void{
-    this.http.get("http://"+ environment.adresseServeur +"/gestionnaire/liste-materiel-numeroSerie").subscribe(reponse => this.listeNumeroSerieMateriel = reponse); //Récupére la liste des toutes les demandes d'emprunt en cours
+    this.http.get("http://" + environment.adresseServeur + "/gestionnaire/liste-materiel-numeroSerie").subscribe(reponse => this.listeNumeroSerieMateriel = reponse); //Récupére la liste des toutes les demandes d'emprunt en cours
   }
 
   validerDemandeEmprunt(idEmprunt: number){
-    this.http.post("http://"+ environment.adresseServeur +"/gestionnaire/valider-demande-emprunt", {idEmprunt: idEmprunt},{responseType: 'text'} )
+    this.http.post("http://" + environment.adresseServeur + "/gestionnaire/valider-demande-emprunt/" + this.idUtilisateurConnecte, {idEmprunt: idEmprunt},{responseType: 'text'} )
     .subscribe(
       (reponse) => {
         this.messageValidationDemandeEmprunt = reponse;
@@ -218,7 +218,7 @@ export class PageGestionnaireComponent implements OnInit {
   }
 
   supprimerDemandeEmprunt(idEmprunt: number){
-    this.http.delete("http://"+ environment.adresseServeur +"/gestionnaire/supprimer-demande-emprunt/" + idEmprunt,{responseType: 'text'} )
+    this.http.delete("http://" + environment.adresseServeur + "/gestionnaire/supprimer-demande-emprunt/" + idEmprunt,{responseType: 'text'} )
     .subscribe(
       (reponse) => {
         this.messageValidationDemandeEmprunt = reponse;
@@ -233,7 +233,7 @@ export class PageGestionnaireComponent implements OnInit {
   }
 
   validerRetourEmprunt(idEmprunt: number){
-    this.http.put("http://"+ environment.adresseServeur +"/gestionnaire/valider-retour-emprunt", {idEmprunt: idEmprunt},{responseType: 'text'} )
+    this.http.put("http://" + environment.adresseServeur + "/gestionnaire/valider-retour-emprunt/" + this.idUtilisateurConnecte, {idEmprunt: idEmprunt},{responseType: 'text'} )
     .subscribe(
       (reponse) => {
         this.messageValidationRetourEmprunt = reponse;
@@ -247,7 +247,7 @@ export class PageGestionnaireComponent implements OnInit {
   }
 
   supprimerDemandeRetour(idEmprunt: number){
-    this.http.put("http://"+ environment.adresseServeur +"/gestionnaire/supprimer-retour-emprunt", {idEmprunt: idEmprunt}, {responseType: 'text'} )
+    this.http.put("http://" + environment.adresseServeur + "/gestionnaire/supprimer-retour-emprunt", {idEmprunt: idEmprunt}, {responseType: 'text'} )
     .subscribe(
       (reponse) => {
         this.messageValidationRetourEmprunt = reponse;
@@ -256,13 +256,12 @@ export class PageGestionnaireComponent implements OnInit {
       },
       (error) => {
         this.messageErreurValidationRetourEmprunt = "Une erreur est survenue, veuillez réessayer plus tard";
-
       }
     )
   }
 
   validerProlongationEmprunt(idEmprunt: number){
-    this.http.put("http://"+ environment.adresseServeur +"/gestionnaire/valider-prolongation-emprunt", {idEmprunt: idEmprunt},{responseType: 'text'} )
+    this.http.put("http://" + environment.adresseServeur + "/gestionnaire/valider-prolongation-emprunt/" + this.idUtilisateurConnecte, {idEmprunt: idEmprunt},{responseType: 'text'} )
     .subscribe(
       (reponse) => {
         this.messageValidationProlongationEmprunt = reponse;
@@ -276,7 +275,7 @@ export class PageGestionnaireComponent implements OnInit {
   }
 
   supprimerProlongationEmprunt(idEmprunt: number){
-    this.http.put("http://"+ environment.adresseServeur +"/gestionnaire/supprimer-prolongation-emprunt", {idEmprunt: idEmprunt}, {responseType: 'text'} )
+    this.http.put("http://" + environment.adresseServeur + "/gestionnaire/supprimer-prolongation-emprunt", {idEmprunt: idEmprunt}, {responseType: 'text'} )
     .subscribe(
       (reponse) => {
         this.messageValidationProlongationEmprunt = reponse;
@@ -302,19 +301,8 @@ export class PageGestionnaireComponent implements OnInit {
     )
   }
 
-  public cacherMessage(): void{
-    this.messageValidationDemandeEmprunt = "";
-    this.messageErreurValidationDemandeEmprunt = "";
-    this.messageErreurValidationRetourEmprunt = "";
-    this.messageValidationRetourEmprunt = "";
-    this.messageErreurValidationProlongationEmprunt = "";
-    this.messageValidationProlongationEmprunt = "";
-    this.messageValidationReservation = "";
-    this.messageErreurReservation = "";
-  }
-
   affichageHitoriqueMateriels(){
-    this.http.get("http://" + environment.adresseServeur + "/gestionnaire/historique-materiels").subscribe(reponse =>this.listeHistoriqueMateriels = reponse);
+    this.http.get("http://" + environment.adresseServeur + "/gestionnaire/historique-materiels").subscribe(reponse => this.listeHistoriqueMateriels = reponse);
   }
 
   openDialogModificationDemandeEmprunt(idEmprunt: number): void {
@@ -339,5 +327,28 @@ export class PageGestionnaireComponent implements OnInit {
               )
           }
         })  
-  } 
+  }
+
+
+
+  public cacherMessage(): void{
+    this.messageValidationDemandeEmprunt = "";
+    this.messageErreurValidationDemandeEmprunt = "";
+    this.messageErreurValidationRetourEmprunt = "";
+    this.messageValidationRetourEmprunt = "";
+    this.messageErreurValidationProlongationEmprunt = "";
+    this.messageValidationProlongationEmprunt = "";
+    this.messageValidationReservation = "";
+    this.messageErreurReservation = "";
+    this.messageValidationModificationDemandeEmprunt = "";
+    this.messageErreurModificationDemandeEmprunt = "";
+  }
+
+  closePopUpCreationCompte() {
+    this.messageErreurValidationCreationCompte = "";
+    this.messageValidationCreationCompte = "";
+  }
+
+  
+
 }

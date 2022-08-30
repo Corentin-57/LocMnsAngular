@@ -21,7 +21,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
       enTete = new HttpHeaders({
         'Access-Control-Allow-Origin': '*',
-        'Authorization': 'Bearer ' + localStorage.getItem('token') //Ajouter le token dans récupérer dans entête nouvelle requête
+        'Authorization': 'Bearer ' + localStorage.getItem('token') //Ajouter le token récupérer dans entête nouvelle requête
       })
     }else{
       enTete = new HttpHeaders({

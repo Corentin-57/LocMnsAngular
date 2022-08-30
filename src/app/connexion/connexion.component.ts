@@ -29,10 +29,10 @@ export class ConnexionComponent implements OnInit {
     private tokenIdentification: TokenIdentificationService,
     private router: Router,
     private connexionDeconnexionService: ConnexionDeconnexionService
-  ) { 
-    this.connexionDeconnexionService.utilisateurConnecte.subscribe( value => { //Permet la maj des boutons quand un changement est effectué sur le service 
+  ) {
+    this.connexionDeconnexionService.utilisateurConnecte.subscribe(value => { //Permet la maj des boutons quand un changement est effectué sur le service 
       this.utilisateurConnecte = value;
-      });
+    });
   }
 
   ngOnInit(): void {
@@ -47,7 +47,7 @@ export class ConnexionComponent implements OnInit {
       //recupérer le token 
       // Message pour la connection 
       this.client
-        .post("http://"+ environment.adresseServeur +"/connexion", utilisateur)
+        .post("http://" + environment.adresseServeur + "/connexion", utilisateur)
         .subscribe((resultat: any) => {
           if (resultat.erreur) {
             alert(resultat.erreur);
